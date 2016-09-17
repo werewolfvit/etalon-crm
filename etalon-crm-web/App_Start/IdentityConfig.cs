@@ -14,6 +14,7 @@ using etalon_crm_web.Models;
 
 namespace etalon_crm_web
 {
+    /*
     public class EmailService : IIdentityMessageService
     {
         public Task SendAsync(IdentityMessage message)
@@ -106,4 +107,5 @@ namespace etalon_crm_web
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
     }
+    */
 }
