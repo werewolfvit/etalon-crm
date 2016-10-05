@@ -10,6 +10,7 @@ using etalon_crm_web.Models;
 
 namespace etalon_crm_web.Controllers
 {
+    /*
     [Authorize]
     public class ManageController : Controller
     {
@@ -386,4 +387,5 @@ namespace etalon_crm_web.Controllers
 
 #endregion
     }
+    */
 }

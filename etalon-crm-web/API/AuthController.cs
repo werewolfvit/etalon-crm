@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using etalon_crm_web.Models;
+using etalon_crm_web.Models.Auth;
 using etalon_crm_web.Models.Common;
 using etalon_crm_web.Models.Identity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Newtonsoft.Json.Linq;
 
 namespace etalon_crm_web.API
 {
@@ -29,16 +31,34 @@ namespace etalon_crm_web.API
             _roleManager = roleManager;
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<MessageModel> GetUserInfo()
+        {
+            if (!User.Identity.IsAuthenticated) return MessageBuilder.GetErrorMessage("Пользователь не авторизован!");
+
+            var userInfo = new UserInfo
+            {
+                Name = User.Identity.Name,
+                Groups = null
+            };
+            return MessageBuilder.GetSuccessMessage(userInfo);
+        }
+
         [HttpPost]
         [AllowAnonymous]
-        public async Task<MessageModel> Login([FromBody] LoginViewModel model)
+        public async Task<MessageModel> Login(JObject jsonData)
         {
             if (!ModelState.IsValid)
             {
                 return MessageBuilder.GetErrorMessage("Ошибка запроса");
             }
 
-            var user = await _userManager.FindAsync(model.Login, model.Password);
+            dynamic json = jsonData;
+            string login = json.login;
+            string password = json.password;
+
+            var user = await _userManager.FindAsync(login, password);
             if (user == null)
                 return MessageBuilder.GetErrorMessage(@"Неверная пара логин\пароль!");
 
@@ -53,7 +73,9 @@ namespace etalon_crm_web.API
             }
         }
 
+        /*
         [Authorize]
+        [HttpPost]
         public MessageModel Logout()
         {
             try
@@ -67,6 +89,7 @@ namespace etalon_crm_web.API
             }
             
         }
+        */
 
         private async Task SignInAsync(User user, bool isPersistent)
         {

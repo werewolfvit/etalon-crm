@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script type="text/javascript" src="/Scripts/ext-all-rtl-debug.js"></script>
+    <link rel="stylesheet" href="/Content/CSS/theme-neptune-all_1.css"/>
+    <link rel="stylesheet" href="/Content/CSS/theme-neptune-all_2.css" />
+</head>
+<body>
+<script type="text/javascript">
+    
+    Ext.define("mainMenuForm",
+    {
+        extend: "Ext.panel.Panel",
+        title: 'MainMenu',
+        renderTo: Ext.getBody()
+    });
+
+    Ext.define('loginForm',
+    {
+        extend: 'Ext.window.Window',
+        renderTo: Ext.getBody(),
+        requires: 'Ext.form.Panel',
+        bodyPagging: 10,
+        title: 'Etalon CRM: вход в систему',
+        closable: false,
+        autoShow: true,
+        resizable: false,
+        draggable: false,
+
+        items: {
+            xtype: 'form',
+            //reference: 'form',
+            items: [
+                {
+                    xtype: 'textfield',
+                    name: 'username',
+                    fieldLabel: 'Логин:',
+                    allowBlank: false,
+                    margin: "10 5 0 5"
+                }, {
+                    xtype: 'textfield',
+                    name: 'password',
+                    inputType: 'password',
+                    fieldLabel: 'Пароль:',
+                    allowBlank: false,
+                    margin: "10 5 10 5"
+                }, {
+                    xtype: "checkboxfield",
+                    name: "remember",
+                    fieldLabel: "Запомнить меня",
+                    checked: true,
+                    margin: "10 5 10 5",
+                    inputValue: true,
+                    uncheckedValue: false
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Войти',
+                    formBind: true,
+                    listeners: {
+                        click: function(btn) {
+                            var form = btn.up('form').getForm();
+                            //console.log(form.getValues());
+
+                            Ext.Ajax.request({
+                                url: "API/Auth/Login",
+                                method: "POST",
+                                jsonData: form.getValues(),
+                                success: function(response, opts) {
+                                    var obj = Ext.decode(response.responseText);
+                                    console.dir(obj);
+                                }
+                            });
+                            //Ext.Msg.show();
+                        }
+                    }
+                }
+            ]
+        }
+    });
+
+
+
+    Ext.application({
+        name: 'MyApp',
+
+        launch: function() {
+            /*
+            1. Проверяем авторизованны ли мы, если да, кидаем на главную, если нет - кидаем на форму логина.
+            2. С главной можно выйти.
+            3. С логина можно залогиниться.
+            */
+
+            Ext.Ajax.request({
+                url: "API/Auth/GetUserInfo",
+                success: function(response, opts) {
+                    var obj = Ext.decode(response.responseText);
+                    if (obj.Status === 'Error') {
+                        Ext.create("loginForm");
+                    } else {
+                        Ext.create("mainMenuForm");
+                    }
+                },
+                failure: function(response, opts) {
+                    console.log("server fault: " + response.status);
+                }
+            });
+        }
+    });
+
+    /*
+    var store = Ext.create('Ext.data.Store', {
+        fields: ['title','phone', 'email'],
+        data: [
+            { 'title': 'Marry An', 'phone': '888', 'email': 'marry@mail.com' },
+            { 'title': 'Marry An2', 'phone': '8882', 'email': 'marry@mail.com2' },
+            { 'title': 'Marry An3', 'phone': '8883', 'email': 'marry@mail.com3' },
+            { 'title': 'Marry An11', 'phone': '88811', 'email': 'marry@mail.com11' },
+            { 'title': 'Marry An112', 'phone': '888112', 'email': 'marry@mail.com112' },
+            { 'title': 'Marry An113', 'phone': '888113', 'email': 'marry@mail.com113' },
+        ]
+    });
+
+    Ext.create('Ext.container.Viewport',
+    {
+        title: 'LOL - GRID',
+        
+        layout: 'fit',
+        fullscreen: true,
+        height: 200,
+        items: [
+            {
+                xtype: 'grid',
+                columns: [
+                    { text: 'Title', dataIndex: 'title', width: 250 },
+                    { text: 'Phone', dataIndex: 'phone', width: 250 },
+                    { text: 'Email', dataIndex: 'email', width: 250 }
+                ],
+                store : store
+            }
+        ]
+    }); */
+
+</script>
+</body>
+</html>

@@ -14,11 +14,12 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace etalon_crm_web.Controllers
 {
+    /*
     [Authorize]
     public class AccountController : Controller
     {
-        //private ApplicationSignInManager _signInManager;
-        //private ApplicationUserManager _userManager;
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
 
         private UserManager<User> _userManager;
         private RoleManager<Role> _roleManager;
@@ -497,4 +498,5 @@ namespace etalon_crm_web.Controllers
         }
         #endregion
     }
+    */
 }
