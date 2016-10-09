@@ -33,6 +33,18 @@ namespace etalon_crm_web.API
 
         [HttpGet]
         [AllowAnonymous]
+        public async Task GetNewUser()
+        {
+            var result = await _userManager.CreateAsync(new User
+            {
+                UserName = "admin",
+                Email = "admin@etalon.ru",
+                Description = "LOL - ADMIN"
+            }, "1q2w3e4r");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         public async Task<MessageModel> GetUserInfo()
         {
             if (!User.Identity.IsAuthenticated) return MessageBuilder.GetErrorMessage("Пользователь не авторизован!");

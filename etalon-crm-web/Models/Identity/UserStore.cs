@@ -40,7 +40,7 @@ namespace etalon_crm_web.Models.Identity
                 using (var db = new SqlConnection(_connectionString))
                 {
                     return
-                        db.Execute(@"INSERT INTO SecUsers(UserId, UserName,Description,Email,TimeLimit, PasswordHash, SecurityStamp) 
+                        db.Execute(@"INSERT INTO Users(UserId, UserName,Description,Email,TimeLimit, PasswordHash, SecurityStamp) 
                         values (@userId, @userName, @description, @email, @timeLimit, @passwordHash, @securityStamp)",
                             user);
                 }
@@ -55,7 +55,7 @@ namespace etalon_crm_web.Models.Identity
                 {
                     return
                         db.Execute(
-                            @"UPDATE SecUsers SET UserName = @UserName, Description = @Description, Email = @Email, 
+                            @"UPDATE Users SET UserName = @UserName, Description = @Description, Email = @Email, 
                     TimeLimit = @TimeLimit, PasswordHash = @PasswordHash, SecurityStamp = @SecurityStamp WHERE UserId = @UserId",
                             user);
                 }
@@ -68,8 +68,8 @@ namespace etalon_crm_web.Models.Identity
             {
                 using (var db = new SqlConnection(_connectionString))
                 {
-                    return db.Execute(@"DELETE FROM SecUsersRoles WHERE UserId = @UserId; 
-                    DELETE SecUsers WHERE UserId = @UserId", user);
+                    return db.Execute(@"DELETE FROM UsersRoles WHERE UserId = @UserId; 
+                    DELETE Users WHERE UserId = @UserId", user);
                 }
             });
         }
@@ -80,7 +80,7 @@ namespace etalon_crm_web.Models.Identity
             {
                 using (var db = new SqlConnection(_connectionString))
                 {
-                    return (db.QueryFirstOrDefault<User>("SELECT * FROM SecUsers WHERE UserId = @UserId",
+                    return (db.QueryFirstOrDefault<User>("SELECT * FROM Users WHERE UserId = @UserId",
                         new { UserId = userId }));
                 }
             });
@@ -92,7 +92,7 @@ namespace etalon_crm_web.Models.Identity
             {
                 using (var db = new SqlConnection(_connectionString))
                 {
-                    return db.QueryFirstOrDefault<User>("SELECT * FROM SecUsers WHERE UserName = @UserName", new { userName });
+                    return db.QueryFirstOrDefault<User>("SELECT * FROM Users WHERE UserName = @UserName", new { userName });
                 }
             });
         }
@@ -114,7 +114,7 @@ namespace etalon_crm_web.Models.Identity
                 {
                     return
                             db.QueryFirstOrDefault<string>(
-                                "SELECT TOP 1 PasswordHash FROM SecUsers WHERE @UserId = UserId",
+                                "SELECT TOP 1 PasswordHash FROM Users WHERE @UserId = UserId",
                                 new { user.UserId });
                 }
             });
@@ -148,8 +148,8 @@ namespace etalon_crm_web.Models.Identity
             {
                 using (var db = new SqlConnection(_connectionString))
                 {
-                    return db.Execute(@"INSERT INTO SecUsersRoles (UserId, RoleId) 
-                    VALUES (@UserId, (SELECT TOP 1 RoleId FROM SecRoles WHERE Name = @roleName))",
+                    return db.Execute(@"INSERT INTO UsersRoles (UserId, RoleId) 
+                    VALUES (@UserId, (SELECT TOP 1 RoleId FROM Roles WHERE Name = @roleName))",
                         new { user.UserId, roleName });
                 }
             });
@@ -161,8 +161,8 @@ namespace etalon_crm_web.Models.Identity
             {
                 using (var db = new SqlConnection(_connectionString))
                 {
-                    return db.Execute("DELETE FROM SecUsersRoles " +
-                                           "WHERE userId = @userId AND RoleId = (SELECT TOP 1 RoleId FROM SecRoles WHERE Name = @roleName)",
+                    return db.Execute("DELETE FROM UsersRoles " +
+                                           "WHERE userId = @userId AND RoleId = (SELECT TOP 1 RoleId FROM Roles WHERE Name = @roleName)",
                         new { user.UserId, roleName });
                 }
             });
@@ -174,8 +174,8 @@ namespace etalon_crm_web.Models.Identity
             {
                 using (var db = new SqlConnection(_connectionString))
                 {
-                    var result = db.Query<string>(@"SELECT DISTINCT Name FROM SecRoles
-                    WHERE RoleId IN (SELECT RoleId FROM SecUsersRoles WHERE UserId = @UserId)", new { user.UserId });
+                    var result = db.Query<string>(@"SELECT DISTINCT Name FROM Roles
+                    WHERE RoleId IN (SELECT RoleId FROM UsersRoles WHERE UserId = @UserId)", new { user.UserId });
                     return (IList<string>)result.ToList();
                 }
             });
@@ -187,8 +187,8 @@ namespace etalon_crm_web.Models.Identity
             {
                 using (var db = new SqlConnection(_connectionString))
                 {
-                    var result = db.Query<string>(@"SELECT DISTINCT Name FROM SecRoles 
-                    WHERE RoleId IN (SELECT RoleId FROM SecUsersRoles WHERE UserId = @UserId)", new { user.UserId });
+                    var result = db.Query<string>(@"SELECT DISTINCT Name FROM Roles 
+                    WHERE RoleId IN (SELECT RoleId FROM UsersRoles WHERE UserId = @UserId)", new { user.UserId });
                     return result.Contains(roleName);
                 }
             });
@@ -200,7 +200,7 @@ namespace etalon_crm_web.Models.Identity
             {
                 using (var db = new SqlConnection(_connectionString))
                 {
-                    return db.Query<User>("SELECT * FROM SecUsers").AsQueryable();
+                    return db.Query<User>("SELECT * FROM Users").AsQueryable();
                 }
             }
         }

@@ -13,9 +13,59 @@
     
     Ext.define("mainMenuForm",
     {
-        extend: "Ext.panel.Panel",
-        title: 'MainMenu',
-        renderTo: Ext.getBody()
+        renderTo: Ext.getBody(),
+        extend: 'Ext.container.Container',
+        layout: {
+            type: 'vbox'
+        },
+        //layout: {
+        //    type: 'table',
+        //    columns: 2,
+        //    tdAttrs: { style: 'padding: 10px;' }
+        //},
+
+        //defaults: {
+        //    xtype: 'panel',
+        //    height: 220,
+        //    width: 220,
+        //    bodyPadding: 10
+        //},
+        //width: 480,
+
+        
+
+        initComponent: function () {
+            this.items = [
+                {
+                    title: 'Left',
+                    xtype: 'panel',
+                    dockedItems: [{
+                        dock: 'left',
+                        xtype: 'toolbar',
+                        items: [{
+                            iconCls: null,
+                            glyph: 61,
+                            xtype: 'button'
+                        }, '-', {
+                            iconCls: null,
+                            glyph: 88,
+                            xtype: 'button'
+                        }, {
+                            iconCls: null,
+                            glyph: 70,
+                            xtype: 'button'
+                        }, '-', {
+                            iconCls: null,
+                            glyph: 47,
+                            xtype: 'button'
+                        }]
+                    }],
+                    html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+                }
+            ];
+
+            this.callParent();
+        }
     });
 
     Ext.define('loginForm',
@@ -36,7 +86,7 @@
             items: [
                 {
                     xtype: 'textfield',
-                    name: 'username',
+                    name: 'login',
                     fieldLabel: 'Логин:',
                     allowBlank: false,
                     margin: "10 5 0 5"
@@ -64,7 +114,6 @@
                     listeners: {
                         click: function(btn) {
                             var form = btn.up('form').getForm();
-                            //console.log(form.getValues());
 
                             Ext.Ajax.request({
                                 url: "API/Auth/Login",
@@ -72,10 +121,20 @@
                                 jsonData: form.getValues(),
                                 success: function(response, opts) {
                                     var obj = Ext.decode(response.responseText);
-                                    console.dir(obj);
+                                    if (obj.Status === 'Error') {
+                                        Ext.example.msg('Не удалось войти', '<b>Неверная пара логин\\пароль!</b>');
+                                        Ext.Msg.alert('Не удалось войти', '<b>Неверная пара логин\\пароль!</b>', Ext.emptyFn);
+                                    } else {
+                                        var wnd = btn.up('window');
+                                        wnd.close();
+                                        Ext.create('mainMenuForm');
+                                    }
+                                },
+                                failure: function () {
+                                    Ext.Msg.alert('Сервер недоступен', 'Сервер не отвечает, обратитесь к администратору.', Ext.emptyFn);
+                                    Ext.example.msg('Сервер недоступен', 'Сервер не отвечает, обратитесь к администратору.');
                                 }
                             });
-                            //Ext.Msg.show();
                         }
                     }
                 }

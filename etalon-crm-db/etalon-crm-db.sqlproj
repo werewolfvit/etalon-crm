@@ -70,6 +70,7 @@
     <Build Include="Tables\MessageAttachmets.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="etalon-crm-db.publish.xml" />
+    <None Include="work.publish.xml" />
+    <None Include="home.publish.xml" />
   </ItemGroup>
 </Project>
