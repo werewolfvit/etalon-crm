@@ -15,12 +15,6 @@ namespace etalon_crm_web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "ApiDefault",
-                url: "API/{controller}/{action}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-
-            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

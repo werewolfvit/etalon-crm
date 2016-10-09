@@ -73,7 +73,7 @@ namespace etalon_crm_web.API
             }
         }
 
-        /*
+        
         [Authorize]
         [HttpPost]
         public MessageModel Logout()
@@ -89,7 +89,7 @@ namespace etalon_crm_web.API
             }
             
         }
-        */
+        
 
         private async Task SignInAsync(User user, bool isPersistent)
         {
