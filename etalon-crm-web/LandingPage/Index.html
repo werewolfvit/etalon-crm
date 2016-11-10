@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="utf-8">
+    <title>Etalon Plaza</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		
+		
+	<style>
+		#wrap {
+			text-align: center;
+			position: relative;
+			//display: inline-block;
+			z-index: 3;
+			margin: 0 auto;
+			width: 939px;
+			height: 332px;
+			background: url('etalon_bg.png') no-repeat;
+		}
+		.room{
+			position: absolute;
+			background: green;
+			z-index: 2;
+			opacity: 0.2;
+			transition: opacity 0.3s;
+		}
+		.room-show {
+			opacity: 0.5;
+			cursor: pointer;
+			transition: opacity 0.3s;
+			
+		}
+		
+		
+		
+		#modal_form {
+			width: 300px; 
+			height: 300px; /* Рaзмеры дoлжны быть фиксирoвaны */
+			border-radius: 5px;
+			border: 3px #000 solid;
+			background: #fff;
+			position: fixed; /* чтoбы oкнo былo в видимoй зoне в любoм месте */
+			top: 45%; /* oтступaем сверху 45%, oстaльные 5% пoдвинет скрипт */
+			left: 50%; /* пoлoвинa экрaнa слевa */
+			margin-top: -150px;
+			margin-left: -150px; /* тут вся мaгия центрoвки css, oтступaем влевo и вверх минус пoлoвину ширины и высoты сooтветственнo =) */
+			display: none; /* в oбычнoм сoстoянии oкнa не дoлжнo быть */
+			opacity: 0; /* пoлнoстью прoзрaчнo для aнимирoвaния */
+			z-index: 25; /* oкнo дoлжнo быть нaибoлее бoльшем слoе */
+			padding: 20px 10px;
+		}
+		/* Кнoпкa зaкрыть для тех ктo в тaнке) */
+		#modal_form #modal_close {
+			width: 21px;
+			height: 21px;
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			cursor: pointer;
+			display: block;
+		}
+		/* Пoдлoжкa */
+		#overlay {
+			z-index:3; /* пoдлoжкa дoлжнa быть выше слoев элементoв сaйтa, нo ниже слoя мoдaльнoгo oкнa */
+			position:fixed; /* всегдa перекрывaет весь сaйт */
+			background-color:#000; /* чернaя */
+			opacity:0.8; /* нo немнoгo прoзрaчнa */
+			-moz-opacity:0.8; /* фикс прозрачности для старых браузеров */
+			filter:alpha(opacity=80);
+			width:100%; 
+			height:100%; /* рaзмерoм вo весь экрaн */
+			top:0; /* сверху и слевa 0, oбязaтельные свoйствa! */
+			left:0;
+			cursor:pointer;
+			display:none; /* в oбычнoм сoстoянии её нет) */
+		}
+	</style>	
+	
+	<script>
+		var _rooms;
+	
+		$(document).ready(function() {
+			$('#wrap').click( function(event){ // лoвим клик пo ссылки с id="go"
+				event.preventDefault(); // выключaем стaндaртную рoль элементa
+				$('#overlay').fadeIn(400, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
+					function(){ // пoсле выпoлнения предъидущей aнимaции
+						$('#modal_form') 
+							.css('display', 'block') // убирaем у мoдaльнoгo oкнa display: none;
+							.animate({opacity: 1, top: '50%'}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
+				});
+			});
+			/* Зaкрытие мoдaльнoгo oкнa, тут делaем тo же сaмoе нo в oбрaтнoм пoрядке */
+			$('#modal_close, #overlay').click( function(){ // лoвим клик пo крестику или пoдлoжке
+				$('#modal_form')
+					.animate({opacity: 0, top: '45%'}, 200,  // плaвнo меняем прoзрaчнoсть нa 0 и oднoвременнo двигaем oкнo вверх
+						function(){ // пoсле aнимaции
+							$(this).css('display', 'none'); // делaем ему display: none;
+							$('#overlay').fadeOut(400); // скрывaем пoдлoжку
+						}
+					);
+			});
+		
+		
+		
+			$.getJSON('/API/Rents/List', function(data){
+				rooms = data.data;
+				drowBlock(rooms);
+				
+				
+				document.getElementById('wrap').addEventListener('mousemove', function(e){	
+					var x = e.pageX - $('#wrap').offset().left;
+					var y = e.pageY - $('#wrap').offset().top;
+					for (var i = 0, l = _rooms.length;  i < l; ++i)	{
+						if ( (x >= _rooms[i].X1 && x <= _rooms[i].X2) && (y >= _rooms[i].Y1 && y <= _rooms[i].Y2) ) {		
+							clearRoom();
+							
+							var room = document.getElementById('room' + i);
+							room.className = room.className + ' room-show';
+							break;
+						}else{
+							clearRoom();
+						}
+					}
+				});
+			});
+		});
+
+		function drowBlock(rooms) {
+			_rooms = rooms;
+			
+			var wrap = document.getElementById('wrap');
+			
+			for (var i = 0, l = rooms.length; i < l; ++i) {
+				var div = document.createElement('div');
+				div.className = 'room';
+				div.id = 'room' + i;
+				
+				div.style = 'width:' + (rooms[i].X2 - rooms[i].X1) + 'px; height:' + (rooms[i].Y2 - rooms[i].Y1) + 'px; left:' + rooms[i].X1 + 'px; top: ' + rooms[i].Y1 + 'px;';
+				wrap.appendChild(div);
+			}
+		}	
+		
+		
+		function clearRoom() {
+			var rooms = document.getElementsByClassName('room');
+			
+			for (var i = 0, l = rooms.length; i < l; ++i){
+				rooms[i].className = 'room';
+			}
+		}
+		
+		
+	</script>
+  </head>
+  <body>
+  <!-- HEADER -->
+    <div class="container-fluid all">
+      <div class="row head">
+        <div class="col-md-4 col-xs-6"><img class="logo" src="img/logo.png"></div>
+        <div class="col-md-4 col-md-offset-4 col-xs-3 col-xs-offset-3 head-contact">
+          <a class="btn btn-large btn-primary" href="#">Личный кабинет</a>
+          <p class="lead">Russia, Moscow Bolshaya Cherkizovskaya 24 A +7 (495) 729-52-22 info@etalonplaza.ru</p>
+        </div>
+      </div>
+      <div class="row subhead">
+        <div class="col-md-5 col-xs-5 col-xs-offset-1 col-md-offset-1 head-text"><h2>"Эталонное решение Вашего бизнеса"</h2></div>
+        <div class="col-md-2 col-xs-6"><img class="clock" src="img/clock2.png"></div>
+        <div class="col-md-2 col-xs-3 col-xs-offset-3 head-text"><h2>"Точно в цель"</h2></div>
+      </div>
+      <!-- SLIDER -->
+      <div class="row">
+      <div id="myCarousel" class="carousel slide sl" data-interval="false">
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="img/sl1.jpg" alt="">
+<!--           <div class="container">
+            <div class="carousel-caption">
+              <h1>Example headline.</h1>
+              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <a class="btn btn-large btn-primary" href="#">Sign up today</a>
+            </div>
+          </div> -->
+        </div>
+        <div class="item">
+          <img src="img/sl2.jpg" alt="">
+<!--           <div class="container">
+            <div class="carousel-caption">
+              <h1>Another example headline.</h1>
+              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <a class="btn btn-large btn-primary" href="#">Learn more</a>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+    </div>
+    <!-- SERVICES -->
+    <div class="container-fluid service">
+      <div class="row service-manage">
+        <div class="col-xs-6 col-md-3">
+          <a class="btn btn-primary servicebtn" href="#">Инфраструктура</a>
+          <img class="" src="img/test.jpg">
+            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+            <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <a class="btn btn-primary servicebtn" href="#">Аренда</a>
+            <img class="" src="img/test.jpg">
+            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+            <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <a class="btn btn-primary servicebtn" href="#">Фотогаллерея</a>
+            <img class="" src="img/test.jpg">
+            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+            <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <a class="btn btn-primary servicebtn" href="#">Контакты</a>
+            <img class="" src="img/test.jpg">
+            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+            <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+        </div>
+      </div>
+      <!-- BIG SEO TEXT -->
+        <div class="row seodatatop">
+          <div class="col-xs-12 col-md-12">
+            <h1>Бизнес центр Эталон плаза - комфортное пространство, отвечающее всем современным требованиям.</h1>
+            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+          </div>
+        </div>
+        <div class="row seodatabot">
+          <div class="col-md-4 col-xs-4"><h2>Спецпредложения</h2></div>
+          <div class="col-md-4 col-xs-4"><img class="logo-bot" src="img/logo.png"></div>
+          <div class="col-md-4 col-xs-4"><h2>для крупных клиентов</h2></div>
+        </div>
+        <div class="row seodatarent">
+          <div class="col-md-12 col-xs-12"><h2>”Аренда офисов от 5 до 1000 метров, от собственника без комиссии”</h2></div>
+          <div class="col-md-12 col-xs-12"><h2>Подберите подходящее помещение прямо сейчас или оставьте заявку</h2></div>
+        </div>
+      <!-- RENT -->
+      <div class="container-fluid rent">
+        <div class="row rentrow">
+          <div class="col-md-12 col-xs-12" >
+			<div id="wrap" align="center">
+				<!--<img id="img" src='etalon_bg.png'>-->
+			</div>
+		  </div>
+          <div class="col-md-12 col-xs-12" ></div>
+          <div class="col-md-12 col-xs-12">
+            <h5>Дополнительный текст по аренде для SEO не менее 400 символов.</h5>
+            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.Donec sed odio dui.</p>
+          </div>
+        </div>
+      </div>
+      <!-- PHOTOGALLERY -->
+      <div class="row photo">
+          <div class="col-md-12 col-xs-12"><h2>Фотогаллерея</h2></div>
+      </div>
+      <div class="row photomenu">
+        <div class="col-md-3 col-xs-3"><h2>Бизнес-центр</h2></div>
+        <div class="col-md-3 col-xs-3"><h2>Офисы</h2></div>
+        <div class="col-md-3 col-xs-3"><h2>Ресторан</h2></div>
+        <div class="col-md-3 col-xs-3"><h2>Двор</h2></div>
+      </div>
+      <div class="row photoitem">
+        <div class="col-md-4 col-xs-6"><img  src="img/test2.jpg"></div>
+        <div class="col-md-4 col-xs-6"><img  src="img/test2.jpg"></div>
+        <div class="col-md-4 col-xs-6"><img  src="img/test2.jpg"></div>
+        <div class="col-md-4 col-xs-6"><img  src="img/test2.jpg"></div>
+        <div class="col-md-4 col-xs-6"><img  src="img/test2.jpg"></div>
+        <div class="col-md-4 col-xs-6"><img  src="img/test2.jpg"></div>
+      </div>
+      <!-- PARTNER -->
+      <div class="row partner">
+          <div class="col-xs-12 col-md-12"><h2>Наши арендаторы</h2></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12 partnerparalax"></div>
+      </div>
+      <!-- CONTACT -->
+      <div class="row contact">
+        <div class="col-md-4 col-xs-6 col-xs-offset-1 col-md-offset-1">
+          <h2>Россия, Москва, 107553</h2>
+          <h2>Большая Черкизовская 24А стр1</h2>
+          <h2>+7(495)7295222</h2>
+          <h2>info@etalonplaza.ru</h2>
+        </div>
+        <div class="col-md-4 col-xs-4 col-md-offset-2"><img class="clocksmall" src="img/clocksmall.png"></div>
+      </div>
+      <!-- MAP -->
+      <div class="row">
+        <div class="col-xs-12 col-md-12 canvas" id="map"></div>
+      </div>
+      <!-- FOOTER -->
+      <div class="row footer">
+        <div class="col-xs-12 col-md-12"></div><h5>Все права защищены Бизнес центр Эталон Плаза 2010-2016г</h5></div>
+      </div>
+    </div>
+ <script type="text/javascript">
+
+var map;
+var myLatLng = {lat: 55.795033, lng: 37.737398};
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: myLatLng,
+    zoom: 14,
+    scrollwheel: false
+  });
+  var marker = new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+    title: 'EtalonPlaza'
+  });
+}
+
+    </script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuqp3iz9NTeTxyJbwcV2KWkqWVz6Am1XU&callback=initMap">
+    </script>
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-carousel.js"></script>
+    <script>
+      !function ($) {
+        $(function(){
+          // carousel demo
+          $('#myCarousel').carousel()
+        })
+      }(window.jQuery)
+    </script>
+	
+	<div id="modal_form"><!-- Сaмo oкнo --> 
+      <span id="modal_close">X</span> <!-- Кнoпкa зaкрыть --> 
+      <!-- Тут любoе сoдержимoе -->
+	</div>
+	<div id="overlay"></div><!-- Пoдлoжкa -->
+  </body>
+</html>

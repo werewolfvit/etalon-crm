@@ -16,7 +16,7 @@ namespace etalon_crm_web
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "API/{controller}/{action}",
+                routeTemplate: "API/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }

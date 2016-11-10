@@ -62,7 +62,7 @@ namespace etalon_crm_web.Models.Identity
             {
                 using (var db = new SqlConnection(_connectionString))
                 {
-                    return db.Query<Role>("SELECT * FROM SecRoles").AsQueryable();
+                    return db.Query<Role>("SELECT * FROM Roles").AsQueryable();
                 }
             }
         }

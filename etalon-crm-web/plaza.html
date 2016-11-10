@@ -1,0 +1,113 @@
+﻿	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		
+		<style>
+			html, body { margin: 0; padding: 0; background: whitesmoke; }
+			#wrap {
+				position: relative;
+				display: inline-block;
+				z-index: 100;
+			}
+			.room{
+				position: absolute;
+				background: green;
+				z-index: 10;
+				opacity: 0.2;
+				transition: opacity 0.3s;
+			}
+			.room-show {
+				opacity: 1;
+				transition: opacity 0.3s;
+			}
+		</style>
+	</head>
+	<body class="home-template">
+		<div id="wrap">
+			<img id="img" src='etalon_bg.png'>
+		</div>
+	</body>
+
+	<script>
+		var _rooms;
+	
+		$(document).ready(function() {
+			$.getJSON('/API/Rents/List', function(data){
+					rooms = data.data;
+					drowBlock(rooms);
+				});
+			});
+
+		function drowBlock(rooms) {
+			_rooms = rooms;
+			
+			var wrap = document.getElementById('wrap');
+			
+			for (var i = 0, l = rooms.length; i < l; ++i) {
+				var div = document.createElement('div');
+				div.className = 'room';
+				div.id = 'room' + i;
+				
+				div.style = 'width:' + (rooms[i].X2 - rooms[i].X1) + 'px; height:' + (rooms[i].Y2 - rooms[i].Y1) + 'px; left:' + rooms[i].X1 + 'px; top: ' + rooms[i].Y1 + 'px;';
+				wrap.appendChild(div);
+			}
+		}	
+		
+		
+		function clearRoom() {
+			var rooms = document.getElementsByClassName('room');
+			
+			for (var i = 0, l = rooms.length; i < l; ++i){
+				rooms[i].className = 'room';
+			}
+		}
+		
+		document.getElementById('wrap').addEventListener('mousemove', function(e){
+			/*
+			var blocks = [
+				{
+					x1: 119,
+					x2: 170,
+					y1: 43,
+					y2: 124,
+					w: 81,
+					h: 51,
+				},
+				{
+					x1: 169,
+					x2: 204,
+					y1: 44,
+					y2: 99,
+					w: 55,
+					h: 35,
+				},
+				{
+					h:41,
+					w:47,
+					x1:268,
+					x2:315,
+					y1:44,
+					y2:85,
+				}
+			];
+			*/
+			var x = e.clientX;
+			var	y = e.clientY;
+
+				
+			for (var i = 0, l = _rooms.length;  i < l; ++i)	{
+				if ( (x >= _rooms[i].X1 && x <= _rooms[i].X2) && (y >= _rooms[i].Y1 && y <= _rooms[i].Y2) ) {		
+					clearRoom();
+					
+					var room = document.getElementById('room' + i);
+					room.className = room.className + ' room-show';
+					break;
+				}else{
+					clearRoom();
+				}
+			}
+		});
+	</script>
+
+	</html>

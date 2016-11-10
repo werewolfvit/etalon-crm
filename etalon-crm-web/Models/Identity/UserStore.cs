@@ -40,8 +40,8 @@ namespace etalon_crm_web.Models.Identity
                 using (var db = new SqlConnection(_connectionString))
                 {
                     return
-                        db.Execute(@"INSERT INTO Users(UserId, UserName,Description,Email,TimeLimit, PasswordHash, SecurityStamp) 
-                        values (@userId, @userName, @description, @email, @timeLimit, @passwordHash, @securityStamp)",
+                        db.Execute(@"INSERT INTO Users(UserId, UserName, PasswordHash, SecurityStamp) 
+                        values (@userId, @userName, @passwordHash, @securityStamp)",
                             user);
                 }
             });
@@ -55,8 +55,8 @@ namespace etalon_crm_web.Models.Identity
                 {
                     return
                         db.Execute(
-                            @"UPDATE Users SET UserName = @UserName, Description = @Description, Email = @Email, 
-                    TimeLimit = @TimeLimit, PasswordHash = @PasswordHash, SecurityStamp = @SecurityStamp WHERE UserId = @UserId",
+                            @"UPDATE Users SET UserName = @UserName,  PasswordHash = @PasswordHash, SecurityStamp = @SecurityStamp 
+                                WHERE UserId = @UserId",
                             user);
                 }
             });

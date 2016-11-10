@@ -31,17 +31,17 @@ namespace etalon_crm_web.API
             _roleManager = roleManager;
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task GetNewUser()
-        {
-            var result = await _userManager.CreateAsync(new User
-            {
-                UserName = "admin",
-                Email = "admin@etalon.ru",
-                Description = "LOL - ADMIN"
-            }, "1q2w3e4r");
-        }
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task GetNewUser()
+        //{
+        //    var result = await _userManager.CreateAsync(new User
+        //    {
+        //        UserName = "admin",
+        //        Email = "admin@etalon.ru",
+        //        Description = "LOL - ADMIN"
+        //    }, "1q2w3e4r");
+        //}
 
         [HttpGet]
         [AllowAnonymous]
@@ -52,7 +52,7 @@ namespace etalon_crm_web.API
             var userInfo = new UserInfo
             {
                 Name = User.Identity.Name,
-                Groups = null
+                Groups = _userManager.GetRoles(User.Identity.GetUserId()).ToList()
             };
             return MessageBuilder.GetSuccessMessage(userInfo);
         }
@@ -85,9 +85,8 @@ namespace etalon_crm_web.API
             }
         }
 
-        
-        [Authorize]
         [HttpPost]
+        [Authorize]
         public MessageModel Logout()
         {
             try
@@ -99,7 +98,6 @@ namespace etalon_crm_web.API
             {
                 return MessageBuilder.GetErrorMessage(ex.Message);
             }
-            
         }
         
 

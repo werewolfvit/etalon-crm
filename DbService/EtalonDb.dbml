@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="etalon-crm" Class="EtalonDbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=192.168.3.115;Initial Catalog=etalon-crm;Persist Security Info=True;User ID=sa" SettingsObjectName="DataService.Properties.Settings" SettingsPropertyName="etalon_crmConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Files" Member="Files">
+    <Type Name="File">
+      <Column Name="IdRecord" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="Path" Type="System.String" DbType="NVarChar(260)" CanBeNull="true" />
+      <Association Name="File_MessageAttachmet" Member="MessageAttachmets" ThisKey="IdRecord" OtherKey="IdFile" Type="MessageAttachmet" />
+      <Association Name="File_User" Member="Users" ThisKey="IdRecord" OtherKey="PhotoId" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MessageAttachmets" Member="MessageAttachmets">
+    <Type Name="MessageAttachmet">
+      <Column Name="IdRecord" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdMessage" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdFile" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="File_MessageAttachmet" Member="File" ThisKey="IdFile" OtherKey="IdRecord" Type="File" IsForeignKey="true" />
+      <Association Name="Message_MessageAttachmet" Member="Message" ThisKey="IdMessage" OtherKey="IdRecord" Type="Message" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MessageRecepients" Member="MessageRecepients">
+    <Type Name="MessageRecepient">
+      <Column Name="IdRecord" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MessageId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="Message_MessageRecepient" Member="Message" ThisKey="MessageId" OtherKey="IdRecord" Type="Message" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Messages" Member="Messages">
+    <Type Name="Message">
+      <Column Name="IdRecord" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MessageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="FromUser" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="IsReaded" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Message_MessageAttachmet" Member="MessageAttachmets" ThisKey="IdRecord" OtherKey="IdMessage" Type="MessageAttachmet" />
+      <Association Name="Message_MessageRecepient" Member="MessageRecepients" ThisKey="IdRecord" OtherKey="MessageId" Type="MessageRecepient" />
+      <Association Name="User_Message" Member="User" ThisKey="FromUser" OtherKey="UserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Roles" Member="Roles">
+    <Type Name="Role">
+      <Column Name="RoleId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="Role_UsersRole" Member="UsersRoles" ThisKey="RoleId" OtherKey="RoleId" Type="UsersRole" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordHash" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SecurityStamp" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Position" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Surname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Middlename" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TimeLimit" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PhotoId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Association Name="User_Message" Member="Messages" ThisKey="UserId" OtherKey="FromUser" Type="Message" />
+      <Association Name="User_UsersRole" Member="UsersRoles" ThisKey="UserId" OtherKey="UserId" Type="UsersRole" />
+      <Association Name="File_User" Member="File" ThisKey="PhotoId" OtherKey="IdRecord" Type="File" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UsersRoles" Member="UsersRoles">
+    <Type Name="UsersRole">
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Role_UsersRole" Member="Role" ThisKey="RoleId" OtherKey="RoleId" Type="Role" IsForeignKey="true" />
+      <Association Name="User_UsersRole" Member="User" ThisKey="UserId" OtherKey="UserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

@@ -7,9 +7,9 @@ namespace etalon_crm_web.Models.Common
 {
     public class MessageModel
     {
-        public string Status;
-        public string Message;
-        public Object Data;
+        public bool success;
+        public string message;
+        public Object data;
     }
 
     public static class MessageBuilder
@@ -18,9 +18,9 @@ namespace etalon_crm_web.Models.Common
         {
             var message = new MessageModel()
             {
-                Status = "Error",
-                Message = error,
-                Data = string.Empty
+                success = false,
+                message = error,
+                data = string.Empty
             };
 
             return message;
@@ -30,9 +30,9 @@ namespace etalon_crm_web.Models.Common
         {
             var message = new MessageModel()
             {
-                Status = "OK",
-                Message = string.Empty,
-                Data = data,
+                success = true,
+                message = string.Empty,
+                data = data,
             };
 
             return message;
