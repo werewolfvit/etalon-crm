@@ -14,7 +14,9 @@
 	[Phone] NVARCHAR(50) NULL,
 	[PhotoId] INT NULL,
 	[Description]   NVARCHAR (256)   DEFAULT ('') NULL,
-    PRIMARY KEY CLUSTERED ([UserId] ASC),
-	FOREIGN KEY ([PhotoId]) REFERENCES Files(IdRecord)
+    [CompanyId] INT NULL, 
+	PRIMARY KEY CLUSTERED ([UserId] ASC),
+	FOREIGN KEY ([PhotoId]) REFERENCES Files(IdRecord),
+	FOREIGN KEY ([CompanyId]) references Companies(IdRecord)
 );
 

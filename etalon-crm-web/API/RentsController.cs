@@ -11,8 +11,8 @@ namespace etalon_crm_web.API
 {
     public class Rent
     {
-        public int SquareId { get; set; }
-        public int Floor { get; set; }
+        public int IdRecord { get; set; }
+        public int FloorNum { get; set; }
         public string Number { get; set; }
         public double Square { get; set; }
         public double Price { get; set; }

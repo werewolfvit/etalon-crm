@@ -69,6 +69,10 @@
     <Build Include="Tables\Messages.sql" />
     <Build Include="Tables\MessageAttachmets.sql" />
     <Build Include="Tables\MessageRecepients.sql" />
+    <Build Include="Tables\Rooms.sql" />
+    <Build Include="Tables\Companies.sql" />
+    <Build Include="Tables\Floors.sql" />
+    <Build Include="Tables\RoomPhotos.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="work.publish.xml" />
