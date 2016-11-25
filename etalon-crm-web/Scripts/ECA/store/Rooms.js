@@ -1,7 +1,7 @@
-﻿Ext.define('ECA.store.Rents', {
+﻿Ext.define('ECA.store.Rooms', {
     extend: 'Ext.data.Store',
-    alias: 'rentsStore',
-    model: 'ECA.model.Rent',
+    alias: 'roomsStore',
+    model: 'ECA.model.Room',
     autoLoad: true,
     autoSync: false,
     proxy: {
@@ -10,10 +10,10 @@
         startParam: false,
         pageParam: false,
         api: {
-            create: 'API/Rents/Add',
-            read: 'API/Rents/List',
-            update: 'API/Rents/Update',
-            destroy: 'API/Rents/Delete'
+            create: 'API/Rooms/Add',
+            read: 'API/Rooms/List',
+            update: 'API/Rooms/Update',
+            destroy: 'API/Rooms/Delete'
         },
         reader: {
             type: 'json',
@@ -22,7 +22,8 @@
         },
         writer: {
             type: 'json',
-            writeAllFields: true
+            writeAllFields: true,
+            writeRecordId: true
         }
     },
     constructor: function (config) {

@@ -185,7 +185,7 @@
   <ItemGroup>
     <Compile Include="API\AuthController.cs" />
     <Compile Include="API\MessagesController.cs" />
-    <Compile Include="API\RentsController.cs" />
+    <Compile Include="API\RoomsController.cs" />
     <Compile Include="API\RolesController.cs" />
     <Compile Include="API\FilesController.cs" />
     <Compile Include="API\UsersController.cs" />
@@ -768,6 +768,15 @@
     <Content Include="Content\CSS\theme-neutral\images\window\toast\icon16_error.png" />
     <Content Include="Content\CSS\theme-neutral\images\window\toast\icon16_info.png" />
     <Content Include="Content\Images\Blue-Sencha.jpg" />
+    <Content Include="Content\Images\Blue-Sencha1.jpg" />
+    <Content Include="Content\Images\Floor-1.png" />
+    <Content Include="Content\Images\Floor-2.png" />
+    <Content Include="Content\Images\Floor-3.png" />
+    <Content Include="Content\Images\Floor-4.png" />
+    <Content Include="Content\Images\Floor-5.png" />
+    <Content Include="Content\Images\Floor-6.png" />
+    <Content Include="Content\Images\Floor-7.png" />
+    <Content Include="Content\Images\Floor-8.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -796,15 +805,17 @@
     <Content Include="LandingPage\js\npm.js" />
     <Content Include="Scripts\ECA\app.js" />
     <Content Include="Scripts\ECA\controller\MainController.js" />
-    <Content Include="Scripts\ECA\model\Rent.js" />
+    <Content Include="Scripts\ECA\model\Floor.js" />
+    <Content Include="Scripts\ECA\model\Room.js" />
     <Content Include="Scripts\ECA\model\Role.js" />
     <Content Include="Scripts\ECA\model\User.js" />
-    <Content Include="Scripts\ECA\store\Rents.js" />
+    <Content Include="Scripts\ECA\store\Floors.js" />
+    <Content Include="Scripts\ECA\store\Rooms.js" />
     <Content Include="Scripts\ECA\store\Users.js" />
     <Content Include="Scripts\ECA\view\login\LoginForm.js" />
     <Content Include="Scripts\ECA\view\main\MainMenuForm.js" />
     <Content Include="Scripts\ECA\view\message\MessageEdit.js" />
-    <Content Include="Scripts\ECA\view\rent\RentsForm.js" />
+    <Content Include="Scripts\ECA\view\room\RoomsForm.js" />
     <Content Include="Scripts\ECA\view\users\UserEdit.js" />
     <Content Include="Scripts\ECA\view\users\UsersForm.js" />
     <Content Include="Scripts\ext-all-rtl-debug.js" />
@@ -828,6 +839,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="work.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -857,6 +869,7 @@
     <None Include="Project_Readme.html" />
     <None Include="Properties\PublishProfiles\EtalonTestPublish.pubxml" />
     <None Include="Properties\PublishProfiles\LocalPublish.pubxml" />
+    <Content Include="Scripts\ECA\floors.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataModel\DataModel.csproj">

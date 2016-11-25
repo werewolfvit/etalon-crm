@@ -2,9 +2,9 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
-    <TargetDatabaseName>u0103018_preview</TargetDatabaseName>
+    <TargetDatabaseName>etalon-crm</TargetDatabaseName>
     <DeployScriptFileName>etalon-crm-db.sql</DeployScriptFileName>
+    <TargetConnectionString>Data Source=192.168.3.115;Persist Security Info=False;User ID=sa;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
     <ProfileVersionNumber>1</ProfileVersionNumber>
-    <TargetConnectionString>Data Source=37.140.192.61;Persist Security Info=False;User ID=u0103018_preview;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
   </PropertyGroup>
 </Project>

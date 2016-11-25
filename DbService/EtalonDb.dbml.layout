@@ -1,96 +1,162 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12.5, 8.5" name="EtalonDb">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 19.125, 11.875" name="EtalonDb">
   <DataContextMoniker Name="/EtalonDbDataContext" />
   <nestedChildShapes>
-    <classShape Id="861c7075-05e7-4218-b14d-81ed17ca81f9" absoluteBounds="10.25, 0.75, 2, 1.3862939453125">
+    <classShape Id="21a616e1-01ec-4fe0-8124-5546f8448dff" absoluteBounds="12.25, 2.875, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/EtalonDbDataContext/Company" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5364f2f6-4f74-49a8-b041-0d27f78ea464" absoluteBounds="12.265, 3.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="fc7e0829-b5e7-4954-8187-afd526498fe0" absoluteBounds="2.875, 6.625, 2, 1.3862939453125">
       <DataClassMoniker Name="/EtalonDbDataContext/File" />
       <nestedChildShapes>
-        <elementListCompartment Id="040fab4c-054c-43c0-b5b9-bd4ea767234e" absoluteBounds="10.265, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="08a8204d-3290-4216-931a-56b119463a2e" absoluteBounds="2.8900000000000006, 7.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="cdf24a05-cb69-4786-a100-36456ad56a1b" absoluteBounds="6.75, 2.125, 2, 1.3862939453125">
+    <classShape Id="8c8c8525-f116-4f1d-b836-913f4d2a33f5" absoluteBounds="1.75, 3.5, 2, 1.3862939453125">
+      <DataClassMoniker Name="/EtalonDbDataContext/Floor" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9f8e6c78-fc06-4afd-b6f7-1b12c7315947" absoluteBounds="1.7650000000000006, 3.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.3125 : 6.625); (3.3125 : 4.8862939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/EtalonDbDataContext/File/File_Floor" />
+      <nodes>
+        <classShapeMoniker Id="fc7e0829-b5e7-4954-8187-afd526498fe0" />
+        <classShapeMoniker Id="8c8c8525-f116-4f1d-b836-913f4d2a33f5" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="8eb4a1d1-8657-44c6-9936-0ef283fe3382" absoluteBounds="2.125, 9.625, 2, 1.3862939453125">
       <DataClassMoniker Name="/EtalonDbDataContext/MessageAttachmet" />
       <nestedChildShapes>
-        <elementListCompartment Id="39ef216d-f706-4c4c-af04-088914eb6e1a" absoluteBounds="6.765, 2.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="a5523895-6b84-4929-adf1-9aa308c7cbe9" absoluteBounds="2.1400000000000006, 10.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(10.25 : 1.4374995); (7.75 : 1.4374995); (7.75 : 2.125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.5 : 8.0112939453125); (3.5 : 9.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/EtalonDbDataContext/File/File_MessageAttachmet" />
       <nodes>
-        <classShapeMoniker Id="861c7075-05e7-4218-b14d-81ed17ca81f9" />
-        <classShapeMoniker Id="cdf24a05-cb69-4786-a100-36456ad56a1b" />
+        <classShapeMoniker Id="fc7e0829-b5e7-4954-8187-afd526498fe0" />
+        <classShapeMoniker Id="8eb4a1d1-8657-44c6-9936-0ef283fe3382" />
       </nodes>
     </associationConnector>
-    <classShape Id="3d2bcc0f-08f1-4e10-8915-762376ae6017" absoluteBounds="9.5, 3.75, 2, 1.3862939453125">
+    <classShape Id="d4ba37da-447f-4b2d-b793-f47548ce6d9b" absoluteBounds="7.625, 8.875, 2, 1.3862939453125">
       <DataClassMoniker Name="/EtalonDbDataContext/MessageRecepient" />
       <nestedChildShapes>
-        <elementListCompartment Id="14e2c41b-5f22-4abb-918b-4af32e6fa183" absoluteBounds="9.515, 4.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="e0ac1aac-58d6-47e5-8295-266179b0d22f" absoluteBounds="7.6400000000000006, 9.335, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="92099aef-6956-4b6c-90cb-64423d0d9cca" absoluteBounds="6.125, 5.25, 2, 1.7708968098958331">
+    <classShape Id="7485ab08-7189-4a10-b8d9-1deb01cd9210" absoluteBounds="12, 9.875, 2, 1.7708968098958331">
       <DataClassMoniker Name="/EtalonDbDataContext/Message" />
       <nestedChildShapes>
-        <elementListCompartment Id="c74821ee-5ed3-4946-99e0-3ada10046961" absoluteBounds="6.1400000000000006, 5.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="0cdd25bf-f8f3-4f9d-a059-3a4c69e78b58" absoluteBounds="12.015, 10.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(7.4375 : 5.25); (7.4375 : 3.5112939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(12 : 10.6675439453125); (4.125 : 10.6675439453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/EtalonDbDataContext/Message/Message_MessageAttachmet" />
       <nodes>
-        <classShapeMoniker Id="92099aef-6956-4b6c-90cb-64423d0d9cca" />
-        <classShapeMoniker Id="cdf24a05-cb69-4786-a100-36456ad56a1b" />
+        <classShapeMoniker Id="7485ab08-7189-4a10-b8d9-1deb01cd9210" />
+        <classShapeMoniker Id="8eb4a1d1-8657-44c6-9936-0ef283fe3382" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.125 : 6.13544840494792); (10.5 : 6.13544840494792); (10.5 : 5.1362939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(12 : 10.0681469726562); (9.625 : 10.0681469726562)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/EtalonDbDataContext/Message/Message_MessageRecepient" />
       <nodes>
-        <classShapeMoniker Id="92099aef-6956-4b6c-90cb-64423d0d9cca" />
-        <classShapeMoniker Id="3d2bcc0f-08f1-4e10-8915-762376ae6017" />
+        <classShapeMoniker Id="7485ab08-7189-4a10-b8d9-1deb01cd9210" />
+        <classShapeMoniker Id="d4ba37da-447f-4b2d-b793-f47548ce6d9b" />
       </nodes>
     </associationConnector>
-    <classShape Id="f33893da-7b84-4297-8e63-6e8552bba98d" absoluteBounds="0.875, 4.5, 2, 1.1939925130208333">
+    <classShape Id="9de7e3ec-d5de-4cdb-a7f2-caad193462c5" absoluteBounds="10.75, 6.5, 2, 1.1939925130208333">
       <DataClassMoniker Name="/EtalonDbDataContext/Role" />
       <nestedChildShapes>
-        <elementListCompartment Id="f6413217-ff8b-485f-a726-d0b2cf25876a" absoluteBounds="0.88999999999999968, 4.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="f8ed2972-6267-40df-a1c9-3574ecb486e5" absoluteBounds="10.765, 6.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="44b5f1bf-d31c-433f-8239-1a7523f3c3be" absoluteBounds="3.625, 0.75, 2, 3.5016097005208326">
+    <classShape Id="0c2713ab-815f-45a4-a9f4-8ed78ada3384" absoluteBounds="5, 4.25, 2, 1.3862939453125">
+      <DataClassMoniker Name="/EtalonDbDataContext/RoomPhoto" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ffb33491-6c13-4825-86e0-a2f0b1ebebc9" absoluteBounds="5.0150000000000006, 4.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.34375 : 6.625); (4.34375 : 5.2925439453125); (5 : 5.2925439453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/EtalonDbDataContext/File/File_RoomPhoto" />
+      <nodes>
+        <classShapeMoniker Id="fc7e0829-b5e7-4954-8187-afd526498fe0" />
+        <classShapeMoniker Id="0c2713ab-815f-45a4-a9f4-8ed78ada3384" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="0d90c832-d29f-4bbf-969a-036f84d4e819" absoluteBounds="16.875, 4.75, 2, 3.6939111328124996">
       <DataClassMoniker Name="/EtalonDbDataContext/User" />
       <nestedChildShapes>
-        <elementListCompartment Id="c9e0739c-e40e-4826-ad9b-8e15841921f6" absoluteBounds="3.6400000000000006, 1.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="9ed8895a-c8aa-4f42-8505-fe40260eb8df" absoluteBounds="16.89, 5.2100000000000009, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.625 : 4.25160970052083); (4.625 : 6.13544840494792); (6.125 : 6.13544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(17.875 : 8.4439111328125); (17.875 : 10.8886946614583); (14 : 10.8886946614583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/EtalonDbDataContext/User/User_Message" />
       <nodes>
-        <classShapeMoniker Id="44b5f1bf-d31c-433f-8239-1a7523f3c3be" />
-        <classShapeMoniker Id="92099aef-6956-4b6c-90cb-64423d0d9cca" />
+        <classShapeMoniker Id="0d90c832-d29f-4bbf-969a-036f84d4e819" />
+        <classShapeMoniker Id="7485ab08-7189-4a10-b8d9-1deb01cd9210" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(10.25 : 1.03124975); (5.625 : 1.03124975)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(13.3125 : 4.06899251302083); (13.3125 : 5.59375); (16.875 : 5.59375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/EtalonDbDataContext/Company/Company_User" />
+      <nodes>
+        <classShapeMoniker Id="21a616e1-01ec-4fe0-8124-5546f8448dff" />
+        <classShapeMoniker Id="0d90c832-d29f-4bbf-969a-036f84d4e819" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.2187525 : 8.0112939453125); (4.2187525 : 8.32131184895833); (16.875 : 8.32131184895833)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/EtalonDbDataContext/File/File_User" />
       <nodes>
-        <classShapeMoniker Id="861c7075-05e7-4218-b14d-81ed17ca81f9" />
-        <classShapeMoniker Id="44b5f1bf-d31c-433f-8239-1a7523f3c3be" />
+        <classShapeMoniker Id="fc7e0829-b5e7-4954-8187-afd526498fe0" />
+        <classShapeMoniker Id="0d90c832-d29f-4bbf-969a-036f84d4e819" />
       </nodes>
     </associationConnector>
-    <classShape Id="36a64aa5-0af4-4e5e-98dc-f204e1f9f3cf" absoluteBounds="0.5, 1, 2, 1.1939925130208333">
+    <classShape Id="6dec42da-fa0c-4670-b402-3cb6a4b17520" absoluteBounds="13.875, 6.5, 2, 1.1939925130208333">
       <DataClassMoniker Name="/EtalonDbDataContext/UsersRole" />
       <nestedChildShapes>
-        <elementListCompartment Id="1e672e08-28b2-4d8f-a152-cc381ead550d" absoluteBounds="0.51499999999999968, 1.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="eff99429-78e3-4e73-a513-01e90f5a087c" absoluteBounds="13.89, 6.9600000000000009, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(1.6875 : 4.5); (1.6875 : 2.19399251302083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(12.75 : 7.09699625651042); (13.875 : 7.09699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/EtalonDbDataContext/Role/Role_UsersRole" />
       <nodes>
-        <classShapeMoniker Id="f33893da-7b84-4297-8e63-6e8552bba98d" />
-        <classShapeMoniker Id="36a64aa5-0af4-4e5e-98dc-f204e1f9f3cf" />
+        <classShapeMoniker Id="9de7e3ec-d5de-4cdb-a7f2-caad193462c5" />
+        <classShapeMoniker Id="6dec42da-fa0c-4670-b402-3cb6a4b17520" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(3.625 : 1.59699625651042); (2.5 : 1.59699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(16.875 : 7.09699625651042); (15.875 : 7.09699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/EtalonDbDataContext/User/User_UsersRole" />
       <nodes>
-        <classShapeMoniker Id="44b5f1bf-d31c-433f-8239-1a7523f3c3be" />
-        <classShapeMoniker Id="36a64aa5-0af4-4e5e-98dc-f204e1f9f3cf" />
+        <classShapeMoniker Id="0d90c832-d29f-4bbf-969a-036f84d4e819" />
+        <classShapeMoniker Id="6dec42da-fa0c-4670-b402-3cb6a4b17520" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="ae41add0-e507-4ff9-99a9-084ad1d06d4c" absoluteBounds="7.875, 4.25, 2, 3.8862125651041666">
+      <DataClassMoniker Name="/EtalonDbDataContext/Room" />
+      <nestedChildShapes>
+        <elementListCompartment Id="39e501fd-05ca-4eb9-a085-4f5ada6afd7a" absoluteBounds="7.8900000000000006, 4.71, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.875 : 4.94314697265625); (7 : 4.94314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EtalonDbDataContext/Room/Room_RoomPhoto" />
+      <nodes>
+        <classShapeMoniker Id="ae41add0-e507-4ff9-99a9-084ad1d06d4c" />
+        <classShapeMoniker Id="0c2713ab-815f-45a4-a9f4-8ed78ada3384" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.75 : 3.8749995); (8.875 : 3.8749995); (8.875 : 4.25)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EtalonDbDataContext/Floor/Floor_Room" />
+      <nodes>
+        <classShapeMoniker Id="8c8c8525-f116-4f1d-b836-913f4d2a33f5" />
+        <classShapeMoniker Id="ae41add0-e507-4ff9-99a9-084ad1d06d4c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(12.25 : 3.37499975); (9.4062525 : 3.37499975); (9.4062525 : 4.25)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EtalonDbDataContext/Company/Company_Room" />
+      <nodes>
+        <classShapeMoniker Id="21a616e1-01ec-4fe0-8124-5546f8448dff" />
+        <classShapeMoniker Id="ae41add0-e507-4ff9-99a9-084ad1d06d4c" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

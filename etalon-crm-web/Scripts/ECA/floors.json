@@ -1,0 +1,25 @@
+﻿{
+  "floors": [
+    {
+      "IdRecord": 1,
+      "Name": "Этаж 1",
+      "Url": "/Content/Images/Floor-1.png"
+    }, {
+      "IdRecord": 2,
+      "Name": "Этаж 2",
+      "Url": "/Content/Images/Floor-2.png" 
+    }, {
+      "IdRecord": 3,
+      "Name": "Этаж 3",
+      "Url": "/Content/Images/Floor-3.png" 
+    }, {
+      "IdRecord": 4,
+      "Name": "Этаж 4",
+      "Url": "/Content/Images/Floor-4.png" 
+    }, {
+      "IdRecord": 5,
+      "Name": "Этаж 5",
+      "Url": "/Content/Images/Floor-5.png" 
+    }
+  ]
+}

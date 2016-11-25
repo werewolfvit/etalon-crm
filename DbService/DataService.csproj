@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbService.cs" />
-    <Compile Include="EtalonDb.designer.cs">
+    <Compile Include="EtalonDb1.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EtalonDb.dbml</DependentUpon>
@@ -56,14 +56,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="RoomsService.cs" />
     <Compile Include="UsersService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="EtalonDb.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>EtalonDb.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>EtalonDb1.designer.cs</LastGenOutput>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
