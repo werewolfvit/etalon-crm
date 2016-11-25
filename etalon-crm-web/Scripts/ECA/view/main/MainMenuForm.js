@@ -2,7 +2,7 @@
 {
     extend: 'Ext.container.Viewport',
     style:
-        "background-image: url('Content/images/Blue-Sencha2.jpg'); margin: 0px; width: 100%; height:100%; background-size: cover;",
+        "background-image: url('Content/images/Blue-Sencha.jpg'); margin: 0px; width: 100%; height:100%; background-size: cover;",
     alias: 'MainMenuForm',
     layout: 'border',
     renderTo: Ext.getBody(),
@@ -65,7 +65,7 @@
                     {
                         text: 'Редактировать площади',
                         handler: function() {
-                            var wnd = Ext.create('RentsForm');
+                            var wnd = Ext.create('RoomsForm');
                             wnd.center();
                             wnd.show();
                         }

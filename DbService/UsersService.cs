@@ -11,18 +11,9 @@ namespace DataService
     /* Users */
     public partial class DbService
     {
-        //public void AddUser(UserModel user)
-        //{
-        //    using (var db = GetDataContext())
-        //    {
-        //        var currUser = db.Users.Single(x => x.UserId == user.UserId);
-        //        curUser.Middlename = user.
-        //    }
-        //}
-
         public void DeleteUser(UserModel user)
         {
-            
+            //
         }
 
         public void UpdateUser(UserModel user)

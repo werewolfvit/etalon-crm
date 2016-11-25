@@ -7,11 +7,12 @@ Ext.application({
         'MainController'
     ],
     models: [
-    'ECA.model.User'
+        'ECA.model.User'
     ],
     stores: [
         'ECA.store.Users',
-        'ECA.store.Rents'
+        'ECA.store.Rooms',
+        'ECA.store.Floors'
     ],
     views: [
         'ECA.view.login.LoginForm',

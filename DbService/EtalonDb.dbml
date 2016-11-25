@@ -1,12 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="etalon-crm" Class="EtalonDbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=192.168.3.115;Initial Catalog=etalon-crm;Persist Security Info=True;User ID=sa" SettingsObjectName="DataService.Properties.Settings" SettingsPropertyName="etalon_crmConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Companies" Member="Companies">
+    <Type Name="Company">
+      <Column Name="IdRecord" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Company_User" Member="Users" ThisKey="IdRecord" OtherKey="CompanyId" Type="User" />
+      <Association Name="Company_Room" Member="Rooms" ThisKey="IdRecord" OtherKey="RenterId" Type="Room" />
+    </Type>
+  </Table>
   <Table Name="dbo.Files" Member="Files">
     <Type Name="File">
       <Column Name="IdRecord" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
       <Column Name="Path" Type="System.String" DbType="NVarChar(260)" CanBeNull="true" />
+      <Association Name="File_Floor" Member="Floors" ThisKey="IdRecord" OtherKey="PhotoId" Type="Floor" />
       <Association Name="File_MessageAttachmet" Member="MessageAttachmets" ThisKey="IdRecord" OtherKey="IdFile" Type="MessageAttachmet" />
+      <Association Name="File_RoomPhoto" Member="RoomPhotos" ThisKey="IdRecord" OtherKey="PhotoId" Type="RoomPhoto" />
       <Association Name="File_User" Member="Users" ThisKey="IdRecord" OtherKey="PhotoId" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Floors" Member="Floors">
+    <Type Name="Floor">
+      <Column Name="IdRecord" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FloorName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PhotoId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Floor_Room" Member="Rooms" ThisKey="IdRecord" OtherKey="FloorId" Type="Room" />
+      <Association Name="File_Floor" Member="File" ThisKey="PhotoId" OtherKey="IdRecord" Type="File" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.MessageAttachmets" Member="MessageAttachmets">
@@ -45,6 +64,15 @@
       <Association Name="Role_UsersRole" Member="UsersRoles" ThisKey="RoleId" OtherKey="RoleId" Type="UsersRole" />
     </Type>
   </Table>
+  <Table Name="dbo.RoomPhotos" Member="RoomPhotos">
+    <Type Name="RoomPhoto">
+      <Column Name="IdRecord" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PhotoId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RoomId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="File_RoomPhoto" Member="File" ThisKey="PhotoId" OtherKey="IdRecord" Type="File" IsForeignKey="true" />
+      <Association Name="Room_RoomPhoto" Member="Room" ThisKey="RoomId" OtherKey="IdRecord" Type="Room" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.Users" Member="Users">
     <Type Name="User">
       <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -61,8 +89,10 @@
       <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="PhotoId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="CompanyId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="User_Message" Member="Messages" ThisKey="UserId" OtherKey="FromUser" Type="Message" />
       <Association Name="User_UsersRole" Member="UsersRoles" ThisKey="UserId" OtherKey="UserId" Type="UsersRole" />
+      <Association Name="Company_User" Member="Company" ThisKey="CompanyId" OtherKey="IdRecord" Type="Company" IsForeignKey="true" />
       <Association Name="File_User" Member="File" ThisKey="PhotoId" OtherKey="IdRecord" Type="File" IsForeignKey="true" />
     </Type>
   </Table>
@@ -72,6 +102,29 @@
       <Column Name="RoleId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Association Name="Role_UsersRole" Member="Role" ThisKey="RoleId" OtherKey="RoleId" Type="Role" IsForeignKey="true" />
       <Association Name="User_UsersRole" Member="User" ThisKey="UserId" OtherKey="UserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rooms" Member="Rooms">
+    <Type Name="Room">
+      <Column Name="IdRecord" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FloorId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Number" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Square" Type="System.Decimal" DbType="Decimal(14,4)" CanBeNull="true" />
+      <Column Name="MeterPrice" Type="System.Decimal" DbType="Decimal(14,4)" CanBeNull="true" />
+      <Column Name="X1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="X2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Y1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Y2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RenterId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DocNum" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DocDate" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Building" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="BTINums" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DocExpDate" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="RentPayment" Type="System.Decimal" DbType="Decimal(14,4)" CanBeNull="true" />
+      <Association Name="Room_RoomPhoto" Member="RoomPhotos" ThisKey="IdRecord" OtherKey="RoomId" Type="RoomPhoto" />
+      <Association Name="Floor_Room" Member="Floor" ThisKey="FloorId" OtherKey="IdRecord" Type="Floor" IsForeignKey="true" />
+      <Association Name="Company_Room" Member="Company" ThisKey="RenterId" OtherKey="IdRecord" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

@@ -30,9 +30,15 @@ namespace DataService
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertCompany(Company instance);
+    partial void UpdateCompany(Company instance);
+    partial void DeleteCompany(Company instance);
     partial void InsertFile(File instance);
     partial void UpdateFile(File instance);
     partial void DeleteFile(File instance);
+    partial void InsertFloor(Floor instance);
+    partial void UpdateFloor(Floor instance);
+    partial void DeleteFloor(Floor instance);
     partial void InsertMessageAttachmet(MessageAttachmet instance);
     partial void UpdateMessageAttachmet(MessageAttachmet instance);
     partial void DeleteMessageAttachmet(MessageAttachmet instance);
@@ -45,12 +51,18 @@ namespace DataService
     partial void InsertRole(Role instance);
     partial void UpdateRole(Role instance);
     partial void DeleteRole(Role instance);
+    partial void InsertRoomPhoto(RoomPhoto instance);
+    partial void UpdateRoomPhoto(RoomPhoto instance);
+    partial void DeleteRoomPhoto(RoomPhoto instance);
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
     partial void InsertUsersRole(UsersRole instance);
     partial void UpdateUsersRole(UsersRole instance);
     partial void DeleteUsersRole(UsersRole instance);
+    partial void InsertRoom(Room instance);
+    partial void UpdateRoom(Room instance);
+    partial void DeleteRoom(Room instance);
     #endregion
 		
 		public EtalonDbDataContext() : 
@@ -83,11 +95,27 @@ namespace DataService
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<Company> Companies
+		{
+			get
+			{
+				return this.GetTable<Company>();
+			}
+		}
+		
 		public System.Data.Linq.Table<File> Files
 		{
 			get
 			{
 				return this.GetTable<File>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Floor> Floors
+		{
+			get
+			{
+				return this.GetTable<Floor>();
 			}
 		}
 		
@@ -123,6 +151,14 @@ namespace DataService
 			}
 		}
 		
+		public System.Data.Linq.Table<RoomPhoto> RoomPhotos
+		{
+			get
+			{
+				return this.GetTable<RoomPhoto>();
+			}
+		}
+		
 		public System.Data.Linq.Table<User> Users
 		{
 			get
@@ -138,6 +174,156 @@ namespace DataService
 				return this.GetTable<UsersRole>();
 			}
 		}
+		
+		public System.Data.Linq.Table<Room> Rooms
+		{
+			get
+			{
+				return this.GetTable<Room>();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Companies")]
+	public partial class Company : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdRecord;
+		
+		private string _Name;
+		
+		private EntitySet<User> _Users;
+		
+		private EntitySet<Room> _Rooms;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdRecordChanging(int value);
+    partial void OnIdRecordChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public Company()
+		{
+			this._Users = new EntitySet<User>(new Action<User>(this.attach_Users), new Action<User>(this.detach_Users));
+			this._Rooms = new EntitySet<Room>(new Action<Room>(this.attach_Rooms), new Action<Room>(this.detach_Rooms));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdRecord
+		{
+			get
+			{
+				return this._IdRecord;
+			}
+			set
+			{
+				if ((this._IdRecord != value))
+				{
+					this.OnIdRecordChanging(value);
+					this.SendPropertyChanging();
+					this._IdRecord = value;
+					this.SendPropertyChanged("IdRecord");
+					this.OnIdRecordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_User", Storage="_Users", ThisKey="IdRecord", OtherKey="CompanyId")]
+		public EntitySet<User> Users
+		{
+			get
+			{
+				return this._Users;
+			}
+			set
+			{
+				this._Users.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Room", Storage="_Rooms", ThisKey="IdRecord", OtherKey="RenterId")]
+		public EntitySet<Room> Rooms
+		{
+			get
+			{
+				return this._Rooms;
+			}
+			set
+			{
+				this._Rooms.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Users(User entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = this;
+		}
+		
+		private void detach_Users(User entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = null;
+		}
+		
+		private void attach_Rooms(Room entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = this;
+		}
+		
+		private void detach_Rooms(Room entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Files")]
@@ -152,7 +338,11 @@ namespace DataService
 		
 		private string _Path;
 		
+		private EntitySet<Floor> _Floors;
+		
 		private EntitySet<MessageAttachmet> _MessageAttachmets;
+		
+		private EntitySet<RoomPhoto> _RoomPhotos;
 		
 		private EntitySet<User> _Users;
 		
@@ -170,7 +360,9 @@ namespace DataService
 		
 		public File()
 		{
+			this._Floors = new EntitySet<Floor>(new Action<Floor>(this.attach_Floors), new Action<Floor>(this.detach_Floors));
 			this._MessageAttachmets = new EntitySet<MessageAttachmet>(new Action<MessageAttachmet>(this.attach_MessageAttachmets), new Action<MessageAttachmet>(this.detach_MessageAttachmets));
+			this._RoomPhotos = new EntitySet<RoomPhoto>(new Action<RoomPhoto>(this.attach_RoomPhotos), new Action<RoomPhoto>(this.detach_RoomPhotos));
 			this._Users = new EntitySet<User>(new Action<User>(this.attach_Users), new Action<User>(this.detach_Users));
 			OnCreated();
 		}
@@ -235,6 +427,19 @@ namespace DataService
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="File_Floor", Storage="_Floors", ThisKey="IdRecord", OtherKey="PhotoId")]
+		public EntitySet<Floor> Floors
+		{
+			get
+			{
+				return this._Floors;
+			}
+			set
+			{
+				this._Floors.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="File_MessageAttachmet", Storage="_MessageAttachmets", ThisKey="IdRecord", OtherKey="IdFile")]
 		public EntitySet<MessageAttachmet> MessageAttachmets
 		{
@@ -245,6 +450,19 @@ namespace DataService
 			set
 			{
 				this._MessageAttachmets.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="File_RoomPhoto", Storage="_RoomPhotos", ThisKey="IdRecord", OtherKey="PhotoId")]
+		public EntitySet<RoomPhoto> RoomPhotos
+		{
+			get
+			{
+				return this._RoomPhotos;
+			}
+			set
+			{
+				this._RoomPhotos.Assign(value);
 			}
 		}
 		
@@ -281,6 +499,18 @@ namespace DataService
 			}
 		}
 		
+		private void attach_Floors(Floor entity)
+		{
+			this.SendPropertyChanging();
+			entity.File = this;
+		}
+		
+		private void detach_Floors(Floor entity)
+		{
+			this.SendPropertyChanging();
+			entity.File = null;
+		}
+		
 		private void attach_MessageAttachmets(MessageAttachmet entity)
 		{
 			this.SendPropertyChanging();
@@ -288,6 +518,18 @@ namespace DataService
 		}
 		
 		private void detach_MessageAttachmets(MessageAttachmet entity)
+		{
+			this.SendPropertyChanging();
+			entity.File = null;
+		}
+		
+		private void attach_RoomPhotos(RoomPhoto entity)
+		{
+			this.SendPropertyChanging();
+			entity.File = this;
+		}
+		
+		private void detach_RoomPhotos(RoomPhoto entity)
 		{
 			this.SendPropertyChanging();
 			entity.File = null;
@@ -303,6 +545,185 @@ namespace DataService
 		{
 			this.SendPropertyChanging();
 			entity.File = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Floors")]
+	public partial class Floor : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdRecord;
+		
+		private string _FloorName;
+		
+		private int _PhotoId;
+		
+		private EntitySet<Room> _Rooms;
+		
+		private EntityRef<File> _File;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdRecordChanging(int value);
+    partial void OnIdRecordChanged();
+    partial void OnFloorNameChanging(string value);
+    partial void OnFloorNameChanged();
+    partial void OnPhotoIdChanging(int value);
+    partial void OnPhotoIdChanged();
+    #endregion
+		
+		public Floor()
+		{
+			this._Rooms = new EntitySet<Room>(new Action<Room>(this.attach_Rooms), new Action<Room>(this.detach_Rooms));
+			this._File = default(EntityRef<File>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdRecord
+		{
+			get
+			{
+				return this._IdRecord;
+			}
+			set
+			{
+				if ((this._IdRecord != value))
+				{
+					this.OnIdRecordChanging(value);
+					this.SendPropertyChanging();
+					this._IdRecord = value;
+					this.SendPropertyChanged("IdRecord");
+					this.OnIdRecordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FloorName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string FloorName
+		{
+			get
+			{
+				return this._FloorName;
+			}
+			set
+			{
+				if ((this._FloorName != value))
+				{
+					this.OnFloorNameChanging(value);
+					this.SendPropertyChanging();
+					this._FloorName = value;
+					this.SendPropertyChanged("FloorName");
+					this.OnFloorNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhotoId", DbType="Int NOT NULL")]
+		public int PhotoId
+		{
+			get
+			{
+				return this._PhotoId;
+			}
+			set
+			{
+				if ((this._PhotoId != value))
+				{
+					if (this._File.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPhotoIdChanging(value);
+					this.SendPropertyChanging();
+					this._PhotoId = value;
+					this.SendPropertyChanged("PhotoId");
+					this.OnPhotoIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Floor_Room", Storage="_Rooms", ThisKey="IdRecord", OtherKey="FloorId")]
+		public EntitySet<Room> Rooms
+		{
+			get
+			{
+				return this._Rooms;
+			}
+			set
+			{
+				this._Rooms.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="File_Floor", Storage="_File", ThisKey="PhotoId", OtherKey="IdRecord", IsForeignKey=true)]
+		public File File
+		{
+			get
+			{
+				return this._File.Entity;
+			}
+			set
+			{
+				File previousValue = this._File.Entity;
+				if (((previousValue != value) 
+							|| (this._File.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._File.Entity = null;
+						previousValue.Floors.Remove(this);
+					}
+					this._File.Entity = value;
+					if ((value != null))
+					{
+						value.Floors.Add(this);
+						this._PhotoId = value.IdRecord;
+					}
+					else
+					{
+						this._PhotoId = default(int);
+					}
+					this.SendPropertyChanged("File");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Rooms(Room entity)
+		{
+			this.SendPropertyChanging();
+			entity.Floor = this;
+		}
+		
+		private void detach_Rooms(Room entity)
+		{
+			this.SendPropertyChanging();
+			entity.Floor = null;
 		}
 	}
 	
@@ -1018,6 +1439,198 @@ namespace DataService
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RoomPhotos")]
+	public partial class RoomPhoto : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdRecord;
+		
+		private int _PhotoId;
+		
+		private int _RoomId;
+		
+		private EntityRef<File> _File;
+		
+		private EntityRef<Room> _Room;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdRecordChanging(int value);
+    partial void OnIdRecordChanged();
+    partial void OnPhotoIdChanging(int value);
+    partial void OnPhotoIdChanged();
+    partial void OnRoomIdChanging(int value);
+    partial void OnRoomIdChanged();
+    #endregion
+		
+		public RoomPhoto()
+		{
+			this._File = default(EntityRef<File>);
+			this._Room = default(EntityRef<Room>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdRecord
+		{
+			get
+			{
+				return this._IdRecord;
+			}
+			set
+			{
+				if ((this._IdRecord != value))
+				{
+					this.OnIdRecordChanging(value);
+					this.SendPropertyChanging();
+					this._IdRecord = value;
+					this.SendPropertyChanged("IdRecord");
+					this.OnIdRecordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhotoId", DbType="Int NOT NULL")]
+		public int PhotoId
+		{
+			get
+			{
+				return this._PhotoId;
+			}
+			set
+			{
+				if ((this._PhotoId != value))
+				{
+					if (this._File.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPhotoIdChanging(value);
+					this.SendPropertyChanging();
+					this._PhotoId = value;
+					this.SendPropertyChanged("PhotoId");
+					this.OnPhotoIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoomId", DbType="Int NOT NULL")]
+		public int RoomId
+		{
+			get
+			{
+				return this._RoomId;
+			}
+			set
+			{
+				if ((this._RoomId != value))
+				{
+					if (this._Room.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRoomIdChanging(value);
+					this.SendPropertyChanging();
+					this._RoomId = value;
+					this.SendPropertyChanged("RoomId");
+					this.OnRoomIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="File_RoomPhoto", Storage="_File", ThisKey="PhotoId", OtherKey="IdRecord", IsForeignKey=true)]
+		public File File
+		{
+			get
+			{
+				return this._File.Entity;
+			}
+			set
+			{
+				File previousValue = this._File.Entity;
+				if (((previousValue != value) 
+							|| (this._File.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._File.Entity = null;
+						previousValue.RoomPhotos.Remove(this);
+					}
+					this._File.Entity = value;
+					if ((value != null))
+					{
+						value.RoomPhotos.Add(this);
+						this._PhotoId = value.IdRecord;
+					}
+					else
+					{
+						this._PhotoId = default(int);
+					}
+					this.SendPropertyChanged("File");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_RoomPhoto", Storage="_Room", ThisKey="RoomId", OtherKey="IdRecord", IsForeignKey=true)]
+		public Room Room
+		{
+			get
+			{
+				return this._Room.Entity;
+			}
+			set
+			{
+				Room previousValue = this._Room.Entity;
+				if (((previousValue != value) 
+							|| (this._Room.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Room.Entity = null;
+						previousValue.RoomPhotos.Remove(this);
+					}
+					this._Room.Entity = value;
+					if ((value != null))
+					{
+						value.RoomPhotos.Add(this);
+						this._RoomId = value.IdRecord;
+					}
+					else
+					{
+						this._RoomId = default(int);
+					}
+					this.SendPropertyChanged("Room");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
 	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1052,9 +1665,13 @@ namespace DataService
 		
 		private string _Description;
 		
+		private System.Nullable<int> _CompanyId;
+		
 		private EntitySet<Message> _Messages;
 		
 		private EntitySet<UsersRole> _UsersRoles;
+		
+		private EntityRef<Company> _Company;
 		
 		private EntityRef<File> _File;
 		
@@ -1090,12 +1707,15 @@ namespace DataService
     partial void OnPhotoIdChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
+    partial void OnCompanyIdChanging(System.Nullable<int> value);
+    partial void OnCompanyIdChanged();
     #endregion
 		
 		public User()
 		{
 			this._Messages = new EntitySet<Message>(new Action<Message>(this.attach_Messages), new Action<Message>(this.detach_Messages));
 			this._UsersRoles = new EntitySet<UsersRole>(new Action<UsersRole>(this.attach_UsersRoles), new Action<UsersRole>(this.detach_UsersRoles));
+			this._Company = default(EntityRef<Company>);
 			this._File = default(EntityRef<File>);
 			OnCreated();
 		}
@@ -1384,6 +2004,30 @@ namespace DataService
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyId", DbType="Int")]
+		public System.Nullable<int> CompanyId
+		{
+			get
+			{
+				return this._CompanyId;
+			}
+			set
+			{
+				if ((this._CompanyId != value))
+				{
+					if (this._Company.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCompanyIdChanging(value);
+					this.SendPropertyChanging();
+					this._CompanyId = value;
+					this.SendPropertyChanged("CompanyId");
+					this.OnCompanyIdChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Message", Storage="_Messages", ThisKey="UserId", OtherKey="FromUser")]
 		public EntitySet<Message> Messages
 		{
@@ -1407,6 +2051,40 @@ namespace DataService
 			set
 			{
 				this._UsersRoles.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_User", Storage="_Company", ThisKey="CompanyId", OtherKey="IdRecord", IsForeignKey=true)]
+		public Company Company
+		{
+			get
+			{
+				return this._Company.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company.Entity;
+				if (((previousValue != value) 
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company.Entity = null;
+						previousValue.Users.Remove(this);
+					}
+					this._Company.Entity = value;
+					if ((value != null))
+					{
+						value.Users.Add(this);
+						this._CompanyId = value.IdRecord;
+					}
+					else
+					{
+						this._CompanyId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Company");
+				}
 			}
 		}
 		
@@ -1654,6 +2332,538 @@ namespace DataService
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rooms")]
+	public partial class Room : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdRecord;
+		
+		private System.Nullable<int> _FloorId;
+		
+		private string _Number;
+		
+		private System.Nullable<decimal> _Square;
+		
+		private System.Nullable<decimal> _MeterPrice;
+		
+		private System.Nullable<int> _X1;
+		
+		private System.Nullable<int> _X2;
+		
+		private System.Nullable<int> _Y1;
+		
+		private System.Nullable<int> _Y2;
+		
+		private System.Nullable<int> _RenterId;
+		
+		private string _DocNum;
+		
+		private System.Nullable<System.DateTime> _DocDate;
+		
+		private string _Building;
+		
+		private string _BTINums;
+		
+		private System.Nullable<System.DateTime> _DocExpDate;
+		
+		private System.Nullable<decimal> _RentPayment;
+		
+		private EntitySet<RoomPhoto> _RoomPhotos;
+		
+		private EntityRef<Floor> _Floor;
+		
+		private EntityRef<Company> _Company;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdRecordChanging(int value);
+    partial void OnIdRecordChanged();
+    partial void OnFloorIdChanging(System.Nullable<int> value);
+    partial void OnFloorIdChanged();
+    partial void OnNumberChanging(string value);
+    partial void OnNumberChanged();
+    partial void OnSquareChanging(System.Nullable<decimal> value);
+    partial void OnSquareChanged();
+    partial void OnMeterPriceChanging(System.Nullable<decimal> value);
+    partial void OnMeterPriceChanged();
+    partial void OnX1Changing(System.Nullable<int> value);
+    partial void OnX1Changed();
+    partial void OnX2Changing(System.Nullable<int> value);
+    partial void OnX2Changed();
+    partial void OnY1Changing(System.Nullable<int> value);
+    partial void OnY1Changed();
+    partial void OnY2Changing(System.Nullable<int> value);
+    partial void OnY2Changed();
+    partial void OnRenterIdChanging(System.Nullable<int> value);
+    partial void OnRenterIdChanged();
+    partial void OnDocNumChanging(string value);
+    partial void OnDocNumChanged();
+    partial void OnDocDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDocDateChanged();
+    partial void OnBuildingChanging(string value);
+    partial void OnBuildingChanged();
+    partial void OnBTINumsChanging(string value);
+    partial void OnBTINumsChanged();
+    partial void OnDocExpDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDocExpDateChanged();
+    partial void OnRentPaymentChanging(System.Nullable<decimal> value);
+    partial void OnRentPaymentChanged();
+    #endregion
+		
+		public Room()
+		{
+			this._RoomPhotos = new EntitySet<RoomPhoto>(new Action<RoomPhoto>(this.attach_RoomPhotos), new Action<RoomPhoto>(this.detach_RoomPhotos));
+			this._Floor = default(EntityRef<Floor>);
+			this._Company = default(EntityRef<Company>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdRecord
+		{
+			get
+			{
+				return this._IdRecord;
+			}
+			set
+			{
+				if ((this._IdRecord != value))
+				{
+					this.OnIdRecordChanging(value);
+					this.SendPropertyChanging();
+					this._IdRecord = value;
+					this.SendPropertyChanged("IdRecord");
+					this.OnIdRecordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FloorId", DbType="Int")]
+		public System.Nullable<int> FloorId
+		{
+			get
+			{
+				return this._FloorId;
+			}
+			set
+			{
+				if ((this._FloorId != value))
+				{
+					if (this._Floor.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFloorIdChanging(value);
+					this.SendPropertyChanging();
+					this._FloorId = value;
+					this.SendPropertyChanged("FloorId");
+					this.OnFloorIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number", DbType="NVarChar(10)")]
+		public string Number
+		{
+			get
+			{
+				return this._Number;
+			}
+			set
+			{
+				if ((this._Number != value))
+				{
+					this.OnNumberChanging(value);
+					this.SendPropertyChanging();
+					this._Number = value;
+					this.SendPropertyChanged("Number");
+					this.OnNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Square", DbType="Decimal(14,4)")]
+		public System.Nullable<decimal> Square
+		{
+			get
+			{
+				return this._Square;
+			}
+			set
+			{
+				if ((this._Square != value))
+				{
+					this.OnSquareChanging(value);
+					this.SendPropertyChanging();
+					this._Square = value;
+					this.SendPropertyChanged("Square");
+					this.OnSquareChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MeterPrice", DbType="Decimal(14,4)")]
+		public System.Nullable<decimal> MeterPrice
+		{
+			get
+			{
+				return this._MeterPrice;
+			}
+			set
+			{
+				if ((this._MeterPrice != value))
+				{
+					this.OnMeterPriceChanging(value);
+					this.SendPropertyChanging();
+					this._MeterPrice = value;
+					this.SendPropertyChanged("MeterPrice");
+					this.OnMeterPriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_X1", DbType="Int")]
+		public System.Nullable<int> X1
+		{
+			get
+			{
+				return this._X1;
+			}
+			set
+			{
+				if ((this._X1 != value))
+				{
+					this.OnX1Changing(value);
+					this.SendPropertyChanging();
+					this._X1 = value;
+					this.SendPropertyChanged("X1");
+					this.OnX1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_X2", DbType="Int")]
+		public System.Nullable<int> X2
+		{
+			get
+			{
+				return this._X2;
+			}
+			set
+			{
+				if ((this._X2 != value))
+				{
+					this.OnX2Changing(value);
+					this.SendPropertyChanging();
+					this._X2 = value;
+					this.SendPropertyChanged("X2");
+					this.OnX2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Y1", DbType="Int")]
+		public System.Nullable<int> Y1
+		{
+			get
+			{
+				return this._Y1;
+			}
+			set
+			{
+				if ((this._Y1 != value))
+				{
+					this.OnY1Changing(value);
+					this.SendPropertyChanging();
+					this._Y1 = value;
+					this.SendPropertyChanged("Y1");
+					this.OnY1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Y2", DbType="Int")]
+		public System.Nullable<int> Y2
+		{
+			get
+			{
+				return this._Y2;
+			}
+			set
+			{
+				if ((this._Y2 != value))
+				{
+					this.OnY2Changing(value);
+					this.SendPropertyChanging();
+					this._Y2 = value;
+					this.SendPropertyChanged("Y2");
+					this.OnY2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RenterId", DbType="Int")]
+		public System.Nullable<int> RenterId
+		{
+			get
+			{
+				return this._RenterId;
+			}
+			set
+			{
+				if ((this._RenterId != value))
+				{
+					if (this._Company.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRenterIdChanging(value);
+					this.SendPropertyChanging();
+					this._RenterId = value;
+					this.SendPropertyChanged("RenterId");
+					this.OnRenterIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNum", DbType="NVarChar(50)")]
+		public string DocNum
+		{
+			get
+			{
+				return this._DocNum;
+			}
+			set
+			{
+				if ((this._DocNum != value))
+				{
+					this.OnDocNumChanging(value);
+					this.SendPropertyChanging();
+					this._DocNum = value;
+					this.SendPropertyChanged("DocNum");
+					this.OnDocNumChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocDate", DbType="DateTime2")]
+		public System.Nullable<System.DateTime> DocDate
+		{
+			get
+			{
+				return this._DocDate;
+			}
+			set
+			{
+				if ((this._DocDate != value))
+				{
+					this.OnDocDateChanging(value);
+					this.SendPropertyChanging();
+					this._DocDate = value;
+					this.SendPropertyChanged("DocDate");
+					this.OnDocDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Building", DbType="NVarChar(30)")]
+		public string Building
+		{
+			get
+			{
+				return this._Building;
+			}
+			set
+			{
+				if ((this._Building != value))
+				{
+					this.OnBuildingChanging(value);
+					this.SendPropertyChanging();
+					this._Building = value;
+					this.SendPropertyChanged("Building");
+					this.OnBuildingChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BTINums", DbType="NVarChar(50)")]
+		public string BTINums
+		{
+			get
+			{
+				return this._BTINums;
+			}
+			set
+			{
+				if ((this._BTINums != value))
+				{
+					this.OnBTINumsChanging(value);
+					this.SendPropertyChanging();
+					this._BTINums = value;
+					this.SendPropertyChanged("BTINums");
+					this.OnBTINumsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocExpDate", DbType="DateTime2")]
+		public System.Nullable<System.DateTime> DocExpDate
+		{
+			get
+			{
+				return this._DocExpDate;
+			}
+			set
+			{
+				if ((this._DocExpDate != value))
+				{
+					this.OnDocExpDateChanging(value);
+					this.SendPropertyChanging();
+					this._DocExpDate = value;
+					this.SendPropertyChanged("DocExpDate");
+					this.OnDocExpDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RentPayment", DbType="Decimal(14,4)")]
+		public System.Nullable<decimal> RentPayment
+		{
+			get
+			{
+				return this._RentPayment;
+			}
+			set
+			{
+				if ((this._RentPayment != value))
+				{
+					this.OnRentPaymentChanging(value);
+					this.SendPropertyChanging();
+					this._RentPayment = value;
+					this.SendPropertyChanged("RentPayment");
+					this.OnRentPaymentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_RoomPhoto", Storage="_RoomPhotos", ThisKey="IdRecord", OtherKey="RoomId")]
+		public EntitySet<RoomPhoto> RoomPhotos
+		{
+			get
+			{
+				return this._RoomPhotos;
+			}
+			set
+			{
+				this._RoomPhotos.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Floor_Room", Storage="_Floor", ThisKey="FloorId", OtherKey="IdRecord", IsForeignKey=true)]
+		public Floor Floor
+		{
+			get
+			{
+				return this._Floor.Entity;
+			}
+			set
+			{
+				Floor previousValue = this._Floor.Entity;
+				if (((previousValue != value) 
+							|| (this._Floor.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Floor.Entity = null;
+						previousValue.Rooms.Remove(this);
+					}
+					this._Floor.Entity = value;
+					if ((value != null))
+					{
+						value.Rooms.Add(this);
+						this._FloorId = value.IdRecord;
+					}
+					else
+					{
+						this._FloorId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Floor");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Room", Storage="_Company", ThisKey="RenterId", OtherKey="IdRecord", IsForeignKey=true)]
+		public Company Company
+		{
+			get
+			{
+				return this._Company.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company.Entity;
+				if (((previousValue != value) 
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company.Entity = null;
+						previousValue.Rooms.Remove(this);
+					}
+					this._Company.Entity = value;
+					if ((value != null))
+					{
+						value.Rooms.Add(this);
+						this._RenterId = value.IdRecord;
+					}
+					else
+					{
+						this._RenterId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Company");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_RoomPhotos(RoomPhoto entity)
+		{
+			this.SendPropertyChanging();
+			entity.Room = this;
+		}
+		
+		private void detach_RoomPhotos(RoomPhoto entity)
+		{
+			this.SendPropertyChanging();
+			entity.Room = null;
 		}
 	}
 }

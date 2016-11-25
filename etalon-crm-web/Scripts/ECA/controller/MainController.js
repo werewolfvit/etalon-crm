@@ -11,7 +11,7 @@
         'ECA.view.login.LoginForm',
         'ECA.view.main.MainMenuForm',
         'ECA.view.users.UsersForm',
-        'ECA.view.rent.RentsForm',
+        'ECA.view.room.RoomsForm',
         'ECA.view.message.MessageEdit'
     ]
 });

@@ -113,8 +113,7 @@
                         allowBlank: false
                     }]
                 }],
-                buttons: [
-                    {
+                buttons: [{
                         xtype: 'button',
                         scale: 'medium',
                         text: 'Сохранить',
