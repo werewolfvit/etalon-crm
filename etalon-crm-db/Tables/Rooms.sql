@@ -18,5 +18,5 @@
 	DocExpDate DATETIME2 NULL,
 	RentPayment NUMERIC(14,4),
 	FOREIGN KEY (RenterId) references Companies(IdRecord),
-	FOREIGN KEY (FloorId) references Floors(IdRecord)
+	--FOREIGN KEY (FloorId) references Floors(IdRecord)
 )

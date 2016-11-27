@@ -4,6 +4,7 @@
     alias: 'floorsStore',
     model: 'ECA.model.Floor',
     autoLoad: true,
+    fields: ['IdRecord', 'Name', 'Url'],
     proxy: {
         type: 'ajax',
         url: 'Scripts/ECA/floors.json',

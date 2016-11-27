@@ -20,6 +20,18 @@
       "IdRecord": 5,
       "Name": "Этаж 5",
       "Url": "/Content/Images/Floor-5.png" 
+    }, {
+      "IdRecord": 6,
+      "Name": "Этаж 6",
+      "Url": "/Content/Images/Floor-6.png" 
+    }, {
+      "IdRecord": 7,
+      "Name": "Этаж 7",
+      "Url": "/Content/Images/Floor-7.png" 
+    }, {
+      "IdRecord": 8,
+      "Name": "Этаж 8",
+      "Url": "/Content/Images/Floor-8.png" 
     }
   ]
 }
