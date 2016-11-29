@@ -87,6 +87,28 @@ namespace DataService
             }
         }
 
+        public void AddRoomPhoto(int fileId, int roomId)
+        {
+            try
+            {
+                using (var db = GetDataContext())
+                {
+                    RoomPhoto rp = new RoomPhoto()
+                    {
+                        PhotoId = fileId,
+                        RoomId = roomId
+                    };
+                    db.RoomPhotos.InsertOnSubmit(rp);
+                    db.SubmitChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log
+                throw new Exception("Can't add new photo room");
+            }
+        }
+
         private RoomModel CopyRoomDbToModel(Room dbRoom)
         {
             return new RoomModel
@@ -100,7 +122,7 @@ namespace DataService
                 X2 = dbRoom.X2,
                 Y1 = dbRoom.Y1,
                 Y2 = dbRoom.Y2,
-                RenterId = dbRoom.RenterId,
+                CompanyId = dbRoom.CompanyId,
                 //
                 DocNum = dbRoom.DocNum,
                 DocDate = dbRoom.DocDate,
@@ -122,7 +144,7 @@ namespace DataService
             dbRoom.X2 = modelRoom.X2;
             dbRoom.Y1 = modelRoom.Y1;
             dbRoom.Y2 = modelRoom.Y2;
-            dbRoom.RenterId = modelRoom.RenterId;
+            dbRoom.CompanyId = modelRoom.CompanyId;
             //
             dbRoom.DocNum = modelRoom.DocNum;
             dbRoom.DocDate = modelRoom.DocDate;
@@ -131,5 +153,7 @@ namespace DataService
             dbRoom.DocExpDate = modelRoom.DocExpDate;
             dbRoom.RentPayment = modelRoom.RentPayment;
         }
+
+
     }
 }

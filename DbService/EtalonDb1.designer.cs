@@ -268,7 +268,7 @@ namespace DataService
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Room", Storage="_Rooms", ThisKey="IdRecord", OtherKey="RenterId")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Room", Storage="_Rooms", ThisKey="IdRecord", OtherKey="CompanyId")]
 		public EntitySet<Room> Rooms
 		{
 			get
@@ -560,8 +560,6 @@ namespace DataService
 		
 		private int _PhotoId;
 		
-		private EntitySet<Room> _Rooms;
-		
 		private EntityRef<File> _File;
 		
     #region Extensibility Method Definitions
@@ -578,7 +576,6 @@ namespace DataService
 		
 		public Floor()
 		{
-			this._Rooms = new EntitySet<Room>(new Action<Room>(this.attach_Rooms), new Action<Room>(this.detach_Rooms));
 			this._File = default(EntityRef<File>);
 			OnCreated();
 		}
@@ -647,19 +644,6 @@ namespace DataService
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Floor_Room", Storage="_Rooms", ThisKey="IdRecord", OtherKey="FloorId")]
-		public EntitySet<Room> Rooms
-		{
-			get
-			{
-				return this._Rooms;
-			}
-			set
-			{
-				this._Rooms.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="File_Floor", Storage="_File", ThisKey="PhotoId", OtherKey="IdRecord", IsForeignKey=true)]
 		public File File
 		{
@@ -712,18 +696,6 @@ namespace DataService
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Rooms(Room entity)
-		{
-			this.SendPropertyChanging();
-			entity.Floor = this;
-		}
-		
-		private void detach_Rooms(Room entity)
-		{
-			this.SendPropertyChanging();
-			entity.Floor = null;
 		}
 	}
 	
@@ -2359,7 +2331,7 @@ namespace DataService
 		
 		private System.Nullable<int> _Y2;
 		
-		private System.Nullable<int> _RenterId;
+		private System.Nullable<int> _CompanyId;
 		
 		private string _DocNum;
 		
@@ -2374,8 +2346,6 @@ namespace DataService
 		private System.Nullable<decimal> _RentPayment;
 		
 		private EntitySet<RoomPhoto> _RoomPhotos;
-		
-		private EntityRef<Floor> _Floor;
 		
 		private EntityRef<Company> _Company;
 		
@@ -2401,8 +2371,8 @@ namespace DataService
     partial void OnY1Changed();
     partial void OnY2Changing(System.Nullable<int> value);
     partial void OnY2Changed();
-    partial void OnRenterIdChanging(System.Nullable<int> value);
-    partial void OnRenterIdChanged();
+    partial void OnCompanyIdChanging(System.Nullable<int> value);
+    partial void OnCompanyIdChanged();
     partial void OnDocNumChanging(string value);
     partial void OnDocNumChanged();
     partial void OnDocDateChanging(System.Nullable<System.DateTime> value);
@@ -2420,7 +2390,6 @@ namespace DataService
 		public Room()
 		{
 			this._RoomPhotos = new EntitySet<RoomPhoto>(new Action<RoomPhoto>(this.attach_RoomPhotos), new Action<RoomPhoto>(this.detach_RoomPhotos));
-			this._Floor = default(EntityRef<Floor>);
 			this._Company = default(EntityRef<Company>);
 			OnCreated();
 		}
@@ -2456,10 +2425,6 @@ namespace DataService
 			{
 				if ((this._FloorId != value))
 				{
-					if (this._Floor.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnFloorIdChanging(value);
 					this.SendPropertyChanging();
 					this._FloorId = value;
@@ -2609,26 +2574,26 @@ namespace DataService
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RenterId", DbType="Int")]
-		public System.Nullable<int> RenterId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyId", DbType="Int")]
+		public System.Nullable<int> CompanyId
 		{
 			get
 			{
-				return this._RenterId;
+				return this._CompanyId;
 			}
 			set
 			{
-				if ((this._RenterId != value))
+				if ((this._CompanyId != value))
 				{
 					if (this._Company.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnRenterIdChanging(value);
+					this.OnCompanyIdChanging(value);
 					this.SendPropertyChanging();
-					this._RenterId = value;
-					this.SendPropertyChanged("RenterId");
-					this.OnRenterIdChanged();
+					this._CompanyId = value;
+					this.SendPropertyChanged("CompanyId");
+					this.OnCompanyIdChanged();
 				}
 			}
 		}
@@ -2766,41 +2731,7 @@ namespace DataService
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Floor_Room", Storage="_Floor", ThisKey="FloorId", OtherKey="IdRecord", IsForeignKey=true)]
-		public Floor Floor
-		{
-			get
-			{
-				return this._Floor.Entity;
-			}
-			set
-			{
-				Floor previousValue = this._Floor.Entity;
-				if (((previousValue != value) 
-							|| (this._Floor.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Floor.Entity = null;
-						previousValue.Rooms.Remove(this);
-					}
-					this._Floor.Entity = value;
-					if ((value != null))
-					{
-						value.Rooms.Add(this);
-						this._FloorId = value.IdRecord;
-					}
-					else
-					{
-						this._FloorId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Floor");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Room", Storage="_Company", ThisKey="RenterId", OtherKey="IdRecord", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Room", Storage="_Company", ThisKey="CompanyId", OtherKey="IdRecord", IsForeignKey=true)]
 		public Company Company
 		{
 			get
@@ -2823,11 +2754,11 @@ namespace DataService
 					if ((value != null))
 					{
 						value.Rooms.Add(this);
-						this._RenterId = value.IdRecord;
+						this._CompanyId = value.IdRecord;
 					}
 					else
 					{
-						this._RenterId = default(Nullable<int>);
+						this._CompanyId = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Company");
 				}

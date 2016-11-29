@@ -9,7 +9,7 @@
 	[X2] INT NULL,
 	[Y1] INT NULL,
 	[Y2] INT NULL,
-	[RenterId] INT NULL,
+	[CompanyId] INT NULL,
 	--
 	DocNum NVARCHAR(50) NULL,
 	DocDate DATETIME2 NULL,
@@ -17,6 +17,6 @@
 	BTINums NVARCHAR(50) NULL,
 	DocExpDate DATETIME2 NULL,
 	RentPayment NUMERIC(14,4),
-	FOREIGN KEY (RenterId) references Companies(IdRecord),
+	FOREIGN KEY (CompanyId) references Companies(IdRecord),
 	--FOREIGN KEY (FloorId) references Floors(IdRecord)
 )

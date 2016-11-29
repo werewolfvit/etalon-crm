@@ -5,7 +5,7 @@
       <Column Name="IdRecord" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="Company_User" Member="Users" ThisKey="IdRecord" OtherKey="CompanyId" Type="User" />
-      <Association Name="Company_Room" Member="Rooms" ThisKey="IdRecord" OtherKey="RenterId" Type="Room" />
+      <Association Name="Company_Room" Member="Rooms" ThisKey="IdRecord" OtherKey="CompanyId" Type="Room" />
     </Type>
   </Table>
   <Table Name="dbo.Files" Member="Files">
@@ -24,7 +24,6 @@
       <Column Name="IdRecord" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="FloorName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="PhotoId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Floor_Room" Member="Rooms" ThisKey="IdRecord" OtherKey="FloorId" Type="Room" />
       <Association Name="File_Floor" Member="File" ThisKey="PhotoId" OtherKey="IdRecord" Type="File" IsForeignKey="true" />
     </Type>
   </Table>
@@ -115,7 +114,7 @@
       <Column Name="X2" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Y1" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Y2" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="RenterId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CompanyId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DocNum" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="DocDate" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Column Name="Building" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
@@ -123,8 +122,7 @@
       <Column Name="DocExpDate" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Column Name="RentPayment" Type="System.Decimal" DbType="Decimal(14,4)" CanBeNull="true" />
       <Association Name="Room_RoomPhoto" Member="RoomPhotos" ThisKey="IdRecord" OtherKey="RoomId" Type="RoomPhoto" />
-      <Association Name="Floor_Room" Member="Floor" ThisKey="FloorId" OtherKey="IdRecord" Type="Floor" IsForeignKey="true" />
-      <Association Name="Company_Room" Member="Company" ThisKey="RenterId" OtherKey="IdRecord" Type="Company" IsForeignKey="true" />
+      <Association Name="Company_Room" Member="Company" ThisKey="CompanyId" OtherKey="IdRecord" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

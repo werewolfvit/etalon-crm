@@ -17,7 +17,7 @@ namespace DataModel
         public int? X2 { get; set; }
         public int? Y1 { get; set; }
         public int? Y2 { get; set; }
-        public int? RenterId { get; set; }
+        public int? CompanyId { get; set; }
         //
         public string DocNum { get; set; }
         public DateTime? DocDate { get; set; }
@@ -25,6 +25,12 @@ namespace DataModel
         public string BTINums { get; set; }
         public DateTime? DocExpDate { get; set; }
         public decimal? RentPayment { get; set; }
+    }
 
+    public class RoomPhotoModel
+    {
+        public int IdRecord { get; set; }
+        public int RoomId { get; set; }
+        public string Url { get; set; }
     }
 }

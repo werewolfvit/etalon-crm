@@ -13,47 +13,43 @@
         region: 'north',
         items: [
         {
-            text: 'Пользователь',
-            menu: {
-                xtype: 'menu',
-                id: 'mainMenu',
-                items: [
-                    {
-                        text: 'Профиль',
-                        handler: function() {
-                            alert('Профиль');
-                        }
-                    }, '-', {
-                        text: 'Выход'
-                    }
-                ]
-            }
-        }, {
             text: 'Сообщения',
             menu: {
                 xtype: 'menu',
                 plain: true,
-                items: {
+                items: [{
                     text: 'Новое сообщение',
                     handler: function() {
                         var wnd = Ext.create('MessageEdit');
                         wnd.center();
                         wnd.show();
                     }
-                }
+                }, {
+                    text: 'Входящие сообщения',
+                    handler: function() {
+                        alert('Входящие сообщения');
+                    }
+                }]
             }
         }, {
-            text: 'Пользователи',
+            text: 'Справочники',
             menu: {
                 xtype: 'menu',
                 plain: true,
                 items: [{
-                        text: 'Редактировать пользователей',
+                        text: 'Пользователи',
                         handler: function () {
                             var wnd = Ext.create('UsersForm');
                             wnd.center();
                             wnd.show();
                         }
+                }, {
+                    text: 'Компании',
+                    handler: function() {
+                        var wnd = Ext.create('CompaniesForm');
+                        wnd.center();
+                        wnd.show();
+                    }
                 }]
             }
         }, {

@@ -31,19 +31,6 @@ namespace etalon_crm_web.API
         {
             try
             {
-                //dynamic data = jsonData;
-                //RoomModel roomModel = new RoomModel()
-                //{
-                //    FloorId = data.FloorId,
-                //    MeterPrice = data.MeterPrice,
-                //    Number = data.Number,
-                //    RenterId = data.RenterId,
-                //    Square = data.Square,
-                //    X1 = data.X1,
-                //    X2 = data.X2,
-                //    Y1 = data.Y1,
-                //    Y2 = data.Y2
-                //};
                 RoomModel roomModel = jsonData.ToObject<RoomModel>();
 
                 var answerRoom = _dbService.AddRoom(roomModel);

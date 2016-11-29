@@ -17,6 +17,7 @@ using User = etalon_crm_web.Models.User;
 
 namespace etalon_crm_web.API
 {
+    [Authorize]
     public class FilesController : ApiController
     {
         private readonly DbService _dbService;
@@ -32,7 +33,6 @@ namespace etalon_crm_web.API
         }
 
 
-        [Authorize]
         [HttpPost]
         public async Task<MessageModel> UploadProfilePhoto(string userId)
         {
@@ -62,6 +62,36 @@ namespace etalon_crm_web.API
                 return MessageBuilder.GetErrorMessage(null);
             }
             
+        }
+
+        [HttpPost]
+        public async Task<MessageModel> AddRoomPhoto(int roomId)
+        {
+            try
+            {
+                if (!Request.Content.IsMimeMultipartContent())
+                {
+                    throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+                }
+
+                var steamProvider = new MultipartMemoryStreamProvider();
+                await Request.Content.ReadAsMultipartAsync(steamProvider);
+
+                var file = steamProvider.Contents[0];
+
+                var filename = file.Headers.ContentDisposition.FileName.Trim('\"');
+                var buffer = await file.ReadAsByteArrayAsync();
+
+                var result = _dbService.SaveFile(buffer, filename);
+                _dbService.AddRoomPhoto(result.FileId, roomId);
+
+
+                return MessageBuilder.GetSuccessMessage(null);
+            }
+            catch (Exception ex)
+            {
+                return MessageBuilder.GetErrorMessage(null);
+            }
         }
     }
 }

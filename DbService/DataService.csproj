@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompanyService.cs" />
     <Compile Include="DbService.cs" />
     <Compile Include="EtalonDb1.designer.cs">
       <AutoGen>True</AutoGen>
@@ -56,6 +57,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="RoomPhotosService.cs" />
     <Compile Include="RoomsService.cs" />
     <Compile Include="UsersService.cs" />
   </ItemGroup>

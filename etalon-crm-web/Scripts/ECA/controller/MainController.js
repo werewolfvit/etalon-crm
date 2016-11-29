@@ -12,6 +12,7 @@
         'ECA.view.main.MainMenuForm',
         'ECA.view.users.UsersForm',
         'ECA.view.room.RoomsForm',
-        'ECA.view.message.MessageEdit'
+        'ECA.view.message.MessageEdit',
+        'ECA.view.companies.CompaniesForm'
     ]
 });

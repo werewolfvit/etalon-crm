@@ -12,7 +12,9 @@ Ext.application({
     stores: [
         'ECA.store.Users',
         'ECA.store.Rooms',
-        'ECA.store.Floors'
+        'ECA.store.Floors',
+        'ECA.store.Companies',
+        'ECA.store.RoomPhotos'
     ],
     views: [
         'ECA.view.login.LoginForm',
@@ -36,3 +38,12 @@ Ext.application({
         });
     }
 });
+
+var companiesStore = null;
+function getCompaniesStore() {
+    if (companiesStore === null) {
+        companiesStore = Ext.create('ECA.store.Companies');
+        companiesStore.load();
+    }
+    return companiesStore;
+}
