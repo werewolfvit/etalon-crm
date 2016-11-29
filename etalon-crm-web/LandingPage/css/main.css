@@ -5,12 +5,12 @@ body{background: #fff;}
 .max140{max-height: 140px;}
 .nopadding{padding: 0}
 .mtop{margin-top: 20px;}
-.head-menu{padding: 0; z-index: 999; text-align: center;}
+.head-menu{padding: 0; z-index: 997; text-align: center;}
 .head{background-image: url(../img/bg-head.jpg); background-size: cover; }
 .service{margin-top: 50px;}
 .service-manage{text-align: center;}
 .service-manage img{width: 100%;}
-.clock{position: absolute;top:-185px;width: 200px; height: 270px;z-index: 999;}
+.clock{position: absolute;top:-185px;width: 200px; height: 270px;z-index: 997;}
 .logo{margin: 50px 50px 50px 150px;width: 250px; height: 90px;}
 .logo-bot{width: 250px; height: 90px;}
 .head-contact{padding: 20px; text-align: right; color: #f5f5f5}
