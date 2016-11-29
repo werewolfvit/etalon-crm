@@ -37,6 +37,7 @@ body{background: #fff;}
 .purpurbg{background: url(../img/bg-head.jpg) no-repeat center center;background-size: cover;background-attachment: fixed; color:#fff;}
 
 .mtop{margin-top: 20px;}
+.preview img{width: 100px}
 
 <<<<<<< HEAD
 /*#modal_form{display: block!important; opacity: 1!important; width:500px!important; height: 500px!important; }
