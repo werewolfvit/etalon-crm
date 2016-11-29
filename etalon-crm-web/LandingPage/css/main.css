@@ -35,10 +35,9 @@ body{background: #fff;}
 .footer{background-image: url(../img/bg-head.jpg); background-size: cover; text-align: center; color:#fff; height: 50px;}
 .carousel-control {height: 100%;margin-top: 0;font-size: 120px;text-shadow: 0 1px 1px rgba(0,0,0,.4);background-color: transparent;border: 0;z-index: 10;}
 .purpurbg{background: url(../img/bg-head.jpg) no-repeat center center;background-size: cover;background-attachment: fixed; color:#fff;}
-<<<<<<< Updated upstream
+
 .mtop{margin-top: 20px;}
-=======
 
 #modal_form{display: block!important; opacity: 1!important; width:500px!important; height: 500px!important; }
 #overlay{display: block!important;}
->>>>>>> Stashed changes
+
