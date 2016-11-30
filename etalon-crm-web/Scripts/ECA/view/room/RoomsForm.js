@@ -13,18 +13,18 @@
     resizable: true,
     layout: 'border',
     jcrop: null,
-    setRoomCoord: function (coord) {
-        var grid = this.down('grid');
-        var model = grid.getSelectionModel().getSelection()[0];
-        if (model == null)
-            return;
+    //setRoomCoord: function (coord) {
+    //    var grid = this.down('grid');
+    //    var model = grid.getSelectionModel().getSelection()[0];
+    //    if (model == null)
+    //        return;
 
-        model.set('X1', coord.x);
-        model.set('X2', coord.x2);
-        model.set('Y1', coord.y);
-        model.set('Y2', coord.y2);
-        grid.store.sync();
-    },
+    //    model.set('X1', coord.x);
+    //    model.set('X2', coord.x2);
+    //    model.set('Y1', coord.y);
+    //    model.set('Y2', coord.y2);
+    //    grid.store.sync();
+    //},
     items: [{
         region: 'center',
         xtype: 'grid',
@@ -128,19 +128,19 @@
                 var wnd = this.up('window');
                 var photofloor = Ext.getCmp('floorimage');
                 var floorId = record.get('FloorId');
-                var store = this.up('window').down('combobox').store;
-                var combo = this.up('window').down('combobox');
+                
+                var floorCombo = wnd.down('combobox');
+                var floorStore = floorCombo.store;
 
                 var photoStore = Ext.getCmp('photoGrid').store;
                 var recId = record.get('IdRecord');
-                console.log('need = ' + recId);
-
                 photoStore.clearFilter();
                 photoStore.filterBy(function(rec) {
                     return (rec.get('RoomId') === recId);
                 });
 
-                var curRecord = store.getAt(store.findExact('IdRecord', floorId));
+                var curRecord = floorStore.getAt(floorStore.findExact('IdRecord', floorId));
+                console.log(curRecord);
                 if (curRecord == null) {
                     wnd.jcrop.disable();
                     wnd.jcrop.destroy();
@@ -148,7 +148,7 @@
                     return;
                 }
 
-                combo.setValue(curRecord.get('Name'));
+                floorCombo.setValue(curRecord.get('Name'));
                 photofloor.setConfig('src', curRecord.get('Url'));
                 wnd.jcrop = $.Jcrop(photofloor.el.dom);
                 var X1 = record.get('X1');
@@ -282,7 +282,8 @@
                 xtype: 'form',
                 items: [{
                     xtype: 'filefield',
-                    title: 'Выбрать файл'
+                    title: 'Выбрать файл',
+                    allowBlank: false
                 }]
             }, {
                 text: 'Добавить фото',
@@ -291,7 +292,12 @@
                     var roomGrid = this.up('window').down('grid');
                     var model = roomGrid.getSelectionModel().getSelection()[0];
                     if (model === null || model === undefined) {
-                        Ext.Msg.alert('Загрузка файла', 'Неудалось загрузить, убедитесь что выбрано помещение для загрузки фотографии!');
+                        Ext.Msg.alert('Загрузка файла', 'Неудалось загрузить, убедитесь что выбрано <b>помещение</b> в таблице');
+                        return;
+                    }
+
+                    if (!frm.isValid()) {
+                        Ext.Msg.alert('Загрузка файла', 'Неудалось загрузить, убедитесь что выбран <b>файл</b> для загрузки фотографии');
                         return;
                     }
                     var roomId = model.get('IdRecord');

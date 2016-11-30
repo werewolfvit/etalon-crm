@@ -14,7 +14,7 @@ using Newtonsoft.Json.Linq;
 
 namespace etalon_crm_web.API
 {
-    [System.Web.Http.Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin")]
     public class CompaniesController : ApiController
     {
         private readonly DbService _dbService;
@@ -30,11 +30,12 @@ namespace etalon_crm_web.API
             _dbService = dbService;
         }
 
+        [HttpPost]
         public MessageModel Add(JObject jsonData)
         {
-            var newComp = jsonData.ToObject<CompanyModel>();
             try
             {
+                var newComp = jsonData.ToObject<CompanyModel>();
                 return MessageBuilder.GetSuccessMessage(_dbService.AddCompany(newComp));
             }
             catch (Exception ex)
@@ -43,7 +44,7 @@ namespace etalon_crm_web.API
             }
         }
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public MessageModel List()
         {
             try
@@ -56,6 +57,7 @@ namespace etalon_crm_web.API
             }
         }
 
+        [HttpPost]
         public MessageModel Update(JObject jsonData)
         {
             try
@@ -70,7 +72,7 @@ namespace etalon_crm_web.API
             }
         }
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public MessageModel Delete(JObject jsonData)
         {
             try

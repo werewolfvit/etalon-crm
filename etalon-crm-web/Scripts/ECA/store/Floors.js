@@ -1,6 +1,6 @@
 ﻿Ext.define('ECA.store.Floors',
 {
-    extend: 'Ext.data.Store',
+    extend: 'Ext.data.ArrayStore',
     alias: 'floorsStore',
     model: 'ECA.model.Floor',
     autoLoad: true,
