@@ -18,7 +18,6 @@ namespace DataModel
         public int? Y1 { get; set; }
         public int? Y2 { get; set; }
         public int? CompanyId { get; set; }
-        //
         public string DocNum { get; set; }
         public DateTime? DocDate { get; set; }
         public string Building { get; set; }
@@ -32,5 +31,20 @@ namespace DataModel
         public int IdRecord { get; set; }
         public int RoomId { get; set; }
         public string Url { get; set; }
+    }
+
+    public class RoomPublicModel
+    {
+        public int IdRecord { get; set; }
+        public int? FloorNum { get; set; }
+        public string Number { get; set; }
+        public decimal? Square { get; set; }
+        public decimal? RentPayment { get; set; }
+        public bool IsBusy { get; set; }
+        public int? X1 { get; set; }
+        public int? X2 { get; set; }
+        public int? Y1 { get; set; }
+        public int? Y2 { get; set; }
+        public List<string> Photos { get; set; }
     }
 }

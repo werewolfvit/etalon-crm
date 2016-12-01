@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 
 namespace etalon_crm_web.API
 {
+    [Authorize]
     public class RoomsController : ApiController
     {
         private DbService _dbService;
@@ -62,6 +63,13 @@ namespace etalon_crm_web.API
         public MessageModel List()
         {
             return MessageBuilder.GetSuccessMessage(_dbService.ListRoom());
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public MessageModel ListPublic()
+        {
+            return MessageBuilder.GetSuccessMessage(_dbService.ListRoomPublic());
         }
 
         [HttpPost]

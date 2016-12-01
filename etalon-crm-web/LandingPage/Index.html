@@ -13,7 +13,8 @@
 <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" />
 <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
 		
-	<style>
+      <style>
+        /* Обертка для аренды */
 		#wrap {
 			text-align: center;
 			position: relative;
@@ -30,24 +31,55 @@
 			opacity: 0.2;
 			transition: opacity 0.3s;
 		}
+
+        .room-busy {
+			position: absolute;
+			background: red;
+			z-index: 2;
+			opacity: 0.2;
+			transition: opacity 0.3s;
+		}
+
 		.room-show {
 			opacity: 0.5;
 			cursor: pointer;
 			transition: opacity 0.3s;
-			
 		}
-		
-		
-		
+
+
+
+        /* Кнопки выбора этажа */
+        #numbers {
+	        text-align: center;
+	        padding: 20px 0;
+	        font-size: 14px;
+	        margin: 0 auto;
+        }
+        #numbers a {
+		    text-decoration: none;
+		    color: #fff;
+		    display: inline-block;
+		    margin: 0;
+		    padding: 10px 37px;
+            background: #A5A5A5;
+        }
+        #numbers a:hover {
+            background: #808080;
+        }
+        #numbers a.active {
+	        background: #5B5B5B;
+        }
+
+        /* Модальная форма */
 		#modal_form {
 			width: 500px; 
-      height: 500px;
+            height: 500px;
 			border-radius: 5px;
 			border: 3px #000 solid;
 			background: #fff;
 			position: fixed; /* чтoбы oкнo былo в видимoй зoне в любoм месте */
-      top:35%;
-      left:45%;
+            top:35%;
+            left:45%;
 			margin-top: -150px;
 			margin-left: -150px; /* тут вся мaгия центрoвки css, oтступaем влевo и вверх минус пoлoвину ширины и высoты сooтветственнo =) */
 			display: none; /* в oбычнoм сoстoянии oкнa не дoлжнo быть */
@@ -55,8 +87,6 @@
 			z-index: 999; /* oкнo дoлжнo быть нaибoлее бoльшем слoе */
 			padding: 20px 10px;
 		}
-
-		/* Кнoпкa зaкрыть для тех ктo в тaнке) */
 		#modal_form #modal_close {
 			width: 21px;
 			height: 21px;
@@ -65,9 +95,7 @@
 			right: 10px;
 			cursor: pointer;
 			display: block;
-		}
-
-		/* Пoдлoжкa */
+		}   
 		#overlay {
 			z-index:998; /* пoдлoжкa дoлжнa быть выше слoев элементoв сaйтa, нo ниже слoя мoдaльнoгo oкнa */
 			position:fixed; /* всегдa перекрывaет весь сaйт */
@@ -86,19 +114,10 @@
 	
 	<script>
 		var _rooms;
-	
+		var _floors;
+
 		$(document).ready(function() {
-			
-			$('#wrap').click( function(event){ // лoвим клик пo ссылки с id="go"
-				event.preventDefault(); // выключaем стaндaртную рoль элементa
-				$('#overlay').fadeIn(400, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
-					function(){ // пoсле выпoлнения предъидущей aнимaции
-						$('#modal_form') 
-							.css('display', 'block') // убирaем у мoдaльнoгo oкнa display: none;
-							.animate({opacity: 1, top: '35%'}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
-				});
-			});
-			
+
 			/* Зaкрытие мoдaльнoгo oкнa, тут делaем тo же сaмoе нo в oбрaтнoм пoрядке */
 			$('#modal_close, #overlay').click( function(){ // лoвим клик пo крестику или пoдлoжке
 				$('#modal_form')
@@ -108,56 +127,85 @@
 							$('#overlay').fadeOut(400); // скрывaем пoдлoжку
 						}
 					);
-			});			
+			});
+
+            $.getJSON('/Scripts/ECA/floors.json', function(data) {
+                _floors = data.floors;
+            });
 		
-			$.getJSON('/API/Rooms/List', function(data){
-				rooms = data.data;
-				drowBlock(rooms);
-				
-				
-				document.getElementById('wrap').addEventListener('mousemove', function(e){	
-					var x = e.pageX - $('#wrap').offset().left;
-					var y = e.pageY - $('#wrap').offset().top;
-					for (var i = 0, l = _rooms.length;  i < l; ++i)	{
-						if ( (x >= _rooms[i].X1 && x <= _rooms[i].X2) && (y >= _rooms[i].Y1 && y <= _rooms[i].Y2) ) {		
-							clearRoom();
-							
-							var room = document.getElementById('room' + i);
-							room.className = room.className + ' room-show';
-							break;
-						}else{
-							clearRoom();
-						}
-					}
-				});
+            $.getJSON('/API/Rooms/ListPublic', function (data) {
+			    _rooms = data.data;
+				drawRoom(1);
+			});
+
+			$('.floorbutton').on('click', function (e) {
+			    var floorNum = e.target.id.match("\\d+");
+
+			    $.each(_floors, function (index, value) {
+			        if (floorNum[0] == value.IdRecord) {
+			            $('#wrap').css({ 'backgroundImage': 'url("' + _floors[index].Url + '")' });
+                    }
+			    });
+
+			    $('.room, .room-show, .room-busy').remove();
+			    drawRoom(floorNum);
 			});
 		});
 
-		function drowBlock(rooms) {
-			_rooms = rooms;
-			
+		function drawRoom(floorNum) {		
 			var wrap = document.getElementById('wrap');
-			
-			for (var i = 0, l = rooms.length; i < l; ++i) {
-				var div = document.createElement('div');
-				div.className = 'room';
-				div.id = 'room' + i;
+		    console.log(_rooms);
+			for (var i = 0, l = _rooms.length; i < l; ++i) {
+			    console.log(_rooms[i].FloorNum + ':' + floorNum);
+
+			    if (_rooms[i].FloorNum == floorNum) {
+			        
+			        var div = document.createElement('div');
+
+			        div.className = (_rooms[i].IsBusy)? 'room-busy' : 'room';
+				    div.id = 'room' + i;
 				
-				div.style = 'width:' + (rooms[i].X2 - rooms[i].X1) + 'px; height:' + (rooms[i].Y2 - rooms[i].Y1) + 'px; left:' + rooms[i].X1 + 'px; top: ' + rooms[i].Y1 + 'px;';
-				wrap.appendChild(div);
+				    div.style = 'width:' + (_rooms[i].X2 - _rooms[i].X1) + 'px; height:'
+                        + (_rooms[i].Y2 - _rooms[i].Y1) + 'px; left:' + _rooms[i].X1 + 'px; top: '
+                        + _rooms[i].Y1 + 'px;';
+				    wrap.appendChild(div);
+			    }
 			}
+
+		    $('.room, .room-busy')
+		        .hover(function() {
+		                $(this).addClass('room-show');
+		            },
+		            function() {
+		                $(this).removeClass('room-show');
+		            }).click(function(e) {
+		            var roomId = e.target.id.match('\\d+')[0];
+		            console.log('Выбрана комната с ИД: ' + roomId);
+
+		            console.log(_rooms[roomId]);
+
+		            $('#popupRoomNum').html(_rooms[roomId].Number);
+		            $('#popupFloor').html(_rooms[roomId].FloorNum);
+		            $('#popupSquare').html(_rooms[roomId].Square);
+		            $('#popupPrice').html(_rooms[roomId].RentPayment);
+		            
+		            
+		            /*
+		            popupRoomNum
+		            popupFloor
+		            popupSquare
+		            popupPrice
+                    */
+
+		                event.preventDefault(); // выключaем стaндaртную рoль элементa
+		                $('#overlay').fadeIn(400, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
+                            function(){ // пoсле выпoлнения предъидущей aнимaции
+                                $('#modal_form') 
+                                    .css('display', 'block') // убирaем у мoдaльнoгo oкнa display: none;
+                                    .animate({opacity: 1, top: '35%'}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
+                            });
+		        });
 		}	
-		
-		
-		function clearRoom() {
-			var rooms = document.getElementsByClassName('room');
-			
-			for (var i = 0, l = rooms.length; i < l; ++i){
-				rooms[i].className = 'room';
-			}
-		}
-		
-		
 	</script>
 
   <script type="text/javascript">
@@ -285,12 +333,21 @@
           <div class="col-md-12 col-xs-12"><h2>”Аренда офисов от 5 до 1000 метров, от собственника без комиссии”</h2></div>
           <div class="col-md-12 col-xs-12"><h2>Подберите подходящее помещение прямо сейчас или оставьте заявку</h2></div>
         </div>
-      <!-- RENT -->
+        <!-- RENT -->
+        <div id="numbers">
+            <a id="floor_1" class="active, floorbutton">Этаж 1</a>
+            <a id="floor_2" class="floorbutton">Этаж 2</a>
+            <a id="floor_3" class="floorbutton">Этаж 3</a>
+            <a id="floor_4" class="floorbutton">Этаж 4</a>
+            <a id="floor_5" class="floorbutton">Этаж 5</a>
+            <a id="floor_6" class="floorbutton">Этаж 6</a>
+            <a id="floor_7" class="floorbutton">Этаж 7</a>
+            <a id="floor_8" class="floorbutton">Этаж 8</a>
+        </div>
       <div class="container-fluid rent">
         <div class="row rentrow" id="rent">
           <div class="col-md-12 col-xs-12" >
 			<div id="wrap" align="center">
-				<!--<img id="img" src='etalon_bg.png'>-->
 			</div>
 		  </div>
           <div class="col-md-12 col-xs-12" ></div>
@@ -343,7 +400,6 @@
       <div class="row footer">
         <div class="col-xs-12 col-md-12"></div><h5>Все права защищены Бизнес центр Эталон Плаза 2010-2016г</h5></div>
       </div>
-    </div>
  <script type="text/javascript">
 
 var map;
@@ -393,10 +449,10 @@ function initMap() {
       <span id="modal_close">X</span> <!-- Кнoпкa зaкрыть --> 
       <form action="">
           <div class="row">
-              <div class="col-md-11 col-xs-11 col-md-offset-1 col-xs-offset-1 mtop">Номер кабинета:<span></span></div>
-              <div class="col-md-11 col-xs-11 col-md-offset-1 col-xs-offset-1">Этаж:<span></span></div>
-              <div class="col-md-11 col-xs-11 col-md-offset-1 col-xs-offset-1">Площадь:<span></span></div>
-              <div class="col-md-11 col-xs-11 col-md-offset-1 col-xs-offset-1">Цена:<span></span></div>
+              <div class="col-md-11 col-xs-11 col-md-offset-1 col-xs-offset-1 mtop">Номер кабинета:<span id="popupRoomNum"></span></div>
+              <div class="col-md-11 col-xs-11 col-md-offset-1 col-xs-offset-1">Этаж:<span id="popupFloor"></span></div>
+              <div class="col-md-11 col-xs-11 col-md-offset-1 col-xs-offset-1">Площадь:<span id="popupSquare"></span></div>
+              <div class="col-md-11 col-xs-11 col-md-offset-1 col-xs-offset-1">Цена:<span id="popupPrice"></span></div>
               <div class="col-md-10 col-xs-11 col-md-offset-1 col-xs-offset-1 mtop">ФИО:<input type="text" class="form-control col-md-9 col-xs-9" id="usr"></div>
               <div class="col-md-10 col-xs-11 col-md-offset-1 col-xs-offset-1">Ваша почта:<input type="text" class="form-control col-md-9 col-xs-9" id="email"></div>
               <div class="col-md-10 col-xs-11 col-md-offset-1 col-xs-offset-1">Ваш телефон:<input type="text" class="form-control col-md-9 col-xs-9" id="mobile"></div>

@@ -52,6 +52,35 @@ namespace DataService
             }
         }
 
+        public IEnumerable<RoomPublicModel> ListRoomPublic()
+        {
+            try
+            {
+                using (var db = GetDataContext())
+                {
+                    return db.Rooms.Select(x => new RoomPublicModel()
+                    {
+                        FloorNum = x.FloorId,
+                        IdRecord = x.IdRecord,
+                        IsBusy = (x.CompanyId != null),
+                        Number = x.Number,
+                        Photos = x.RoomPhotos.Select(y => GetRelativeUrl(y.File.Path)).ToList(),
+                        RentPayment = x.RentPayment,
+                        Square = x.Square,
+                        X1 = x.X1,
+                        X2 = x.X2,
+                        Y1 = x.Y1,
+                        Y2 = x.Y2
+                    }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                // log
+                throw new Exception("Can't get public list room");
+            }
+        }
+
         public IEnumerable<RoomModel> ListRoom()
         {
             try
@@ -153,7 +182,5 @@ namespace DataService
             dbRoom.DocExpDate = modelRoom.DocExpDate;
             dbRoom.RentPayment = modelRoom.RentPayment;
         }
-
-
     }
 }
