@@ -11,8 +11,8 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
 
-    <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" />
-    <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
+    <link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="js/lightbox.js"></script>
 
     <style>
         /* Обертка для аренды */
@@ -166,7 +166,7 @@
                 $.each(_floors, function(index, value) {
                     if (floorNum[0] == value.IdRecord) {
                         $('#wrap').css({
-                            'backgroundImage': 'url("' + _floors[index].Url + '")'
+                            'backgroundImage': 'url("' + value.Url + '")'
                         });
                     }
                 });
@@ -207,6 +207,24 @@
                     $('#popupFloor').html(_rooms[roomId].FloorNum);
                     $('#popupSquare').html(_rooms[roomId].Square);
                     $('#popupPrice').html(_rooms[roomId].RentPayment);
+
+                    $('#popupGallery').html('');
+
+                    console.log(_rooms[roomId]);
+                    $.each(_rooms[roomId].Photos,
+                        function (index, value) {
+                            var img = document.createElement('img');
+                            img.setAttribute('src', value);
+
+                            var a = document.createElement('a');
+                            a.setAttribute('class', 'fancybox col-md-4 col-xs-3 preview');
+                            a.setAttribute('data-lightbox', 'Кабинет номер: ' + _rooms[roomId].Number);
+                            a.setAttribute('rel', 'group');
+                            a.setAttribute('href', value);
+                            a.appendChild(img);
+
+                            document.getElementById('popupGallery').appendChild(a);
+                        });
 
                     event.preventDefault(); // выключaем стaндaртную рoль элементa
                     $('#overlay').fadeIn(400, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
@@ -501,10 +519,14 @@
                 <div class="col-md-10 col-xs-11 col-md-offset-1 col-xs-offset-1">Ваша почта:<input type="text" class="form-control col-md-9 col-xs-9" id="email"></div>
                 <div class="col-md-10 col-xs-11 col-md-offset-1 col-xs-offset-1">Ваш телефон:<input type="text" class="form-control col-md-9 col-xs-9" id="mobile"></div>
                 <div class="col-md-11 col-xs-11 col-md-offset-1 col-xs-offset-1 mtop"><button type="button" class="btn btn-success col-md-11 col-xs-11">Заказать</button></div>
-                <div class="col-md-11 col-xs-11 col-md-offset-1 col-xs-offset-1 mtop">
-                    <a class="fancybox col-md-4 col-xs-3 preview" rel="group" href="img/test.jpg"><img src="img/test.jpg" alt="адын" /></a>
-                    <a class="fancybox col-md-4 col-xs-3 preview" rel="group" href="img/test.jpg"><img src="img/test.jpg" alt="адын" /></a>
-                    <a class="fancybox col-md-4 col-xs-3 preview" rel="group" href="img/test.jpg"><img src="img/test.jpg" alt="адын" /></a>
+                <div id="popupGallery" class="col-md-11 col-xs-11 col-md-offset-1 col-xs-offset-1 mtop">
+                    <a class="fancybox col-md-4 col-xs-3 preview" data-lightbox="image-1" rel="group" href="img/test.jpg"><img src="img/test.jpg" alt="адын" /></a>
+                    <a class="fancybox col-md-4 col-xs-3 preview" data-lightbox="image-1" rel="group" href="img/test.jpg"><img src="img/test.jpg" alt="адын" /></a>
+                    <a class="fancybox col-md-4 col-xs-3 preview" data-lightbox="image-1" rel="group" href="img/test.jpg"><img src="img/test.jpg" alt="адын" /></a>
+                    <a class="fancybox col-md-4 col-xs-3 preview" data-lightbox="image-1" rel="group" href="img/test.jpg"><img src="img/test.jpg" alt="адын" /></a>
+                    <a class="fancybox col-md-4 col-xs-3 preview" data-lightbox="image-1" rel="group" href="img/test.jpg"><img src="img/test.jpg" alt="адын" /></a>
+                    <a class="fancybox col-md-4 col-xs-3 preview" data-lightbox="image-1" rel="group" href="img/test.jpg"><img src="img/test.jpg" alt="адын" /></a>
+                    <a class="fancybox col-md-4 col-xs-3 preview" data-lightbox="image-1" rel="group" href="img/test.jpg"><img src="img/test.jpg" alt="адын" /></a>
                 </div>
 
             </div>
