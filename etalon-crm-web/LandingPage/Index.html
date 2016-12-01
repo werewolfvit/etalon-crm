@@ -154,10 +154,8 @@
 
 		function drawRoom(floorNum) {		
 			var wrap = document.getElementById('wrap');
-		    console.log(_rooms);
-			for (var i = 0, l = _rooms.length; i < l; ++i) {
-			    console.log(_rooms[i].FloorNum + ':' + floorNum);
 
+			for (var i = 0, l = _rooms.length; i < l; ++i) {
 			    if (_rooms[i].FloorNum == floorNum) {
 			        
 			        var div = document.createElement('div');
@@ -180,22 +178,11 @@
 		                $(this).removeClass('room-show');
 		            }).click(function(e) {
 		            var roomId = e.target.id.match('\\d+')[0];
-		            console.log('Выбрана комната с ИД: ' + roomId);
-
-		            console.log(_rooms[roomId]);
 
 		            $('#popupRoomNum').html(_rooms[roomId].Number);
 		            $('#popupFloor').html(_rooms[roomId].FloorNum);
 		            $('#popupSquare').html(_rooms[roomId].Square);
 		            $('#popupPrice').html(_rooms[roomId].RentPayment);
-		            
-		            
-		            /*
-		            popupRoomNum
-		            popupFloor
-		            popupSquare
-		            popupPrice
-                    */
 
 		                event.preventDefault(); // выключaем стaндaртную рoль элементa
 		                $('#overlay').fadeIn(400, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
