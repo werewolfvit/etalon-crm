@@ -788,9 +788,14 @@
     <Content Include="LandingPage\css\bootstrap-theme.min.css" />
     <Content Include="LandingPage\css\bootstrap.css" />
     <Content Include="LandingPage\css\bootstrap.min.css" />
+    <Content Include="LandingPage\css\lightbox.css" />
     <Content Include="LandingPage\css\main.css" />
     <Content Include="LandingPage\etalon_bg.png" />
     <Content Include="LandingPage\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="LandingPage\images\close.png" />
+    <Content Include="LandingPage\images\loading.gif" />
+    <Content Include="LandingPage\images\next.png" />
+    <Content Include="LandingPage\images\prev.png" />
     <Content Include="LandingPage\img\bg-head.jpg" />
     <Content Include="LandingPage\img\clock.png" />
     <Content Include="LandingPage\img\clock2.png" />
@@ -805,6 +810,7 @@
     <Content Include="LandingPage\js\bootstrap-carousel.js" />
     <Content Include="LandingPage\js\bootstrap.js" />
     <Content Include="LandingPage\js\bootstrap.min.js" />
+    <Content Include="LandingPage\js\lightbox.js" />
     <Content Include="LandingPage\js\npm.js" />
     <Content Include="Scripts\ECA\app.js" />
     <Content Include="Scripts\ECA\controller\MainController.js" />
