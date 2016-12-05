@@ -8,11 +8,13 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
     <link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
     <script type="text/javascript" src="js/lightbox.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-carousel.js"></script>
 
     <style>
         /* Обертка для аренды */
@@ -129,6 +131,105 @@
             display: none;
             /* в oбычнoм сoстoянии её нет) */
         }
+
+        .subhead-text, .seodatabot-text {
+            opacity: 0;
+            animation-duration: 0.3s;
+            animation-delay: 1s;
+            animation-name: slidein;
+            animation-fill-mode: forwards;
+            animation-timing-function: ease;
+            -moz-animation-duration: 0.3s;
+            -moz-animation-delay: 1s;
+            -moz-animation-name: slidein;
+            -moz-animation-fill-mode: forwards;
+            -moz-animation-timing-function: ease;
+            -webkit-animation-duration: 0.3s;
+            -webkit-animation-delay: 1s;
+            -webkit-animation-name: slidein;
+            -webkit-animation-fill-mode: forwards;
+            -webkit-animation-timing-function: ease;
+        }
+
+        @-webkit-keyframes slidein {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-moz-keyframes slidein {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slidein {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Бутя стряпа айна не транссисон 3 */
+        .carousel-fade .carousel-inner .item {
+            opacity: 0;
+            transition-property: opacity;
+        }
+
+        .carousel-fade .carousel-inner .active {
+            opacity: 1;
+        }
+
+            .carousel-fade .carousel-inner .active.left,
+            .carousel-fade .carousel-inner .active.right {
+                left: 0;
+                opacity: 0;
+                z-index: 1;
+            }
+
+        .carousel-fade .carousel-inner .next.left,
+        .carousel-fade .carousel-inner .prev.right {
+            opacity: 1;
+        }
+
+        .carousel-fade .carousel-control {
+            z-index: 2;
+        }
+
+        @media all and (transform-3d), (-webkit-transform-3d) {
+            .carousel-fade .carousel-inner > .item.next,
+            .carousel-fade .carousel-inner > .item.active.right {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+
+            .carousel-fade .carousel-inner > .item.prev,
+            .carousel-fade .carousel-inner > .item.active.left {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+
+                .carousel-fade .carousel-inner > .item.next.left,
+                .carousel-fade .carousel-inner > .item.prev.right,
+                .carousel-fade .carousel-inner > .item.active {
+                    opacity: 1;
+                    -webkit-transform: translate3d(0, 0, 0);
+                    transform: translate3d(0, 0, 0);
+                }
+        }
     </style>
 
     <script>
@@ -151,7 +252,7 @@
                     );
             });
 
-            $.getJSON('/Scripts/ECA/floors.json', function(data) {
+            /*$.getJSON('/Scripts/ECA/floors.json', function(data) {
                 _floors = data.floors;
             });
 
@@ -173,10 +274,10 @@
 
                 $('.room, .room-show, .room-busy').remove();
                 drawRoom(floorNum);
-            });
+            });*/
         });
 
-        function drawRoom(floorNum) {
+        /*function drawRoom(floorNum) {
             var wrap = document.getElementById('wrap');
 
             for (var i = 0, l = _rooms.length; i < l; ++i) {
@@ -237,13 +338,13 @@
                                 }, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
                         });
                 });
-        }
+        }*/
     </script>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        /*$(document).ready(function() {
             $(".fancybox").fancybox();
-        });
+        });*/
     </script>
 
 </head>
@@ -251,6 +352,7 @@
 <body>
     <!-- HEADER -->
     <div class="container-fluid all">
+        <!-- HEAD -->
         <div class="row head">
             <div class="col-md-4 col-xs-6"><img class="logo" src="img/logo.png"></div>
             <div class="col-md-4 col-md-offset-4 col-xs-3 col-xs-offset-3 head-contact">
@@ -258,15 +360,18 @@
                 <p class="lead">Russia, Moscow Bolshaya Cherkizovskaya 24 A +7 (495) 729-52-22 info@etalonplaza.ru</p>
             </div>
         </div>
+        <!-- /HEAD -->
+        <!-- SUBHEAD -->
         <div class="row subhead">
             <div class="col-md-5 col-xs-5 col-xs-offset-1 col-md-offset-1 head-text">
-                <h2>"Эталонное решение Вашего бизнеса"</h2>
+                <h2 class="subhead-text">"Эталонное решение Вашего бизнеса"</h2>
             </div>
             <div class="col-md-2 col-xs-6"><img class="clock" src="img/clock2.png"></div>
             <div class="col-md-2 col-xs-3 col-xs-offset-3 head-text">
-                <h2>"Точно в цель"</h2>
+                <h2 class="subhead-text">"Точно в цель"</h2>
             </div>
         </div>
+        <!-- /SUBHEAD -->
         <!-- SLIDER -->
         <div class="row">
             <div id="myCarousel" class="carousel slide sl" data-interval="false">
@@ -282,45 +387,51 @@
                 <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
             </div>
         </div>
+        <!-- /SLIDER -->
         <!-- SERVICES -->
         <div class="container-fluid service">
-            <div class="col-md-12 col-xs-12 head-menu">
+            <div class="col-xs-12 head-menu">
                 <div class="col-xs-6 col-md-3 nopadding"><a class="btn btn-primary servicebtn" href="#">Инфраструктура</a></div>
                 <div class="col-xs-6 col-md-3 nopadding"><a class="btn btn-primary servicebtn" href="#rent">Аренда</a></div>
                 <div class="col-xs-6 col-md-3 nopadding"><a class="btn btn-primary servicebtn" href="#photo">Фотогаллерея</a></div>
                 <div class="col-xs-6 col-md-3 nopadding"><a class="btn btn-primary servicebtn" href="#contact">Контакты</a></div>
             </div>
-            <div id="myCarousel2" class="carousel slide sl" data-interval="false">
-                <div class="carousel-inner">
-                    <div class="col-md-12 col-xs-12 service-manage item active nopadding">
-                        <div class="col-xs-6 col-md-3">
-                            <img class="" src="img/test.jpg">
-                            <h5>Клининговоая служба</h5>
-                            <p class="min140 max140">Бизнес Центр «Эталон» предлагает стандарты качества спектра клининговых услуг всем арендаторам здания:Влажная уборка пола с применением химических средств.Сбор и вынос офисного мусора с заменой мусорных пакетов</p>
-                            <p><a class="btn" href="#">Подробнее &raquo;</a></p>
-                        </div>
-                        <div class="col-xs-6 col-md-3">
-                            <img class="" src="img/test.jpg">
-                            <h5>Автосервис</h5>
-                            <p class="min140 max140">На территории Бизнес Центра «Эталон плаза» расположен круглосуточный Автосервис,специалисты которого произведут качественный ремонт Вашего автомобиля.Так же, осуществляются услуги по шиномонтажу и хранению колес.</p>
-                            <p><a class="btn" href="#">Подробнее &raquo;</a></p>
-                        </div>
-                        <div class="col-xs-6 col-md-3">
-                            <img class="" src="img/test.jpg">
-                            <h5>Автомойка</h5>
-                            <p class="min140 max140">На территории Бизнес Центра «Эталон плаза» расположена современная Автомойка, где специалисты произведут качественную мойку и внутреннюю уборку Вашего автомобиля</p>
-                            <p><a class="btn" href="#">Подробнее &raquo;</a></p>
-                        </div>
-                        <div class="col-xs-6 col-md-3">
-                            <img class="" src="img/test.jpg">
-                            <h5>Внутренний двор</h5>
-                            <p class="min140 max140">На территории Бизнес Центра «Эталон плаза» для Вашего удобства распологается благоустроенная площадка для отдыха, где можно отдохнуть после рабочего дня, в окружении реликтовых деревьев с небольшим водопадом и...</p>
-                            <p><a class="btn" href="#">Подробнее &raquo;</a></p>
+        </div>
+        <div id="myCarousel2" class="carousel slide sl carousel-fade" data-interval="false">
+            <div class="carousel-inner">
+                <div class="container-fluid item active">
+                    <div class="row">
+                        <div class="col-xs-12 service-manage nopadding">
+                            <div class="col-xs-6 col-md-3">
+                                <img class="" src="img/test.jpg">
+                                <h5>Клининговоая служба</h5>
+                                <p class="min140 max140">Бизнес Центр «Эталон» предлагает стандарты качества спектра клининговых услуг всем арендаторам здания:Влажная уборка пола с применением химических средств.Сбор и вынос офисного мусора с заменой мусорных пакетов</p>
+                                <p><a class="btn" href="#">Подробнее &raquo;</a></p>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <img class="" src="img/test.jpg">
+                                <h5>Автосервис</h5>
+                                <p class="min140 max140">На территории Бизнес Центра «Эталон плаза» расположен круглосуточный Автосервис,специалисты которого произведут качественный ремонт Вашего автомобиля.Так же, осуществляются услуги по шиномонтажу и хранению колес.</p>
+                                <p><a class="btn" href="#">Подробнее &raquo;</a></p>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <img class="" src="img/test.jpg">
+                                <h5>Автомойка</h5>
+                                <p class="min140 max140">На территории Бизнес Центра «Эталон плаза» расположена современная Автомойка, где специалисты произведут качественную мойку и внутреннюю уборку Вашего автомобиля</p>
+                                <p><a class="btn" href="#">Подробнее &raquo;</a></p>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <img class="" src="img/test.jpg">
+                                <h5>Внутренний двор</h5>
+                                <p class="min140 max140">На территории Бизнес Центра «Эталон плаза»  для Вашего удобства распологается благоустроенная площадка для отдыха, где можно отдохнуть после рабочего дня, в окружении реликтовых деревьев с небольшим водопадом и...</p>
+                                <p><a class="btn" href="#">Подробнее &raquo;</a></p>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-md-12 col-xs-12 service-manage item nopadding">
-                        <div class="col-md-12 col-xs-12">
+                </div>
+                <div class="container-fluid item">
+                    <div class="row">
+                        <div class="col-xs-12 service-manage nopadding">
                             <div class="col-xs-6 col-md-3">
                                 <img class="" src="img/test.jpg">
                                 <h5>Круглосуточная охрана</h5>
@@ -330,7 +441,7 @@
                             <div class="col-xs-6 col-md-3">
                                 <img class="" src="img/test.jpg">
                                 <h5>Автостоянка</h5>
-                                <p class="min140 max140">Свободное пространство огороженной территории дает возможность создания круглосуточной парковки более чем на 200 машин, которой при желании, могут воспользоваться арендаторы Бизнес Центра «Эталон», а так же жители прилегающих домов...</p>
+                                <p class="min140 max140">Свободное пространство огороженной территории дает возможность создания круглосуточной парковки более чем на 200 машин, которой  при желании, могут воспользоваться арендаторы Бизнес Центра «Эталон», а так же жители прилегающих домов...</p>
                                 <p><a class="btn" href="#">Подробнее &raquo;</a></p>
                             </div>
                             <div class="col-xs-6 col-md-3">
@@ -342,18 +453,15 @@
                             <div class="col-xs-6 col-md-3">
                                 <img class="" src="img/test.jpg">
                                 <h5>Скоростной интеренет</h5>
-                                <p class="min140 max140"> Бизнес Центр «Эталон» устанавливает новые стандарты качества услуг предоставляемых арендаторам и гостям здания по IP-телефонии и интернету.Подключение к неограниченному количеству телефонных линий с кодом 495 и 499...</p>
+                                <p class="min140 max140"> Бизнес Центр «Эталон»  устанавливает новые стандарты качества услуг предоставляемых арендаторам и гостям здания по IP-телефонии и интернету.Подключение к неограниченному количеству телефонных линий с кодом 495 и 499...</p>
                                 <p><a class="btn" href="#">Подробнее &raquo;</a></p>
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
-
         </div>
+        <!-- /SERVICES -->
         <!-- BIG SEO TEXT -->
         <div class="row seodatatop">
             <div class="col-xs-12 col-md-12">
@@ -363,11 +471,11 @@
         </div>
         <div class="row seodatabot purpurbg">
             <div class="col-md-4 col-xs-4">
-                <h2>Спецпредложения</h2>
+                <h2 class="seodatabot-text">Спецпредложения</h2>
             </div>
             <div class="col-md-4 col-xs-4"><img class="logo-bot" src="img/logo.png"></div>
             <div class="col-md-4 col-xs-4">
-                <h2>для крупных клиентов</h2>
+                <h2 class="seodatabot-text">для крупных клиентов</h2>
             </div>
         </div>
         <div class="row seodatarent">
@@ -378,6 +486,7 @@
                 <h2>Подберите подходящее помещение прямо сейчас или оставьте заявку</h2>
             </div>
         </div>
+        <!-- /BIG SEO TEXT -->
         <!-- RENT -->
         <div id="numbers">
             <a id="floor_1" class="active, floorbutton">Этаж 1</a>
@@ -402,34 +511,168 @@
                 </div>
             </div>
         </div>
+        <!-- /RENT -->
         <!-- PHOTOGALLERY -->
         <div class="row photo" id="photo">
-            <div class="col-md-12 col-xs-12">
+            <div class="col-xs-12">
                 <h2>Фотогаллерея</h2>
             </div>
         </div>
         <div class="row photomenu purpurbg">
-            <div class="col-md-3 col-xs-3">
+            <div class="col-xs-3">
                 <h2>Бизнес-центр</h2>
             </div>
-            <div class="col-md-3 col-xs-3">
+            <div class="col-xs-3">
                 <h2>Офисы</h2>
             </div>
-            <div class="col-md-3 col-xs-3">
+            <div class="col-xs-3">
                 <h2>Ресторан</h2>
             </div>
-            <div class="col-md-3 col-xs-3">
+            <div class="col-xs-3">
                 <h2>Двор</h2>
             </div>
         </div>
-        <div class="row photoitem">
+        <!--<div class="row photoitem">
             <div class="col-md-4 col-xs-6"><img src="img/test2.jpg"></div>
             <div class="col-md-4 col-xs-6"><img src="img/test2.jpg"></div>
             <div class="col-md-4 col-xs-6"><img src="img/test2.jpg"></div>
             <div class="col-md-4 col-xs-6"><img src="img/test2.jpg"></div>
             <div class="col-md-4 col-xs-6"><img src="img/test2.jpg"></div>
             <div class="col-md-4 col-xs-6"><img src="img/test2.jpg"></div>
+        </div>-->
+        <!-- TABS -->
+        <div class="tab-content">
+            <!-- BUSINES CENTER  -->
+            <div id="buscentr" class="tab-pane fade in active">
+                <div class="carousel slide carousel-fade busines-carusel" id="busines-carusel">
+                    <div class="carousel-inner">
+                        <div class="container-fluid item active">
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="busines"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="busines"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="busines"><img src="img/test2.jpg"></a></div>
+                            </div>
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="busines"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="busines"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="busines"><img src="img/test2.jpg"></a></div>
+                            </div>
+                        </div>
+                        <div class="container-fluid item">
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="busines"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="busines"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="busines"><img src="img/test2.jpg"></a></div>
+                            </div>
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="busines"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="busines"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="busines"><img src="img/test2.jpg"></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /BUSINES CENTER  -->
+            <!-- OFFICE  -->
+            <div id="office" class="tab-pane fade in">
+                <div class="carousel slide carousel-fade office-carusel" id="office-carusel">
+                    <div class="carousel-inner">
+                        <div class="container-fluid item active">
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="office"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="office"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="office"><img src="img/test2.jpg"></a></div>
+                            </div>
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="office"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="office"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="office"><img src="img/test2.jpg"></a></div>
+                            </div>
+                        </div>
+                        <div class="container-fluid item">
+                            <div class="row">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="office"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="office"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="office"><img src="img/test2.jpg"></a></div>
+                            </div>
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="office"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="office"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="office"><img src="img/test2.jpg"></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /OFFICE  -->
+            <!-- RESTORAN  -->
+            <div id="restoran" class="tab-pane fade in">
+                <div class="carousel slide carousel-fade restoran-carusel" id="restoran-carusel">
+                    <div class="carousel-inner">
+                        <div class="item container-fluid active">
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="restoran"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="restoran"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="restoran"><img src="img/test2.jpg"></a></div>
+                            </div>
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="restoran"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="restoran"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="restoran"><img src="img/test2.jpg"></a></div>
+                            </div>
+                        </div>
+                        <div class="item container-fluid ">
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="restoran"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="restoran"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="restoran"><img src="img/test2.jpg"></a></div>
+                            </div>
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="restoran"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="restoran"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="restoran"><img src="img/test2.jpg"></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /RESTORAN  -->
+            <!-- DVOR  -->
+            <div id="dvor" class="tab-pane fade in">
+                <div class="carousel slide carousel-fade dvor-carusel" id="dvor-carusel">
+                    <div class="carousel-inner">
+                        <div class="item container-fluid active">
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="dvor"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="dvor"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="dvor"><img src="img/test2.jpg"></a></div>
+                            </div>
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="dvor"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="dvor"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="dvor"><img src="img/test2.jpg"></a></div>
+                            </div>
+                        </div>
+                        <div class="item container-fluid ">
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="dvor"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="dvor"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="dvor"><img src="img/test2.jpg"></a></div>
+                            </div>
+                            <div class="row photoitem">
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="dvor"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="dvor"><img src="img/test2.jpg"></a></div>
+                                <div class="col-xs-4"><a href="img/test2.jpg" data-lightbox="dvor"><img src="img/test2.jpg"></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /DVOR  -->
         </div>
+        <!-- /TABS -->
+        <!-- /PHOTOGALLERY -->
         <!-- PARTNER -->
         <div class="row partner">
             <div class="col-xs-12 col-md-12">
@@ -439,6 +682,7 @@
         <div class="row">
             <div class="col-xs-12 col-md-12 partnerparalax"></div>
         </div>
+        <!-- /PARTNER -->
         <!-- CONTACT -->
         <div class="row contact" id="contact">
             <div class="col-md-4 col-xs-6 col-xs-offset-1 col-md-offset-1">
@@ -449,15 +693,18 @@
             </div>
             <div class="col-md-4 col-xs-4 col-md-offset-2"><img class="clocksmall" src="img/clocksmall.png"></div>
         </div>
+        <!-- /CONTACT -->
         <!-- MAP -->
         <div class="row">
             <div class="col-xs-12 col-md-12 canvas" id="map"></div>
         </div>
+        <!-- /MAP -->
         <!-- FOOTER -->
         <div class="row footer">
             <div class="col-xs-12 col-md-12"></div>
             <h5>Все права защищены Бизнес центр Эталон Плаза 2010-2016г</h5>
         </div>
+        <!-- /FOOTER -->
     </div>
     <script type="text/javascript">
         var map;
@@ -478,13 +725,18 @@
                 title: 'EtalonPlaza'
             });
         }
+		$(document).ready(function(){
+			$('#myCarousel2').carousel({ interval: 5000 });
+			$('#busines-carusel').carousel();
+			$('#office-carusel').carousel();
+			$('#restoran-carusel').carousel();
+			$('#dvor-carusel').carousel();
+		});
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuqp3iz9NTeTxyJbwcV2KWkqWVz6Am1XU&callback=initMap">
     </script>
 
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
+    <!--<script src="http://code.jquery.com/jquery-latest.js"></script>-->
     <!--
         <script>
           !function ($) {

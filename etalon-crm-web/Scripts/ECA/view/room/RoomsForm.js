@@ -60,7 +60,8 @@
             text: 'Организация',
             dataIndex: 'CompanyId',
             flex: 2,
-            editor: new Ext.form.ComboBox({
+            editor: {
+                xtype: 'combobox',
                 displayField: 'Name',
                 editable: true,
                 forceSelection: true,
@@ -68,7 +69,7 @@
                 store: getCompaniesStore(),
                 triggerAction: 'all',
                 valueField: 'IdRecord'
-            }),
+            },
             renderer: function (value) {
                 var str = getCompaniesStore();
                 var rec = str.findRecord('IdRecord', value);

@@ -25,6 +25,13 @@
             writeAllFields: true
         }
     },
+    //data: [
+    //{label: 'Great', value: 5},
+    //{label: 'Above Average', value: 4},
+    //{label: 'Average', value: 3},
+    //{label: 'Below Average', value: 2},
+    //{label: 'Poor', value: 1},
+    //],
     constructor: function (config) {
         this.callParent([config]);
         this.proxy.on('exception', this.onProxyException, this);
