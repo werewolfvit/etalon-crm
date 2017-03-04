@@ -21,10 +21,8 @@ namespace DataService
                 {
                     db.Rooms.InsertOnSubmit(newRoom);
                     db.SubmitChanges();
+                    return CopyRoomDbToModel(newRoom);
                 }
-
-                return CopyRoomDbToModel(newRoom);
-
             }
             catch (Exception ex)
             {
@@ -33,7 +31,7 @@ namespace DataService
             }
         }
 
-        public void UpdateRoom(RoomModel model)
+        public RoomModel UpdateRoom(RoomModel model)
         {
             try
             {
@@ -42,6 +40,7 @@ namespace DataService
                     var curRoom = db.Rooms.Single(x => x.IdRecord == model.IdRecord);
                     CopyRoomModelToDb(ref curRoom, ref model);
                     db.SubmitChanges();
+                    return CopyRoomDbToModel(curRoom);
                 }
 
             }
@@ -62,10 +61,10 @@ namespace DataService
                     {
                         FloorNum = x.FloorId,
                         IdRecord = x.IdRecord,
-                        IsBusy = (x.CompanyId != null),
+                        IsBusy = (x.CompanyId != 0),
                         Number = x.Number,
                         Photos = x.RoomPhotos.Select(y => GetRelativeUrl(y.File.Path)).ToList(),
-                        RentPayment = x.RentPayment,
+                        RentPayment = x.MeterPrice,
                         Square = x.Square,
                         X1 = x.X1,
                         X2 = x.X2,
@@ -153,12 +152,12 @@ namespace DataService
                 Y2 = dbRoom.Y2,
                 CompanyId = dbRoom.CompanyId,
                 //
-                DocNum = dbRoom.DocNum,
-                DocDate = dbRoom.DocDate,
-                Building = dbRoom.Building,
-                BTINums = dbRoom.BTINums,
-                DocExpDate = dbRoom.DocExpDate,
-                RentPayment = dbRoom.RentPayment
+                DocNum = dbRoom.Company.DocNum,
+                DocDate = dbRoom.Company.DocDate,
+                Building = dbRoom.Company.Building,
+                BTINums = dbRoom.Company.BTINums,
+                DocExpDate = dbRoom.Company.DocExpDate,
+                RentPayment = dbRoom.Company.RentPayment
                 };
         }
 
@@ -174,13 +173,6 @@ namespace DataService
             dbRoom.Y1 = modelRoom.Y1;
             dbRoom.Y2 = modelRoom.Y2;
             dbRoom.CompanyId = modelRoom.CompanyId;
-            //
-            dbRoom.DocNum = modelRoom.DocNum;
-            dbRoom.DocDate = modelRoom.DocDate;
-            dbRoom.Building = modelRoom.Building;
-            dbRoom.BTINums = modelRoom.BTINums;
-            dbRoom.DocExpDate = modelRoom.DocExpDate;
-            dbRoom.RentPayment = modelRoom.RentPayment;
         }
     }
 }

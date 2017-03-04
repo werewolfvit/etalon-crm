@@ -18,22 +18,60 @@ namespace DataService
 
         public void UpdateUser(UserModel user)
         {
-            using (var db = GetDataContext())
+            try
             {
-                var currUser = db.Users.Single(x => x.UserId == user.UserId);
-                currUser.Description = user.Description;
-                currUser.Email = user.Email;
-                currUser.IsActive = user.IsActive;
-                currUser.Middlename = user.Middlename;
-                currUser.Phone = user.Phone;
-                currUser.PhotoId = user.PhotoId;
-                currUser.Position = user.Position;
-                currUser.Name = user.Name;
-                currUser.Surname = user.Surname;
-                currUser.TimeLimit = user.TimeLimit;
-                currUser.UserName = user.UserName;
-                db.SubmitChanges();
+                using (var db = GetDataContext())
+                {
+                    var currUser = db.Users.Single(x => x.UserId == user.UserId);
+                    currUser.Description = user.Description;
+                    currUser.Email = user.Email;
+                    currUser.IsActive = user.IsActive;
+                    currUser.Middlename = user.Middlename;
+                    currUser.Phone = user.Phone;
+                    currUser.PhotoId = user.PhotoId;
+                    currUser.Position = user.Position;
+                    currUser.Name = user.Name;
+                    currUser.Surname = user.Surname;
+                    currUser.TimeLimit = user.TimeLimit;
+                    currUser.UserName = user.UserName;
+                    currUser.CompanyId = user.CompanyId;
+                    db.SubmitChanges();
+                }
             }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
+                throw new Exception("Can't update user");
+            }
+        }
+
+        public UserInfo GetUserInfo(string userId)
+        {
+            try
+            {
+                using (var db = GetDataContext())
+                {
+                    var user = db.Users.Single(x => x.UserId.ToString() == userId);
+                    return new UserInfo()
+                    {
+                        Login = user.UserName,
+                        Name = string.Format("{0} {1} {2}", user.Surname, user.Name, user.Middlename),
+                        Email = user.Email,
+                        Company = (user.Company != null) ? user.Company.Name : "-",
+                        Description = user.Description,
+                        Groups = user.UsersRoles.Select(x => x.Role.Name).ToList(),
+                        Phone = user.Phone,
+                        Position = user.Position,
+                        PhotoUrl = (user.File != null) ? GetRelativeUrl(user.File.Path) : null
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message + " : " + ex.StackTrace);
+                throw new Exception("Can't get user info");
+            }
+
         }
 
         public IEnumerable<UserModel> ListUser()
@@ -55,6 +93,7 @@ namespace DataService
                     PhotoId = x.PhotoId,
                     PhotoUrl = GetRelativeUrl(x.File.Path),
                     TimeLimit = x.TimeLimit,
+                    CompanyId = x.CompanyId.Value
                 }).ToList();
             }
         }

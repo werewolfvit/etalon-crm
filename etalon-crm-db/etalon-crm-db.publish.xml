@@ -6,5 +6,6 @@
     <DeployScriptFileName>etalon-crm-db.sql</DeployScriptFileName>
     <ProfileVersionNumber>1</ProfileVersionNumber>
     <TargetConnectionString>Data Source=37.140.192.61;Persist Security Info=False;User ID=u0103018_preview;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
+    <BlockOnPossibleDataLoss>False</BlockOnPossibleDataLoss>
   </PropertyGroup>
 </Project>

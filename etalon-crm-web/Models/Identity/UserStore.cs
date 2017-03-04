@@ -14,7 +14,8 @@ namespace etalon_crm_web.Models.Identity
             IUserPasswordStore<User>,
             IUserSecurityStampStore<User>,
             IUserRoleStore<User>,
-            IQueryableUserStore<User>
+            IQueryableUserStore<User>,
+            IUserEmailStore<User>
     {
 
         private readonly string _connectionString;
@@ -203,6 +204,37 @@ namespace etalon_crm_web.Models.Identity
                     return db.Query<User>("SELECT * FROM Users").AsQueryable();
                 }
             }
+        }
+
+        public Task SetEmailAsync(User user, string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> GetEmailAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> GetEmailConfirmedAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SetEmailConfirmedAsync(User user, bool confirmed)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> FindByEmailAsync(string email)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                using (var db = new SqlConnection(_connectionString))
+                {
+                    return db.QueryFirstOrDefault<User>("SELECT * FROM Users WHERE Email = @Email", new { email });
+                }
+            });
         }
     }
 }

@@ -21,5 +21,19 @@ namespace DataModel
         public string Phone { get; set; }
         public int? PhotoId { get; set; }
         public string PhotoUrl { get; set; }
+        public int CompanyId { get; set; }
+    }
+
+    public class UserInfo
+    {
+        public string Login { get; set; }
+        public string Name { get; set; }
+        public string Position { get; set; }
+        public string Description { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Company { get; set; }
+        public string PhotoUrl { get; set; }
+        public List<string> Groups { get; set; }
     }
 }

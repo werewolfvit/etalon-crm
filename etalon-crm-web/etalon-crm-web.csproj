@@ -48,6 +48,10 @@
       <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -55,6 +59,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.3.11\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -185,7 +193,9 @@
   <ItemGroup>
     <Compile Include="API\AuthController.cs" />
     <Compile Include="API\CompaniesController.cs" />
+    <Compile Include="API\GroupsController.cs" />
     <Compile Include="API\MessagesController.cs" />
+    <Compile Include="API\ReportsController.cs" />
     <Compile Include="API\RoomPhotosController.cs" />
     <Compile Include="API\RoomsController.cs" />
     <Compile Include="API\RolesController.cs" />
@@ -202,12 +212,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Auth\UserInfo.cs" />
     <Compile Include="Models\Common\MessageModel.cs" />
     <Compile Include="Models\Identity\IdentityModels.cs" />
     <Compile Include="Models\Identity\RoleStore.cs" />
     <Compile Include="Models\Identity\UserStore.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Reports\ReportBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -781,56 +791,157 @@
     <Content Include="Content\Images\Floor-7.png" />
     <Content Include="Content\Images\Floor-8.png" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Index.html" />
+    <Content Include="LandingPage\autoservice.html" />
+    <Content Include="LandingPage\back.html" />
+    <Content Include="LandingPage\cafe.html" />
+    <Content Include="LandingPage\carwash.html" />
+    <Content Include="LandingPage\cleanservice.html" />
     <Content Include="LandingPage\css\bootstrap-responsive.css" />
     <Content Include="LandingPage\css\bootstrap-theme.css" />
+    <Content Include="LandingPage\css\bootstrap-theme.css.map" />
     <Content Include="LandingPage\css\bootstrap-theme.min.css" />
     <Content Include="LandingPage\css\bootstrap.css" />
+    <Content Include="LandingPage\css\bootstrap.css.map" />
     <Content Include="LandingPage\css\bootstrap.min.css" />
     <Content Include="LandingPage\css\lightbox.css" />
     <Content Include="LandingPage\css\main.css" />
     <Content Include="LandingPage\etalon_bg.png" />
+    <Content Include="LandingPage\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="LandingPage\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="LandingPage\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="LandingPage\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="LandingPage\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="LandingPage\images\close.png" />
     <Content Include="LandingPage\images\loading.gif" />
     <Content Include="LandingPage\images\next.png" />
     <Content Include="LandingPage\images\prev.png" />
+    <Content Include="LandingPage\img\.DS_Store" />
+    <Content Include="LandingPage\img\aservice1.jpg" />
+    <Content Include="LandingPage\img\aservice2.jpg" />
+    <Content Include="LandingPage\img\back1.jpg" />
+    <Content Include="LandingPage\img\back2.jpg" />
     <Content Include="LandingPage\img\bg-head.jpg" />
+    <Content Include="LandingPage\img\cafe1.jpg" />
+    <Content Include="LandingPage\img\cafe2.jpg" />
+    <Content Include="LandingPage\img\carwash1.jpg" />
+    <Content Include="LandingPage\img\carwash2.jpg" />
+    <Content Include="LandingPage\img\clean1.jpg" />
+    <Content Include="LandingPage\img\clean2.jpg" />
     <Content Include="LandingPage\img\clock.png" />
     <Content Include="LandingPage\img\clock2.png" />
     <Content Include="LandingPage\img\clocksmall.png" />
+    <Content Include="LandingPage\img\gallery\1.JPG" />
+    <Content Include="LandingPage\img\gallery\10.JPG" />
+    <Content Include="LandingPage\img\gallery\11.JPG" />
+    <Content Include="LandingPage\img\gallery\12.JPG" />
+    <Content Include="LandingPage\img\gallery\13.JPG" />
+    <Content Include="LandingPage\img\gallery\14.JPG" />
+    <Content Include="LandingPage\img\gallery\15.JPG" />
+    <Content Include="LandingPage\img\gallery\16.JPG" />
+    <Content Include="LandingPage\img\gallery\17.JPG" />
+    <Content Include="LandingPage\img\gallery\18.JPG" />
+    <Content Include="LandingPage\img\gallery\19.JPG" />
+    <Content Include="LandingPage\img\gallery\2.JPG" />
+    <Content Include="LandingPage\img\gallery\20.JPG" />
+    <Content Include="LandingPage\img\gallery\21.jpg" />
+    <Content Include="LandingPage\img\gallery\22.JPG" />
+    <Content Include="LandingPage\img\gallery\23.JPG" />
+    <Content Include="LandingPage\img\gallery\24.JPG" />
+    <Content Include="LandingPage\img\gallery\25.JPG" />
+    <Content Include="LandingPage\img\gallery\26.jpg" />
+    <Content Include="LandingPage\img\gallery\27.jpg" />
+    <Content Include="LandingPage\img\gallery\28.jpg" />
+    <Content Include="LandingPage\img\gallery\29.jpg" />
+    <Content Include="LandingPage\img\gallery\3.JPG" />
+    <Content Include="LandingPage\img\gallery\30.jpg" />
+    <Content Include="LandingPage\img\gallery\31.jpg" />
+    <Content Include="LandingPage\img\gallery\32.jpg" />
+    <Content Include="LandingPage\img\gallery\33.jpg" />
+    <Content Include="LandingPage\img\gallery\4.JPG" />
+    <Content Include="LandingPage\img\gallery\5.JPG" />
+    <Content Include="LandingPage\img\gallery\6.JPG" />
+    <Content Include="LandingPage\img\gallery\7.JPG" />
+    <Content Include="LandingPage\img\gallery\8.JPG" />
+    <Content Include="LandingPage\img\gallery\9.JPG" />
+    <Content Include="LandingPage\img\inet1.jpg" />
+    <Content Include="LandingPage\img\inet2.jpg" />
     <Content Include="LandingPage\img\logo.png" />
+    <Content Include="LandingPage\img\office.JPG" />
+    <Content Include="LandingPage\img\parking1.jpg" />
+    <Content Include="LandingPage\img\parking2.jpg" />
+    <Content Include="LandingPage\img\partner\1.jpg" />
+    <Content Include="LandingPage\img\partner\2.jpg" />
+    <Content Include="LandingPage\img\partner\3.jpg" />
+    <Content Include="LandingPage\img\partner\4.jpg" />
+    <Content Include="LandingPage\img\partner\5.jpg" />
+    <Content Include="LandingPage\img\partner\6.jpg" />
+    <Content Include="LandingPage\img\rented.png" />
+    <Content Include="LandingPage\img\sec1.jpg" />
+    <Content Include="LandingPage\img\sec2.jpg" />
     <Content Include="LandingPage\img\sl1.jpg" />
     <Content Include="LandingPage\img\sl2.jpg" />
     <Content Include="LandingPage\img\sl3.jpg" />
+    <Content Include="LandingPage\img\structure\aclean.jpg" />
+    <Content Include="LandingPage\img\structure\aservice.jpg" />
+    <Content Include="LandingPage\img\structure\aservice2.jpg" />
+    <Content Include="LandingPage\img\structure\back.jpg" />
+    <Content Include="LandingPage\img\structure\cafe.jpg" />
+    <Content Include="LandingPage\img\structure\clean.jpg" />
+    <Content Include="LandingPage\img\structure\inet.jpg" />
+    <Content Include="LandingPage\img\structure\parking.jpg" />
+    <Content Include="LandingPage\img\structure\security.jpg" />
     <Content Include="LandingPage\img\test.jpg" />
     <Content Include="LandingPage\img\test2.jpg" />
-    <Content Include="LandingPage\Index.html" />
+    <Content Include="LandingPage\infra\autoservice.html" />
+    <Content Include="LandingPage\infra\back.html" />
+    <Content Include="LandingPage\infra\cafe.html" />
+    <Content Include="LandingPage\infra\carwash.html" />
+    <Content Include="LandingPage\infra\cleansevice.html" />
+    <Content Include="LandingPage\infra\internet.html" />
+    <Content Include="LandingPage\infra\parking.html" />
+    <Content Include="LandingPage\infra\security.html" />
+    <Content Include="LandingPage\internet.html" />
     <Content Include="LandingPage\js\bootstrap-carousel.js" />
     <Content Include="LandingPage\js\bootstrap.js" />
     <Content Include="LandingPage\js\bootstrap.min.js" />
     <Content Include="LandingPage\js\lightbox.js" />
     <Content Include="LandingPage\js\npm.js" />
+    <Content Include="LandingPage\parking.html" />
+    <Content Include="LandingPage\security.html" />
     <Content Include="Scripts\ECA\app.js" />
     <Content Include="Scripts\ECA\controller\MainController.js" />
     <Content Include="Scripts\ECA\model\Company.js" />
     <Content Include="Scripts\ECA\model\Floor.js" />
+    <Content Include="Scripts\ECA\model\Group.js" />
+    <Content Include="Scripts\ECA\model\Recepient.js" />
     <Content Include="Scripts\ECA\model\Room.js" />
     <Content Include="Scripts\ECA\model\Role.js" />
     <Content Include="Scripts\ECA\model\RoomPhoto.js" />
+    <Content Include="Scripts\ECA\model\TmpBadgeAuto.js" />
+    <Content Include="Scripts\ECA\model\TmpBadgeFio.js" />
     <Content Include="Scripts\ECA\model\User.js" />
+    <Content Include="Scripts\ECA\model\UserInfo.js" />
+    <Content Include="Scripts\ECA\model\UserMessage.js" />
     <Content Include="Scripts\ECA\store\Companies.js" />
     <Content Include="Scripts\ECA\store\Floors.js" />
     <Content Include="Scripts\ECA\store\RoomPhotos.js" />
     <Content Include="Scripts\ECA\store\Rooms.js" />
     <Content Include="Scripts\ECA\store\Users.js" />
     <Content Include="Scripts\ECA\view\companies\CompaniesForm.js" />
+    <Content Include="Scripts\ECA\view\companies\CompanyEdit.js" />
     <Content Include="Scripts\ECA\view\login\LoginForm.js" />
+    <Content Include="Scripts\ECA\view\login\RefreshPassForm.js" />
     <Content Include="Scripts\ECA\view\main\MainMenuForm.js" />
     <Content Include="Scripts\ECA\view\message\MessageEdit.js" />
+    <Content Include="Scripts\ECA\view\message\MessageRead.js" />
+    <Content Include="Scripts\ECA\view\message\MessagesForm.js" />
+    <Content Include="Scripts\ECA\view\message\MessageTmpBadge.js" />
+    <Content Include="Scripts\ECA\view\room\RoomEdit.js" />
     <Content Include="Scripts\ECA\view\room\RoomsForm.js" />
     <Content Include="Scripts\ECA\view\users\UserEdit.js" />
+    <Content Include="Scripts\ECA\view\users\UserProfileForm.js" />
     <Content Include="Scripts\ECA\view\users\UsersForm.js" />
     <Content Include="Scripts\ext-all-rtl-debug.js" />
     <Content Include="Scripts\ext-all.js" />
@@ -839,8 +950,10 @@
     <Content Include="Scripts\imageareaselector\jquery.imgareaselect.pack.js" />
     <Content Include="Scripts\imageareaselector\jquery.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Default.html" />
-    <Content Include="Web.config" />
+    <Content Include="Profile.html" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -859,12 +972,11 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\" />
     <Folder Include="Content\Files\" />
+    <Folder Include="fonts\" />
+    <Folder Include="Models\Auth\" />
     <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <Content Include="Content\CSS\ext\ext-watermark\fonts\ext-watermark.eot" />
     <Content Include="Content\CSS\ext\ext-watermark\fonts\ext-watermark.ttf" />
@@ -873,13 +985,12 @@
     <Content Include="Content\CSS\theme-base\Readme.md" />
     <Content Include="Content\CSS\theme-neutral\Readme.md" />
     <Content Include="Content\CSS\Readme.md" />
-    <Content Include="LandingPage\.DS_Store" />
-    <Content Include="LandingPage\css\bootstrap-theme.css.map" />
-    <Content Include="LandingPage\css\bootstrap.css.map" />
-    <Content Include="LandingPage\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="LandingPage\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="LandingPage\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="LandingPage\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Project_Readme.html" />
     <None Include="Properties\PublishProfiles\EtalonTestPublish.pubxml" />
     <None Include="Properties\PublishProfiles\LocalPublish.pubxml" />

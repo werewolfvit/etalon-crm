@@ -22,7 +22,7 @@ using User = etalon_crm_web.Models.User;
 
 namespace etalon_crm_web.API
 {
-    [System.Web.Http.Authorize(Roles = "admin")]
+    [System.Web.Http.Authorize(Roles = "Admin")]
     public class UsersController : ApiController
     {
         private readonly UserManager<User> _userManager;
@@ -47,18 +47,19 @@ namespace etalon_crm_web.API
             {
                 dynamic data = jsonData;
                 var newUserGuid = Guid.NewGuid();
+                var userName = newUserGuid.ToString().Replace("-", "");
                 var result = _userManager.Create(new User()
                 {
                     UserId = newUserGuid,
-                    UserName = data.UserName
+                    UserName = userName
                 });
 
                 if (!result.Succeeded)
-                    MessageBuilder.GetErrorMessage("При добавлении пользователя была допущена ошибка!");
+                    return MessageBuilder.GetErrorMessage("При добавлении пользователя была допущена ошибка!");
 
                 var userToUpdate = new UserModel()
                 {
-                    UserName = data.UserName,
+                    UserName = userName,
                     UserId = newUserGuid,
                     IsActive = data.IsActive,
                     Description = data.Description,
@@ -68,11 +69,34 @@ namespace etalon_crm_web.API
                     Middlename = data.Middlename,
                     Phone = data.Phone,
                     Position = data.Position,
-                    TimeLimit = data.TimeLimit
+                    TimeLimit = data.TimeLimit,
+                    CompanyId = data.CompanyId
                 };
                 _dbService.UpdateUser(userToUpdate);
 
                 return MessageBuilder.GetSuccessMessage(userToUpdate);
+            }
+            catch (Exception ex)
+            {
+                return MessageBuilder.GetErrorMessage(ex.Message);
+            }
+        }
+
+        [System.Web.Http.Authorize(Roles = "Admin,Employer,Renter")]
+        [System.Web.Http.HttpPost]
+        public MessageModel UserChangePassword(JObject jsonData)
+        {
+            try
+            {
+                dynamic data = jsonData;
+                string pass = data.password;
+                var user = _userManager.FindByName(User.Identity.Name);
+                user.PasswordHash = _userManager.PasswordHasher.HashPassword(pass);
+                var result = _userManager.Update(user);
+                if (!result.Succeeded)
+                    return MessageBuilder.GetErrorMessage(string.Join(Environment.NewLine, result.Errors));
+
+                return MessageBuilder.GetSuccessMessage(null);
             }
             catch (Exception ex)
             {
@@ -145,7 +169,8 @@ namespace etalon_crm_web.API
                     Surname = data.Surname,
                     TimeLimit = data.TimeLimit,
                     UserId = data.UserId,
-                    UserName = data.UserName
+                    UserName = data.UserName,
+                    CompanyId = data.CompanyId
                 };
 
                 _dbService.UpdateUser(userToUpd);

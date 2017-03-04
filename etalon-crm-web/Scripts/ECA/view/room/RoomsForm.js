@@ -13,18 +13,6 @@
     resizable: true,
     layout: 'border',
     jcrop: null,
-    //setRoomCoord: function (coord) {
-    //    var grid = this.down('grid');
-    //    var model = grid.getSelectionModel().getSelection()[0];
-    //    if (model == null)
-    //        return;
-
-    //    model.set('X1', coord.x);
-    //    model.set('X2', coord.x2);
-    //    model.set('Y1', coord.y);
-    //    model.set('Y2', coord.y2);
-    //    grid.store.sync();
-    //},
     items: [{
         region: 'center',
         xtype: 'grid',
@@ -32,12 +20,9 @@
         store: 'ECA.store.Rooms',
         layout: 'fit',
         columns: [{
-            text: 'Номер кабинета',
+            text: 'Номер офиса',
             dataIndex: 'Number',
-            flex: 2,
-            editor: {
-                allowBlank: false
-            }
+            flex: 2
         }, {
             text: 'Этаж',
             dataIndex: 'FloorId',
@@ -45,91 +30,68 @@
         }, {
             text: 'Площадь',
             dataIndex: 'Square',
-            flex: 1,
-            editor: {
-                allowBlank: false
-            }
+            flex: 1
         }, {
             text: 'Стоимость, в руб.',
             dataIndex: 'MeterPrice',
-            flex: 2,
-            editor: {
-                allowBlank: false
-            }
+            flex: 2
         }, {
             text: 'Организация',
             dataIndex: 'CompanyId',
+            displayField: 'Name',
+            editable: true,
+            forceSelection: true,
+            mode: 'local',
+            store: getCompaniesStore(),
+            triggerAction: 'all',
+            valueField: 'IdRecord',
             flex: 2,
-            editor: {
-                xtype: 'combobox',
-                displayField: 'Name',
-                editable: true,
-                forceSelection: true,
-                mode: 'local',
-                store: getCompaniesStore(),
-                triggerAction: 'all',
-                valueField: 'IdRecord'
-            },
-            renderer: function (value) {
+            renderer: function(value) {
+                console.log(value);
+
                 var str = getCompaniesStore();
                 var rec = str.findRecord('IdRecord', value);
+                console.log(rec);
 
                 if (rec === null) {
                     return '<span style="background-color: RGB(160, 255, 160);"><i>Свободно</i></span>';
                 }
                 return rec.get('Name');
+
             }
         }, {
             text: '№ договора',
             dataIndex: 'DocNum',
-            flex: 2,
-            editor: {
-                xtype: 'textfield'
-            }
+            flex: 2
         }, {
             text: 'Дата договора ',
             dataIndex: 'DocDate',
             flex: 2,
-            editor: {
-                xtype: 'datefield'
-            },
             renderer: Ext.util.Format.dateRenderer('d.m.Y')
         }, {
             text: 'Строение',
             dataIndex: 'Building',
-            flex: 1,
-            editor: {
-                xtype: 'textfield'
-            }
+            flex: 1
         }, {
             text: '№ комнаты (БТИ)',
             dataIndex: 'BTINums',
-            flex: 2,
-            editor: {
-                xtype: 'textfield'
-            }
+            flex: 2
         }, {
             text: 'Срок договора, по',
             dataIndex: 'DocExpDate',
             flex: 2,
-            editor: {
-                xtype: 'datefield'
-            },
             renderer: Ext.util.Format.dateRenderer('d.m.Y')
         }, {
             text: 'Размер а/п в месяц, в руб.',
             dataIndex: 'RentPayment',
-            flex: 3,
-            editor: {
-                xtype: 'textfield'
-            }
+            flex: 3
         }],
         listeners: {
-            select: function (obj, record, eOpts) {
+            select: function(obj, record, eOpts) {
                 var wnd = this.up('window');
                 var photofloor = Ext.getCmp('floorimage');
                 var floorId = record.get('FloorId');
-                
+
                 var floorCombo = wnd.down('combobox');
                 var floorStore = floorCombo.store;
 
@@ -141,7 +103,6 @@
                 });
 
                 var curRecord = floorStore.getAt(floorStore.findExact('IdRecord', floorId));
-                console.log(curRecord);
                 if (curRecord == null) {
                     wnd.jcrop.disable();
                     wnd.jcrop.destroy();
@@ -165,49 +126,55 @@
             }
         },
         selType: 'rowmodel',
-        plugins: [
-            Ext.create('Ext.grid.plugin.RowEditing', {
-                clicksToEdit: 2
-            })
-        ],
         tbar: [{
-            scale: 'medium',
-            text: 'Создать',
-            handler: function () {
-                var rent = Ext.create('ECA.model.Room');
-                rent.set('IdRecord', -1);
-                rent.set('Number', 0);
-                rent.set('FloorId', 1);
-                rent.set('Square', 0);
-                rent.set('MeterPrice', 0);
-                rent.set('X1', 0);
-                rent.set('X2', 0);
-                rent.set('Y1', 0);
-                rent.set('Y2', 0);
-                rent.set('DocNum', '');
-                rent.set('DocDate', new Date('2016-01-01'));
-                rent.set('Building', '');
-                rent.set('BTINums', '');
-                rent.set('DocExpDate', new Date('2016-01-01'));
-                rent.set('RentPayment', 0);
+                scale: 'medium',
+                text: 'Создать',
+                handler: function() {
+                    var rent = Ext.create('ECA.model.Room');
+                    rent.set('IdRecord', -1);
+                    rent.set('CompanyId', 0);
+                    rent.set('FloorId', 1);
+                    rent.set('Square', 0);
+                    rent.set('MeterPrice', 0);
+                    rent.set('X1', 0);
+                    rent.set('X2', 0);
+                    rent.set('Y1', 0);
+                    rent.set('Y2', 0);
 
-                this.up('grid').store.add(rent);
-                this.up('grid').store.sync();
-            }
-        }, {
-            scale: 'medium',
-            text: 'Удалить',
-            handler: function () {
-                var grid = this.up('grid');
-                var model = grid.getSelectionModel().getSelection()[0];
-                grid.store.remove(model);
-                grid.store.sync();
-            }
-        },
+                    this.up('grid').store.add(rent);
+                    this.up('grid').store.sync();
+                }
+            }, {
+                scale: 'medium',
+                text: 'Редактировать',
+                handler: function() {
+                    var wnd = this.up('window');
+                    var rec = wnd.down('grid').getSelectionModel().getSelection()[0];
+                    if (rec !== null) {
+                        var editWnd = Ext.create('ECA.view.room.RoomEdit');
+                        editWnd.showModalDialog(rec,
+                            function(modalResult, data) {
+                                if (modalResult === true) {
+                                    editWnd.down('form').updateRecord();
+                                    wnd.down('grid').store.sync();
+                                }
+                            });
+                    }
+                }
+            }, {
+                scale: 'medium',
+                text: 'Удалить',
+                handler: function() {
+                    var grid = this.up('grid');
+                    var model = grid.getSelectionModel().getSelection()[0];
+                    grid.store.remove(model);
+                    grid.store.sync();
+                }
+            },
             '->', {
                 scale: 'medium',
-                text: 'Сохранить изменения',
-                handler: function () {
+                text: 'Сохранить расположение помещения',
+                handler: function() {
                     var wnd = this.up('window');
 
                     var grid = this.up('grid');
@@ -247,7 +214,7 @@
                 queryMode: 'local',
                 typeAhead: true,
                 listeners: {
-                    select: function (combo, record, eOpts) {
+                    select: function(combo, record, eOpts) {
                         var photofloor = Ext.getCmp('floorimage');
                         var wnd = this.up('window');
 
@@ -288,7 +255,7 @@
                 }]
             }, {
                 text: 'Добавить фото',
-                handler: function () {
+                handler: function() {
                     var frm = this.up('window').down('form').getForm();
                     var roomGrid = this.up('window').down('grid');
                     var model = roomGrid.getSelectionModel().getSelection()[0];
@@ -306,7 +273,7 @@
                     frm.submit({
                         url: 'API/Files/AddRoomPhoto?roomId=' + roomId,
                         waitMsg: 'Загрузка...',
-                        success: function (fp, o) {
+                        success: function(fp, o) {
                             Ext.getCmp('photoGrid').store.load();
                             Ext.Msg.alert('Загрузка файла', 'Файл загружен!');
                         }
@@ -314,7 +281,7 @@
                 }
             }, {
                 text: 'Удалить фото',
-                handler: function () {
+                handler: function() {
                     var grid = Ext.getCmp('photoGrid');
                     var record = grid.getSelectionModel().getSelection()[0];
                     record.drop();
@@ -329,7 +296,7 @@
                     text: 'Фотография',
                     dataIndex: 'Url',
                     flex: 1,
-                    renderer: function (value) {
+                    renderer: function(value) {
                         return '<div align="center"><img style="height: 100%; max-height: 200px;" src="' + value + '"></div>';
                     }
                 }]

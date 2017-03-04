@@ -24,7 +24,7 @@ Ext.define('ECA.view.users.UsersForm',
 
 
                 columns: [
-                    { text: 'Логин', dataIndex: 'UserName', flex: 2 },
+                   // { text: 'Логин', dataIndex: 'UserName', flex: 2 },
                     { text: 'Почта', dataIndex: 'Email', flex: 2 },
                     { text: 'Должность', dataIndex: 'Position', flex: 2 },
                     { xtype: 'checkcolumn', text: 'Активна', dataIndex: 'IsActive', flex: 1, enable: false }

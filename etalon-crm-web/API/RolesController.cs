@@ -14,11 +14,11 @@ using Newtonsoft.Json.Linq;
 
 namespace etalon_crm_web.API
 {
-    [System.Web.Http.Authorize(Roles = "admin")]
+    [System.Web.Http.Authorize(Roles = "Admin")]
     public class RolesController : ApiController
     {
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> _roleManger;
+        private readonly RoleManager<Role> _roleManager;
 
         public RolesController() : this(new UserManager<User>(new UserStore()), new RoleManager<Role>(new RoleStore()))
         {
@@ -27,7 +27,7 @@ namespace etalon_crm_web.API
         public RolesController(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             _userManager = userManager;
-            _roleManger = roleManager;
+            _roleManager = roleManager;
         }
 
         [System.Web.Http.HttpPost]
@@ -36,8 +36,17 @@ namespace etalon_crm_web.API
             try
             {
                 dynamic data = jsonData;
-                var rolesArr = JArray.Parse(data.Data.ToString());
-                string[] needRoles = rolesArr.ToObject<string[]>();
+                string[] needRoles = {};
+                try
+                {
+                    var rolesArr = JArray.Parse(data.Data.ToString());
+                    needRoles = rolesArr.ToObject<string[]>();
+                }
+                catch (Exception ex)
+                {
+                    // log
+                }
+                
 
                 string userId = data.UserId;
                 var currRoles = _userManager.GetRoles(userId);
@@ -63,7 +72,7 @@ namespace etalon_crm_web.API
         [System.Web.Http.HttpGet]
         public MessageModel GetAll()
         {
-            return MessageBuilder.GetSuccessMessage(_roleManger.Roles);
+            return MessageBuilder.GetSuccessMessage(_roleManager.Roles);
         }
 
         [System.Web.Http.HttpGet]

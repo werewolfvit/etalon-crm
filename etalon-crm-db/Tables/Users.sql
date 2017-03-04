@@ -10,11 +10,11 @@
 	[Middlename] NVARCHAR(50) NULL,
 	[TimeLimit]     DATETIME2 (7)    NULL,
 	[IsActive]	BIT NOT NULL DEFAULT 1,
-	[Email]         NVARCHAR (50) NULL,
+	[Email]         NVARCHAR (50) NULL UNIQUE,
 	[Phone] NVARCHAR(50) NULL,
 	[PhotoId] INT NULL,
 	[Description]   NVARCHAR (256)   DEFAULT ('') NULL,
-    [CompanyId] INT NULL, 
+    [CompanyId] INT NOT NULL DEFAULT 0, 
 	PRIMARY KEY CLUSTERED ([UserId] ASC),
 	FOREIGN KEY ([PhotoId]) REFERENCES Files(IdRecord),
 	FOREIGN KEY ([CompanyId]) references Companies(IdRecord)

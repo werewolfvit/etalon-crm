@@ -1,6 +1,6 @@
 ﻿Ext.define('ECA.store.Companies', {
     extend: 'Ext.data.Store',
-    //alias: 'companiesStore',
+    alias: 'companiesStore1',
     model: 'ECA.model.Company',
     autoLoad: false,
     autoSync: true,

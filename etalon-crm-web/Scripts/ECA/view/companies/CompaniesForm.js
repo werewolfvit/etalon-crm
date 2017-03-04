@@ -25,10 +25,11 @@ Ext.define('ECA.view.companies.CompaniesForm',
             ],
             tbar: [{
                 scale: 'medium', text: 'Создать', handler: function () {
-                    Ext.MessageBox.prompt('Наименование', 'Введите название компании:', function (btn, text) {
-                        if (btn === 'ok' && text !== Ext.emptyString) {
+                    var compEdit = Ext.create('ECA.view.companies.CompanyEdit');
+                    compEdit.showModalDialog(null, function (modalResult, data) {
+                        if (modalResult) {
                             var newComp = Ext.create('ECA.model.Company');
-                            newComp.set('Name', text);
+                            newComp.set(data);
                             var store = Ext.getCmp('companiesForm').down('grid').store;
                             store.add(newComp);
                         }
@@ -36,13 +37,26 @@ Ext.define('ECA.view.companies.CompaniesForm',
                 }
                 }, {
                     scale: 'medium', text: 'Редактировать', handler: function () {
-                        Ext.MessageBox.prompt('Наименование', 'Введите название компании:', function (btn, text) {
-                            if (btn === 'ok' && text !== Ext.emptyString) {
-                                var currModel = Ext.getCmp('companiesForm').down('grid').getSelectionModel().getSelection()[0];
-                                currModel.set('Name', text);
-                                currModel.update();
-                            }
-                        });
+                        var currModel = Ext.getCmp('companiesForm').down('grid').getSelectionModel().getSelection()[0];
+                        if (currModel !== null) {
+                            var compEdit = Ext.create('ECA.view.companies.CompanyEdit');
+                            compEdit.showModalDialog(currModel, function (modalResult, data) {
+                                if (modalResult) {
+                                    currModel.set(data);
+                                    //currModel.update();
+                                    //compEdit.down('form').updateRecord();
+                                }
+                            });
+                        }
+                        
+
+                        //Ext.MessageBox.prompt('Наименование', 'Введите название компании:', function (btn, text) {
+                        //    if (btn === 'ok' && text !== Ext.emptyString) {
+                        //        var currModel = Ext.getCmp('companiesForm').down('grid').getSelectionModel().getSelection()[0];
+                        //        currModel.set('Name', text);
+                        //        currModel.update();
+                        //    }
+                        //});
                     }
                 }, {
                     scale: 'medium', text: 'Удалить', handler: function () {

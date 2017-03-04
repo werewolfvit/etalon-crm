@@ -32,6 +32,7 @@ namespace etalon_crm_web.Models
     {
         public Guid RoleId { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         string IRole<string>.Id => RoleId.ToString();
     }
 }

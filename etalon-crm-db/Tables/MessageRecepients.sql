@@ -1,7 +1,9 @@
 ﻿CREATE TABLE [dbo].[MessageRecepients]
 (
-	[IdRecord] INT NOT NULL PRIMARY KEY,
+	[IdRecord] INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
 	[MessageId] INT NOT NULL,
-	[UserId] UNIQUEIDENTIFIER NOT NULL,
-	FOREIGN KEY (MessageId) REFERENCES Messages(IdRecord)
+	[ToUserId] UNIQUEIDENTIFIER NOT NULL,
+	[IsReaded] BIT NOT NULL DEFAULT 0,
+	FOREIGN KEY ([ToUserId]) REFERENCES Users(UserId),
+    FOREIGN KEY (MessageId) REFERENCES [Messages](IdRecord),
 )

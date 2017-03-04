@@ -7,7 +7,7 @@
         bodyPagging: 10,
         title: 'Etalon CRM: вход в систему',
         closable: false,
-        autoShow: true,
+        //autoShow: true,
         resizable: false,
         draggable: false,
 
@@ -17,11 +17,13 @@
             items: [
                 {
                     xtype: 'textfield',
-                    name: 'login',
-                    fieldLabel: 'Логин:',
+                    name: 'email',
+                    fieldLabel: 'Ваша почта:',
                     allowBlank: false,
                     margin: "10 5 0 5",
-                    emptyText: 'baryshnikov.v'
+                    emptyText: 'your.login',
+                    vtype: 'email',
+                    emptyText: 'example@mail.com'
                 }, {
                     xtype: 'textfield',
                     name: 'password',
@@ -40,6 +42,15 @@
                 }
             ],
             buttons: [
+            {
+                text: 'Забыли пароль?',
+                handler: function () {
+                    var wnd = Ext.create('ECA.view.login.RefreshPassForm');
+                    wnd.center();
+                    wnd.show();
+                    this.up('window').close();
+                }
+            },
                 {
                     text: 'Войти',
                     formBind: true,
@@ -56,14 +67,11 @@
                                     if (!obj.success) {
                                         Ext.Msg.alert('Не удалось войти', '<b>Неверная пара логин\\пароль!</b>', Ext.emptyFn);
                                     } else {
-                                        var wnd = btn.up('window');
-                                        wnd.close();
-
-                                        Ext.create("MainMenuForm");
+                                        window.location.reload();
                                     }
                                 },
                                 failure: function () {
-                                    Ext.Msg.alert('Сервер недоступен', 'Сервер не отвечает, обратитесь к администратору.', Ext.emptyFn);
+                                    Ext.Msg.alert('Не удалось войти', 'Сервер не отвечает, обратитесь к администратору.', Ext.emptyFn);
                                 }
                             });
                         }

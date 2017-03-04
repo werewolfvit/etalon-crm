@@ -24,33 +24,30 @@
                 xtype: 'tagfield',
                 labelWidth: 200,
                 width: 850,
-                name: 'addressSelector',
+                name: 'Recepients',
                 id: 'addressTagField',
                 fieldLabel: 'Выберите получателей:',
                 store: {
                     xtype: 'store',
-                    fields: ['id', 'show'],
-                    data: [{
-                        id: 0,
-                        show: 'Бухгалтерия'
-                    }, {
-                        id: 1,
-                        show: 'Охрана'
-                    }, {
-                        id: 2,
-                        show: 'Завхоз'
-                    }, {
-                        id: 3,
-                        show: 'Директор'
-                    }]
+                    model: 'ECA.model.Recepient',
+                    autoLoad: true,
+                    proxy: {
+                        type: 'ajax',
+                        url: '/API/Messages/GetRecepientList',
+                        reader: {
+                            type: 'json',
+                            rootProperty: 'data'
+                        }
+                    }
                 },
-                displayField: 'show',
-                valueField: 'show',
+                displayField: 'Recepient',
+                valueField: 'IdRecord',
                 queryMode: 'local',
                 filterPickList: true
             }, {
                 flex: 1,
                 xtype: 'textfield',
+                name: 'Subject',
                 labelWidth: 200,
                 width: 850,
                 fieldLabel: 'Заголовок письма:'
@@ -58,21 +55,38 @@
         }, {
             region: 'center',
             xtype: 'htmleditor',
+            name: 'Text',
             layout: 'fit'
         }, {
             region: 'south',
-            xtype: 'form',
+            xtype: 'panel',
             title: '',
             buttons: [{
                 xtype: 'button',
                 scale: 'medium',
                 text: 'Отправить',
                 handler: function () {
-                    Ext.Msg.show({
-                        title: 'Сообщение',
-                        msg: 'Успешно отправлено'
+                    var form = this.up('form').getForm();
+                    Ext.Ajax.request({
+                        url: "API/Messages/SendMessage",
+                        method: "POST",
+                        jsonData: form.getValues(),
+                        success: function (response, opts) {
+                            var obj = Ext.decode(response.responseText);
+                            if (!obj.success) {
+                                Ext.Msg.alert('Отправка', '<b>Сообщение не удалось отправить</b>', Ext.emptyFn);
+                            } else {
+                                Ext.Msg.alert('Отправка', '<b>Сообщение отправлено</b>', Ext.emptyFn);
+                                var wnd = btn.up('window');
+                                wnd.close();
+
+                                Ext.create("MainMenuForm");
+                            }
+                        },
+                        failure: function () {
+                            Ext.Msg.alert('Сервер недоступен', 'Сервер не отвечает, обратитесь к администратору.', Ext.emptyFn);
+                        }
                     });
-                    this.up("window").close();
                 }
             }, {
                 xtype: 'button',

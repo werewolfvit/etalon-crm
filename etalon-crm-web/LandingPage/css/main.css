@@ -2,7 +2,7 @@ h1 {text-align: center;}
 h2{ font-weight: 300;}
 body{background: #fff;}
 .min140{min-height: 140px;}
-.max140{max-height: 140px;}
+.max140{max-height: 185px;}
 .nopadding{padding: 0}
 .mtop{margin-top: 20px;}
 .head-menu{padding: 0; z-index: 997; text-align: center;}
@@ -39,10 +39,19 @@ body{background: #fff;}
 .mtop{margin-top: 20px;}
 .preview img{width: 100px}
 
-<<<<<<< HEAD
-/*#modal_form{display: block!important; opacity: 1!important; width:500px!important; height: 500px!important; }
-#overlay{display: block!important;}*/
->>>>>>> Stashed changes
-=======
+.service-manage img{width: 270px; height: 156px;}
+.scroll{overflow: hidden;}
+.partner_logo{text-align: center;}
+.partner_logo img{padding-top: 25px;padding-bottom: 25px;}
 
->>>>>>> origin/develop
+
+
+/*INFRA*/
+
+.logo-infra{margin: 50px 50px 50px 150px;width: 350px;height: 140px;}
+.clock-infra{position: absolute; z-index: 10;}
+.head-text{padding: 50px 0 50px 0;font-weight: 300;font-size: 40px;}
+.footer-text{padding: 15px 0 15px 0;font-weight: 300;font-size: 40px;}
+.sub{color: white;text-align: center;font-weight: 200;}
+.descript{ text-align: center; }
+.descript h3{ font-weight: 300;padding-bottom: 30px;}

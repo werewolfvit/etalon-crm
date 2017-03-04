@@ -11,7 +11,7 @@ namespace etalon_crm_web.Controllers
         // GET: Default
         public ActionResult Index()
         {
-            return Redirect("~/Default.html");
+            return Redirect("~/Index.html");
         }
     }
 }

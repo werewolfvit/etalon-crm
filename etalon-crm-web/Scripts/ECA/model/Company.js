@@ -1,4 +1,8 @@
 ﻿Ext.define('ECA.model.Company', {
     extend: 'Ext.data.Model',
-    fields: ['Name', 'IdRecord']
-}); 
+    fields: ['IdRecord', 'Name', 'FullName', 'DocNum',
+        'DocDate', 'Building', 'BTINums', 'DocExpDate', 'RentPayment',
+        'MonthCount', 'PayByDoc', 'PayReceived', 'ToPay']
+});                      
+                         
+                         

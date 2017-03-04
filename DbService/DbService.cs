@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using DataService;
+using NLog;
 
 namespace DataService
 {
     public partial class DbService
     {
         private readonly string _connectionString;
+        private static Logger _logger = LogManager.GetLogger("DbService");
 
         private static string IdentityName
         {

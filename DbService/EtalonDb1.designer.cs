@@ -30,24 +30,9 @@ namespace DataService
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertCompany(Company instance);
-    partial void UpdateCompany(Company instance);
-    partial void DeleteCompany(Company instance);
     partial void InsertFile(File instance);
     partial void UpdateFile(File instance);
     partial void DeleteFile(File instance);
-    partial void InsertFloor(Floor instance);
-    partial void UpdateFloor(Floor instance);
-    partial void DeleteFloor(Floor instance);
-    partial void InsertMessageAttachmet(MessageAttachmet instance);
-    partial void UpdateMessageAttachmet(MessageAttachmet instance);
-    partial void DeleteMessageAttachmet(MessageAttachmet instance);
-    partial void InsertMessageRecepient(MessageRecepient instance);
-    partial void UpdateMessageRecepient(MessageRecepient instance);
-    partial void DeleteMessageRecepient(MessageRecepient instance);
-    partial void InsertMessage(Message instance);
-    partial void UpdateMessage(Message instance);
-    partial void DeleteMessage(Message instance);
     partial void InsertRole(Role instance);
     partial void UpdateRole(Role instance);
     partial void DeleteRole(Role instance);
@@ -63,6 +48,27 @@ namespace DataService
     partial void InsertRoom(Room instance);
     partial void UpdateRoom(Room instance);
     partial void DeleteRoom(Room instance);
+    partial void InsertMsgGroup(MsgGroup instance);
+    partial void UpdateMsgGroup(MsgGroup instance);
+    partial void DeleteMsgGroup(MsgGroup instance);
+    partial void InsertMsgGroupsLink(MsgGroupsLink instance);
+    partial void UpdateMsgGroupsLink(MsgGroupsLink instance);
+    partial void DeleteMsgGroupsLink(MsgGroupsLink instance);
+    partial void InsertMsgNotification(MsgNotification instance);
+    partial void UpdateMsgNotification(MsgNotification instance);
+    partial void DeleteMsgNotification(MsgNotification instance);
+    partial void InsertUsersMsgGroup(UsersMsgGroup instance);
+    partial void UpdateUsersMsgGroup(UsersMsgGroup instance);
+    partial void DeleteUsersMsgGroup(UsersMsgGroup instance);
+    partial void InsertMessage(Message instance);
+    partial void UpdateMessage(Message instance);
+    partial void DeleteMessage(Message instance);
+    partial void InsertMessageRecepient(MessageRecepient instance);
+    partial void UpdateMessageRecepient(MessageRecepient instance);
+    partial void DeleteMessageRecepient(MessageRecepient instance);
+    partial void InsertCompany(Company instance);
+    partial void UpdateCompany(Company instance);
+    partial void DeleteCompany(Company instance);
     #endregion
 		
 		public EtalonDbDataContext() : 
@@ -95,51 +101,11 @@ namespace DataService
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Company> Companies
-		{
-			get
-			{
-				return this.GetTable<Company>();
-			}
-		}
-		
 		public System.Data.Linq.Table<File> Files
 		{
 			get
 			{
 				return this.GetTable<File>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Floor> Floors
-		{
-			get
-			{
-				return this.GetTable<Floor>();
-			}
-		}
-		
-		public System.Data.Linq.Table<MessageAttachmet> MessageAttachmets
-		{
-			get
-			{
-				return this.GetTable<MessageAttachmet>();
-			}
-		}
-		
-		public System.Data.Linq.Table<MessageRecepient> MessageRecepients
-		{
-			get
-			{
-				return this.GetTable<MessageRecepient>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Message> Messages
-		{
-			get
-			{
-				return this.GetTable<Message>();
 			}
 		}
 		
@@ -182,147 +148,69 @@ namespace DataService
 				return this.GetTable<Room>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Companies")]
-	public partial class Company : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdRecord;
-		
-		private string _Name;
-		
-		private EntitySet<User> _Users;
-		
-		private EntitySet<Room> _Rooms;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdRecordChanging(int value);
-    partial void OnIdRecordChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    #endregion
-		
-		public Company()
-		{
-			this._Users = new EntitySet<User>(new Action<User>(this.attach_Users), new Action<User>(this.detach_Users));
-			this._Rooms = new EntitySet<Room>(new Action<Room>(this.attach_Rooms), new Action<Room>(this.detach_Rooms));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdRecord
+		public System.Data.Linq.Table<MsgGroup> MsgGroups
 		{
 			get
 			{
-				return this._IdRecord;
-			}
-			set
-			{
-				if ((this._IdRecord != value))
-				{
-					this.OnIdRecordChanging(value);
-					this.SendPropertyChanging();
-					this._IdRecord = value;
-					this.SendPropertyChanged("IdRecord");
-					this.OnIdRecordChanged();
-				}
+				return this.GetTable<MsgGroup>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string Name
+		public System.Data.Linq.Table<MsgGroupsLink> MsgGroupsLinks
 		{
 			get
 			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
+				return this.GetTable<MsgGroupsLink>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_User", Storage="_Users", ThisKey="IdRecord", OtherKey="CompanyId")]
-		public EntitySet<User> Users
+		public System.Data.Linq.Table<MsgNotification> MsgNotifications
 		{
 			get
 			{
-				return this._Users;
-			}
-			set
-			{
-				this._Users.Assign(value);
+				return this.GetTable<MsgNotification>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Room", Storage="_Rooms", ThisKey="IdRecord", OtherKey="CompanyId")]
-		public EntitySet<Room> Rooms
+		public System.Data.Linq.Table<UsersMsgGroup> UsersMsgGroups
 		{
 			get
 			{
-				return this._Rooms;
+				return this.GetTable<UsersMsgGroup>();
 			}
-			set
+		}
+		
+		public System.Data.Linq.Table<Message> Messages
+		{
+			get
 			{
-				this._Rooms.Assign(value);
+				return this.GetTable<Message>();
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
+		public System.Data.Linq.Table<MessageRecepient> MessageRecepients
 		{
-			if ((this.PropertyChanging != null))
+			get
 			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
+				return this.GetTable<MessageRecepient>();
 			}
 		}
 		
-		protected virtual void SendPropertyChanged(String propertyName)
+		public System.Data.Linq.Table<vClientsRoomsReport> vClientsRoomsReports
 		{
-			if ((this.PropertyChanged != null))
+			get
 			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<vClientsRoomsReport>();
 			}
 		}
 		
-		private void attach_Users(User entity)
+		public System.Data.Linq.Table<Company> Companies
 		{
-			this.SendPropertyChanging();
-			entity.Company = this;
-		}
-		
-		private void detach_Users(User entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = null;
-		}
-		
-		private void attach_Rooms(Room entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = this;
-		}
-		
-		private void detach_Rooms(Room entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = null;
+			get
+			{
+				return this.GetTable<Company>();
+			}
 		}
 	}
 	
@@ -337,10 +225,6 @@ namespace DataService
 		private string _Name;
 		
 		private string _Path;
-		
-		private EntitySet<Floor> _Floors;
-		
-		private EntitySet<MessageAttachmet> _MessageAttachmets;
 		
 		private EntitySet<RoomPhoto> _RoomPhotos;
 		
@@ -360,8 +244,6 @@ namespace DataService
 		
 		public File()
 		{
-			this._Floors = new EntitySet<Floor>(new Action<Floor>(this.attach_Floors), new Action<Floor>(this.detach_Floors));
-			this._MessageAttachmets = new EntitySet<MessageAttachmet>(new Action<MessageAttachmet>(this.attach_MessageAttachmets), new Action<MessageAttachmet>(this.detach_MessageAttachmets));
 			this._RoomPhotos = new EntitySet<RoomPhoto>(new Action<RoomPhoto>(this.attach_RoomPhotos), new Action<RoomPhoto>(this.detach_RoomPhotos));
 			this._Users = new EntitySet<User>(new Action<User>(this.attach_Users), new Action<User>(this.detach_Users));
 			OnCreated();
@@ -427,32 +309,6 @@ namespace DataService
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="File_Floor", Storage="_Floors", ThisKey="IdRecord", OtherKey="PhotoId")]
-		public EntitySet<Floor> Floors
-		{
-			get
-			{
-				return this._Floors;
-			}
-			set
-			{
-				this._Floors.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="File_MessageAttachmet", Storage="_MessageAttachmets", ThisKey="IdRecord", OtherKey="IdFile")]
-		public EntitySet<MessageAttachmet> MessageAttachmets
-		{
-			get
-			{
-				return this._MessageAttachmets;
-			}
-			set
-			{
-				this._MessageAttachmets.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="File_RoomPhoto", Storage="_RoomPhotos", ThisKey="IdRecord", OtherKey="PhotoId")]
 		public EntitySet<RoomPhoto> RoomPhotos
 		{
@@ -499,30 +355,6 @@ namespace DataService
 			}
 		}
 		
-		private void attach_Floors(Floor entity)
-		{
-			this.SendPropertyChanging();
-			entity.File = this;
-		}
-		
-		private void detach_Floors(Floor entity)
-		{
-			this.SendPropertyChanging();
-			entity.File = null;
-		}
-		
-		private void attach_MessageAttachmets(MessageAttachmet entity)
-		{
-			this.SendPropertyChanging();
-			entity.File = this;
-		}
-		
-		private void detach_MessageAttachmets(MessageAttachmet entity)
-		{
-			this.SendPropertyChanging();
-			entity.File = null;
-		}
-		
 		private void attach_RoomPhotos(RoomPhoto entity)
 		{
 			this.SendPropertyChanging();
@@ -545,755 +377,6 @@ namespace DataService
 		{
 			this.SendPropertyChanging();
 			entity.File = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Floors")]
-	public partial class Floor : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdRecord;
-		
-		private string _FloorName;
-		
-		private int _PhotoId;
-		
-		private EntityRef<File> _File;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdRecordChanging(int value);
-    partial void OnIdRecordChanged();
-    partial void OnFloorNameChanging(string value);
-    partial void OnFloorNameChanged();
-    partial void OnPhotoIdChanging(int value);
-    partial void OnPhotoIdChanged();
-    #endregion
-		
-		public Floor()
-		{
-			this._File = default(EntityRef<File>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdRecord
-		{
-			get
-			{
-				return this._IdRecord;
-			}
-			set
-			{
-				if ((this._IdRecord != value))
-				{
-					this.OnIdRecordChanging(value);
-					this.SendPropertyChanging();
-					this._IdRecord = value;
-					this.SendPropertyChanged("IdRecord");
-					this.OnIdRecordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FloorName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string FloorName
-		{
-			get
-			{
-				return this._FloorName;
-			}
-			set
-			{
-				if ((this._FloorName != value))
-				{
-					this.OnFloorNameChanging(value);
-					this.SendPropertyChanging();
-					this._FloorName = value;
-					this.SendPropertyChanged("FloorName");
-					this.OnFloorNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhotoId", DbType="Int NOT NULL")]
-		public int PhotoId
-		{
-			get
-			{
-				return this._PhotoId;
-			}
-			set
-			{
-				if ((this._PhotoId != value))
-				{
-					if (this._File.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPhotoIdChanging(value);
-					this.SendPropertyChanging();
-					this._PhotoId = value;
-					this.SendPropertyChanged("PhotoId");
-					this.OnPhotoIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="File_Floor", Storage="_File", ThisKey="PhotoId", OtherKey="IdRecord", IsForeignKey=true)]
-		public File File
-		{
-			get
-			{
-				return this._File.Entity;
-			}
-			set
-			{
-				File previousValue = this._File.Entity;
-				if (((previousValue != value) 
-							|| (this._File.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._File.Entity = null;
-						previousValue.Floors.Remove(this);
-					}
-					this._File.Entity = value;
-					if ((value != null))
-					{
-						value.Floors.Add(this);
-						this._PhotoId = value.IdRecord;
-					}
-					else
-					{
-						this._PhotoId = default(int);
-					}
-					this.SendPropertyChanged("File");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MessageAttachmets")]
-	public partial class MessageAttachmet : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdRecord;
-		
-		private int _IdMessage;
-		
-		private int _IdFile;
-		
-		private EntityRef<File> _File;
-		
-		private EntityRef<Message> _Message;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdRecordChanging(int value);
-    partial void OnIdRecordChanged();
-    partial void OnIdMessageChanging(int value);
-    partial void OnIdMessageChanged();
-    partial void OnIdFileChanging(int value);
-    partial void OnIdFileChanged();
-    #endregion
-		
-		public MessageAttachmet()
-		{
-			this._File = default(EntityRef<File>);
-			this._Message = default(EntityRef<Message>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdRecord
-		{
-			get
-			{
-				return this._IdRecord;
-			}
-			set
-			{
-				if ((this._IdRecord != value))
-				{
-					this.OnIdRecordChanging(value);
-					this.SendPropertyChanging();
-					this._IdRecord = value;
-					this.SendPropertyChanged("IdRecord");
-					this.OnIdRecordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdMessage", DbType="Int NOT NULL")]
-		public int IdMessage
-		{
-			get
-			{
-				return this._IdMessage;
-			}
-			set
-			{
-				if ((this._IdMessage != value))
-				{
-					if (this._Message.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdMessageChanging(value);
-					this.SendPropertyChanging();
-					this._IdMessage = value;
-					this.SendPropertyChanged("IdMessage");
-					this.OnIdMessageChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdFile", DbType="Int NOT NULL")]
-		public int IdFile
-		{
-			get
-			{
-				return this._IdFile;
-			}
-			set
-			{
-				if ((this._IdFile != value))
-				{
-					if (this._File.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdFileChanging(value);
-					this.SendPropertyChanging();
-					this._IdFile = value;
-					this.SendPropertyChanged("IdFile");
-					this.OnIdFileChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="File_MessageAttachmet", Storage="_File", ThisKey="IdFile", OtherKey="IdRecord", IsForeignKey=true)]
-		public File File
-		{
-			get
-			{
-				return this._File.Entity;
-			}
-			set
-			{
-				File previousValue = this._File.Entity;
-				if (((previousValue != value) 
-							|| (this._File.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._File.Entity = null;
-						previousValue.MessageAttachmets.Remove(this);
-					}
-					this._File.Entity = value;
-					if ((value != null))
-					{
-						value.MessageAttachmets.Add(this);
-						this._IdFile = value.IdRecord;
-					}
-					else
-					{
-						this._IdFile = default(int);
-					}
-					this.SendPropertyChanged("File");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Message_MessageAttachmet", Storage="_Message", ThisKey="IdMessage", OtherKey="IdRecord", IsForeignKey=true)]
-		public Message Message
-		{
-			get
-			{
-				return this._Message.Entity;
-			}
-			set
-			{
-				Message previousValue = this._Message.Entity;
-				if (((previousValue != value) 
-							|| (this._Message.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Message.Entity = null;
-						previousValue.MessageAttachmets.Remove(this);
-					}
-					this._Message.Entity = value;
-					if ((value != null))
-					{
-						value.MessageAttachmets.Add(this);
-						this._IdMessage = value.IdRecord;
-					}
-					else
-					{
-						this._IdMessage = default(int);
-					}
-					this.SendPropertyChanged("Message");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MessageRecepients")]
-	public partial class MessageRecepient : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdRecord;
-		
-		private int _MessageId;
-		
-		private System.Guid _UserId;
-		
-		private EntityRef<Message> _Message;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdRecordChanging(int value);
-    partial void OnIdRecordChanged();
-    partial void OnMessageIdChanging(int value);
-    partial void OnMessageIdChanged();
-    partial void OnUserIdChanging(System.Guid value);
-    partial void OnUserIdChanged();
-    #endregion
-		
-		public MessageRecepient()
-		{
-			this._Message = default(EntityRef<Message>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int IdRecord
-		{
-			get
-			{
-				return this._IdRecord;
-			}
-			set
-			{
-				if ((this._IdRecord != value))
-				{
-					this.OnIdRecordChanging(value);
-					this.SendPropertyChanging();
-					this._IdRecord = value;
-					this.SendPropertyChanged("IdRecord");
-					this.OnIdRecordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MessageId", DbType="Int NOT NULL")]
-		public int MessageId
-		{
-			get
-			{
-				return this._MessageId;
-			}
-			set
-			{
-				if ((this._MessageId != value))
-				{
-					if (this._Message.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMessageIdChanging(value);
-					this.SendPropertyChanging();
-					this._MessageId = value;
-					this.SendPropertyChanged("MessageId");
-					this.OnMessageIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid UserId
-		{
-			get
-			{
-				return this._UserId;
-			}
-			set
-			{
-				if ((this._UserId != value))
-				{
-					this.OnUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._UserId = value;
-					this.SendPropertyChanged("UserId");
-					this.OnUserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Message_MessageRecepient", Storage="_Message", ThisKey="MessageId", OtherKey="IdRecord", IsForeignKey=true)]
-		public Message Message
-		{
-			get
-			{
-				return this._Message.Entity;
-			}
-			set
-			{
-				Message previousValue = this._Message.Entity;
-				if (((previousValue != value) 
-							|| (this._Message.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Message.Entity = null;
-						previousValue.MessageRecepients.Remove(this);
-					}
-					this._Message.Entity = value;
-					if ((value != null))
-					{
-						value.MessageRecepients.Add(this);
-						this._MessageId = value.IdRecord;
-					}
-					else
-					{
-						this._MessageId = default(int);
-					}
-					this.SendPropertyChanged("Message");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Messages")]
-	public partial class Message : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdRecord;
-		
-		private string _MessageText;
-		
-		private System.Guid _FromUser;
-		
-		private System.DateTime _DateCreate;
-		
-		private bool _IsReaded;
-		
-		private EntitySet<MessageAttachmet> _MessageAttachmets;
-		
-		private EntitySet<MessageRecepient> _MessageRecepients;
-		
-		private EntityRef<User> _User;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdRecordChanging(int value);
-    partial void OnIdRecordChanged();
-    partial void OnMessageTextChanging(string value);
-    partial void OnMessageTextChanged();
-    partial void OnFromUserChanging(System.Guid value);
-    partial void OnFromUserChanged();
-    partial void OnDateCreateChanging(System.DateTime value);
-    partial void OnDateCreateChanged();
-    partial void OnIsReadedChanging(bool value);
-    partial void OnIsReadedChanged();
-    #endregion
-		
-		public Message()
-		{
-			this._MessageAttachmets = new EntitySet<MessageAttachmet>(new Action<MessageAttachmet>(this.attach_MessageAttachmets), new Action<MessageAttachmet>(this.detach_MessageAttachmets));
-			this._MessageRecepients = new EntitySet<MessageRecepient>(new Action<MessageRecepient>(this.attach_MessageRecepients), new Action<MessageRecepient>(this.detach_MessageRecepients));
-			this._User = default(EntityRef<User>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdRecord
-		{
-			get
-			{
-				return this._IdRecord;
-			}
-			set
-			{
-				if ((this._IdRecord != value))
-				{
-					this.OnIdRecordChanging(value);
-					this.SendPropertyChanging();
-					this._IdRecord = value;
-					this.SendPropertyChanged("IdRecord");
-					this.OnIdRecordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MessageText", DbType="NVarChar(MAX)")]
-		public string MessageText
-		{
-			get
-			{
-				return this._MessageText;
-			}
-			set
-			{
-				if ((this._MessageText != value))
-				{
-					this.OnMessageTextChanging(value);
-					this.SendPropertyChanging();
-					this._MessageText = value;
-					this.SendPropertyChanged("MessageText");
-					this.OnMessageTextChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FromUser", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid FromUser
-		{
-			get
-			{
-				return this._FromUser;
-			}
-			set
-			{
-				if ((this._FromUser != value))
-				{
-					if (this._User.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFromUserChanging(value);
-					this.SendPropertyChanging();
-					this._FromUser = value;
-					this.SendPropertyChanged("FromUser");
-					this.OnFromUserChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreate", DbType="DateTime2 NOT NULL")]
-		public System.DateTime DateCreate
-		{
-			get
-			{
-				return this._DateCreate;
-			}
-			set
-			{
-				if ((this._DateCreate != value))
-				{
-					this.OnDateCreateChanging(value);
-					this.SendPropertyChanging();
-					this._DateCreate = value;
-					this.SendPropertyChanged("DateCreate");
-					this.OnDateCreateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsReaded", DbType="Bit NOT NULL")]
-		public bool IsReaded
-		{
-			get
-			{
-				return this._IsReaded;
-			}
-			set
-			{
-				if ((this._IsReaded != value))
-				{
-					this.OnIsReadedChanging(value);
-					this.SendPropertyChanging();
-					this._IsReaded = value;
-					this.SendPropertyChanged("IsReaded");
-					this.OnIsReadedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Message_MessageAttachmet", Storage="_MessageAttachmets", ThisKey="IdRecord", OtherKey="IdMessage")]
-		public EntitySet<MessageAttachmet> MessageAttachmets
-		{
-			get
-			{
-				return this._MessageAttachmets;
-			}
-			set
-			{
-				this._MessageAttachmets.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Message_MessageRecepient", Storage="_MessageRecepients", ThisKey="IdRecord", OtherKey="MessageId")]
-		public EntitySet<MessageRecepient> MessageRecepients
-		{
-			get
-			{
-				return this._MessageRecepients;
-			}
-			set
-			{
-				this._MessageRecepients.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Message", Storage="_User", ThisKey="FromUser", OtherKey="UserId", IsForeignKey=true)]
-		public User User
-		{
-			get
-			{
-				return this._User.Entity;
-			}
-			set
-			{
-				User previousValue = this._User.Entity;
-				if (((previousValue != value) 
-							|| (this._User.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._User.Entity = null;
-						previousValue.Messages.Remove(this);
-					}
-					this._User.Entity = value;
-					if ((value != null))
-					{
-						value.Messages.Add(this);
-						this._FromUser = value.UserId;
-					}
-					else
-					{
-						this._FromUser = default(System.Guid);
-					}
-					this.SendPropertyChanged("User");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_MessageAttachmets(MessageAttachmet entity)
-		{
-			this.SendPropertyChanging();
-			entity.Message = this;
-		}
-		
-		private void detach_MessageAttachmets(MessageAttachmet entity)
-		{
-			this.SendPropertyChanging();
-			entity.Message = null;
-		}
-		
-		private void attach_MessageRecepients(MessageRecepient entity)
-		{
-			this.SendPropertyChanging();
-			entity.Message = this;
-		}
-		
-		private void detach_MessageRecepients(MessageRecepient entity)
-		{
-			this.SendPropertyChanging();
-			entity.Message = null;
 		}
 	}
 	
@@ -1639,13 +722,19 @@ namespace DataService
 		
 		private System.Nullable<int> _CompanyId;
 		
-		private EntitySet<Message> _Messages;
-		
 		private EntitySet<UsersRole> _UsersRoles;
 		
-		private EntityRef<Company> _Company;
+		private EntitySet<MsgNotification> _MsgNotifications;
+		
+		private EntitySet<UsersMsgGroup> _UsersMsgGroups;
+		
+		private EntitySet<Message> _Messages;
+		
+		private EntitySet<MessageRecepient> _MessageRecepients;
 		
 		private EntityRef<File> _File;
+		
+		private EntityRef<Company> _Company;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1685,10 +774,13 @@ namespace DataService
 		
 		public User()
 		{
-			this._Messages = new EntitySet<Message>(new Action<Message>(this.attach_Messages), new Action<Message>(this.detach_Messages));
 			this._UsersRoles = new EntitySet<UsersRole>(new Action<UsersRole>(this.attach_UsersRoles), new Action<UsersRole>(this.detach_UsersRoles));
-			this._Company = default(EntityRef<Company>);
+			this._MsgNotifications = new EntitySet<MsgNotification>(new Action<MsgNotification>(this.attach_MsgNotifications), new Action<MsgNotification>(this.detach_MsgNotifications));
+			this._UsersMsgGroups = new EntitySet<UsersMsgGroup>(new Action<UsersMsgGroup>(this.attach_UsersMsgGroups), new Action<UsersMsgGroup>(this.detach_UsersMsgGroups));
+			this._Messages = new EntitySet<Message>(new Action<Message>(this.attach_Messages), new Action<Message>(this.detach_Messages));
+			this._MessageRecepients = new EntitySet<MessageRecepient>(new Action<MessageRecepient>(this.attach_MessageRecepients), new Action<MessageRecepient>(this.detach_MessageRecepients));
 			this._File = default(EntityRef<File>);
+			this._Company = default(EntityRef<Company>);
 			OnCreated();
 		}
 		
@@ -2000,19 +1092,6 @@ namespace DataService
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Message", Storage="_Messages", ThisKey="UserId", OtherKey="FromUser")]
-		public EntitySet<Message> Messages
-		{
-			get
-			{
-				return this._Messages;
-			}
-			set
-			{
-				this._Messages.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UsersRole", Storage="_UsersRoles", ThisKey="UserId", OtherKey="UserId")]
 		public EntitySet<UsersRole> UsersRoles
 		{
@@ -2026,37 +1105,55 @@ namespace DataService
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_User", Storage="_Company", ThisKey="CompanyId", OtherKey="IdRecord", IsForeignKey=true)]
-		public Company Company
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_MsgNotification", Storage="_MsgNotifications", ThisKey="UserId", OtherKey="UserId")]
+		public EntitySet<MsgNotification> MsgNotifications
 		{
 			get
 			{
-				return this._Company.Entity;
+				return this._MsgNotifications;
 			}
 			set
 			{
-				Company previousValue = this._Company.Entity;
-				if (((previousValue != value) 
-							|| (this._Company.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Company.Entity = null;
-						previousValue.Users.Remove(this);
-					}
-					this._Company.Entity = value;
-					if ((value != null))
-					{
-						value.Users.Add(this);
-						this._CompanyId = value.IdRecord;
-					}
-					else
-					{
-						this._CompanyId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Company");
-				}
+				this._MsgNotifications.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UsersMsgGroup", Storage="_UsersMsgGroups", ThisKey="UserId", OtherKey="UserId")]
+		public EntitySet<UsersMsgGroup> UsersMsgGroups
+		{
+			get
+			{
+				return this._UsersMsgGroups;
+			}
+			set
+			{
+				this._UsersMsgGroups.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Message", Storage="_Messages", ThisKey="UserId", OtherKey="FromUserId")]
+		public EntitySet<Message> Messages
+		{
+			get
+			{
+				return this._Messages;
+			}
+			set
+			{
+				this._Messages.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_MessageRecepient", Storage="_MessageRecepients", ThisKey="UserId", OtherKey="ToUserId")]
+		public EntitySet<MessageRecepient> MessageRecepients
+		{
+			get
+			{
+				return this._MessageRecepients;
+			}
+			set
+			{
+				this._MessageRecepients.Assign(value);
 			}
 		}
 		
@@ -2094,6 +1191,40 @@ namespace DataService
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_User", Storage="_Company", ThisKey="CompanyId", OtherKey="IdRecord", IsForeignKey=true)]
+		public Company Company
+		{
+			get
+			{
+				return this._Company.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company.Entity;
+				if (((previousValue != value) 
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company.Entity = null;
+						previousValue.Users.Remove(this);
+					}
+					this._Company.Entity = value;
+					if ((value != null))
+					{
+						value.Users.Add(this);
+						this._CompanyId = value.IdRecord;
+					}
+					else
+					{
+						this._CompanyId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Company");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2114,6 +1245,42 @@ namespace DataService
 			}
 		}
 		
+		private void attach_UsersRoles(UsersRole entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_UsersRoles(UsersRole entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_MsgNotifications(MsgNotification entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_MsgNotifications(MsgNotification entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_UsersMsgGroups(UsersMsgGroup entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_UsersMsgGroups(UsersMsgGroup entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
 		private void attach_Messages(Message entity)
 		{
 			this.SendPropertyChanging();
@@ -2126,13 +1293,13 @@ namespace DataService
 			entity.User = null;
 		}
 		
-		private void attach_UsersRoles(UsersRole entity)
+		private void attach_MessageRecepients(MessageRecepient entity)
 		{
 			this.SendPropertyChanging();
 			entity.User = this;
 		}
 		
-		private void detach_UsersRoles(UsersRole entity)
+		private void detach_MessageRecepients(MessageRecepient entity)
 		{
 			this.SendPropertyChanging();
 			entity.User = null;
@@ -2333,18 +1500,6 @@ namespace DataService
 		
 		private System.Nullable<int> _CompanyId;
 		
-		private string _DocNum;
-		
-		private System.Nullable<System.DateTime> _DocDate;
-		
-		private string _Building;
-		
-		private string _BTINums;
-		
-		private System.Nullable<System.DateTime> _DocExpDate;
-		
-		private System.Nullable<decimal> _RentPayment;
-		
 		private EntitySet<RoomPhoto> _RoomPhotos;
 		
 		private EntityRef<Company> _Company;
@@ -2373,18 +1528,6 @@ namespace DataService
     partial void OnY2Changed();
     partial void OnCompanyIdChanging(System.Nullable<int> value);
     partial void OnCompanyIdChanged();
-    partial void OnDocNumChanging(string value);
-    partial void OnDocNumChanged();
-    partial void OnDocDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnDocDateChanged();
-    partial void OnBuildingChanging(string value);
-    partial void OnBuildingChanged();
-    partial void OnBTINumsChanging(string value);
-    partial void OnBTINumsChanged();
-    partial void OnDocExpDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnDocExpDateChanged();
-    partial void OnRentPaymentChanging(System.Nullable<decimal> value);
-    partial void OnRentPaymentChanged();
     #endregion
 		
 		public Room()
@@ -2598,6 +1741,1861 @@ namespace DataService
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_RoomPhoto", Storage="_RoomPhotos", ThisKey="IdRecord", OtherKey="RoomId")]
+		public EntitySet<RoomPhoto> RoomPhotos
+		{
+			get
+			{
+				return this._RoomPhotos;
+			}
+			set
+			{
+				this._RoomPhotos.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Room", Storage="_Company", ThisKey="CompanyId", OtherKey="IdRecord", IsForeignKey=true)]
+		public Company Company
+		{
+			get
+			{
+				return this._Company.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company.Entity;
+				if (((previousValue != value) 
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company.Entity = null;
+						previousValue.Rooms.Remove(this);
+					}
+					this._Company.Entity = value;
+					if ((value != null))
+					{
+						value.Rooms.Add(this);
+						this._CompanyId = value.IdRecord;
+					}
+					else
+					{
+						this._CompanyId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Company");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_RoomPhotos(RoomPhoto entity)
+		{
+			this.SendPropertyChanging();
+			entity.Room = this;
+		}
+		
+		private void detach_RoomPhotos(RoomPhoto entity)
+		{
+			this.SendPropertyChanging();
+			entity.Room = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MsgGroups")]
+	public partial class MsgGroup : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _GroupId;
+		
+		private string _Name;
+		
+		private EntitySet<MsgGroupsLink> _MsgGroupsLinks;
+		
+		private EntitySet<MsgGroupsLink> _MsgGroupsLinks1;
+		
+		private EntitySet<UsersMsgGroup> _UsersMsgGroups;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnGroupIdChanging(System.Guid value);
+    partial void OnGroupIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public MsgGroup()
+		{
+			this._MsgGroupsLinks = new EntitySet<MsgGroupsLink>(new Action<MsgGroupsLink>(this.attach_MsgGroupsLinks), new Action<MsgGroupsLink>(this.detach_MsgGroupsLinks));
+			this._MsgGroupsLinks1 = new EntitySet<MsgGroupsLink>(new Action<MsgGroupsLink>(this.attach_MsgGroupsLinks1), new Action<MsgGroupsLink>(this.detach_MsgGroupsLinks1));
+			this._UsersMsgGroups = new EntitySet<UsersMsgGroup>(new Action<UsersMsgGroup>(this.attach_UsersMsgGroups), new Action<UsersMsgGroup>(this.detach_UsersMsgGroups));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GroupId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid GroupId
+		{
+			get
+			{
+				return this._GroupId;
+			}
+			set
+			{
+				if ((this._GroupId != value))
+				{
+					this.OnGroupIdChanging(value);
+					this.SendPropertyChanging();
+					this._GroupId = value;
+					this.SendPropertyChanged("GroupId");
+					this.OnGroupIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MsgGroup_MsgGroupsLink", Storage="_MsgGroupsLinks", ThisKey="GroupId", OtherKey="FirstGroupId")]
+		public EntitySet<MsgGroupsLink> MsgGroupsLinks
+		{
+			get
+			{
+				return this._MsgGroupsLinks;
+			}
+			set
+			{
+				this._MsgGroupsLinks.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MsgGroup_MsgGroupsLink1", Storage="_MsgGroupsLinks1", ThisKey="GroupId", OtherKey="SecondGroupId")]
+		public EntitySet<MsgGroupsLink> MsgGroupsLinks1
+		{
+			get
+			{
+				return this._MsgGroupsLinks1;
+			}
+			set
+			{
+				this._MsgGroupsLinks1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MsgGroup_UsersMsgGroup", Storage="_UsersMsgGroups", ThisKey="GroupId", OtherKey="GroupId")]
+		public EntitySet<UsersMsgGroup> UsersMsgGroups
+		{
+			get
+			{
+				return this._UsersMsgGroups;
+			}
+			set
+			{
+				this._UsersMsgGroups.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_MsgGroupsLinks(MsgGroupsLink entity)
+		{
+			this.SendPropertyChanging();
+			entity.MsgGroup = this;
+		}
+		
+		private void detach_MsgGroupsLinks(MsgGroupsLink entity)
+		{
+			this.SendPropertyChanging();
+			entity.MsgGroup = null;
+		}
+		
+		private void attach_MsgGroupsLinks1(MsgGroupsLink entity)
+		{
+			this.SendPropertyChanging();
+			entity.MsgGroup1 = this;
+		}
+		
+		private void detach_MsgGroupsLinks1(MsgGroupsLink entity)
+		{
+			this.SendPropertyChanging();
+			entity.MsgGroup1 = null;
+		}
+		
+		private void attach_UsersMsgGroups(UsersMsgGroup entity)
+		{
+			this.SendPropertyChanging();
+			entity.MsgGroup = this;
+		}
+		
+		private void detach_UsersMsgGroups(UsersMsgGroup entity)
+		{
+			this.SendPropertyChanging();
+			entity.MsgGroup = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MsgGroupsLinks")]
+	public partial class MsgGroupsLink : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdRecord;
+		
+		private System.Guid _FirstGroupId;
+		
+		private System.Guid _SecondGroupId;
+		
+		private EntityRef<MsgGroup> _MsgGroup;
+		
+		private EntityRef<MsgGroup> _MsgGroup1;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdRecordChanging(int value);
+    partial void OnIdRecordChanged();
+    partial void OnFirstGroupIdChanging(System.Guid value);
+    partial void OnFirstGroupIdChanged();
+    partial void OnSecondGroupIdChanging(System.Guid value);
+    partial void OnSecondGroupIdChanged();
+    #endregion
+		
+		public MsgGroupsLink()
+		{
+			this._MsgGroup = default(EntityRef<MsgGroup>);
+			this._MsgGroup1 = default(EntityRef<MsgGroup>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdRecord
+		{
+			get
+			{
+				return this._IdRecord;
+			}
+			set
+			{
+				if ((this._IdRecord != value))
+				{
+					this.OnIdRecordChanging(value);
+					this.SendPropertyChanging();
+					this._IdRecord = value;
+					this.SendPropertyChanged("IdRecord");
+					this.OnIdRecordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstGroupId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid FirstGroupId
+		{
+			get
+			{
+				return this._FirstGroupId;
+			}
+			set
+			{
+				if ((this._FirstGroupId != value))
+				{
+					if (this._MsgGroup.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFirstGroupIdChanging(value);
+					this.SendPropertyChanging();
+					this._FirstGroupId = value;
+					this.SendPropertyChanged("FirstGroupId");
+					this.OnFirstGroupIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SecondGroupId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SecondGroupId
+		{
+			get
+			{
+				return this._SecondGroupId;
+			}
+			set
+			{
+				if ((this._SecondGroupId != value))
+				{
+					if (this._MsgGroup1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSecondGroupIdChanging(value);
+					this.SendPropertyChanging();
+					this._SecondGroupId = value;
+					this.SendPropertyChanged("SecondGroupId");
+					this.OnSecondGroupIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MsgGroup_MsgGroupsLink", Storage="_MsgGroup", ThisKey="FirstGroupId", OtherKey="GroupId", IsForeignKey=true)]
+		public MsgGroup MsgGroup
+		{
+			get
+			{
+				return this._MsgGroup.Entity;
+			}
+			set
+			{
+				MsgGroup previousValue = this._MsgGroup.Entity;
+				if (((previousValue != value) 
+							|| (this._MsgGroup.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._MsgGroup.Entity = null;
+						previousValue.MsgGroupsLinks.Remove(this);
+					}
+					this._MsgGroup.Entity = value;
+					if ((value != null))
+					{
+						value.MsgGroupsLinks.Add(this);
+						this._FirstGroupId = value.GroupId;
+					}
+					else
+					{
+						this._FirstGroupId = default(System.Guid);
+					}
+					this.SendPropertyChanged("MsgGroup");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MsgGroup_MsgGroupsLink1", Storage="_MsgGroup1", ThisKey="SecondGroupId", OtherKey="GroupId", IsForeignKey=true)]
+		public MsgGroup MsgGroup1
+		{
+			get
+			{
+				return this._MsgGroup1.Entity;
+			}
+			set
+			{
+				MsgGroup previousValue = this._MsgGroup1.Entity;
+				if (((previousValue != value) 
+							|| (this._MsgGroup1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._MsgGroup1.Entity = null;
+						previousValue.MsgGroupsLinks1.Remove(this);
+					}
+					this._MsgGroup1.Entity = value;
+					if ((value != null))
+					{
+						value.MsgGroupsLinks1.Add(this);
+						this._SecondGroupId = value.GroupId;
+					}
+					else
+					{
+						this._SecondGroupId = default(System.Guid);
+					}
+					this.SendPropertyChanged("MsgGroup1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MsgNotifications")]
+	public partial class MsgNotification : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdRecord;
+		
+		private int _MessageId;
+		
+		private System.Guid _UserId;
+		
+		private string _Email;
+		
+		private string _Text;
+		
+		private System.DateTime _DateCreate;
+		
+		private System.Nullable<System.DateTime> _DateSend;
+		
+		private string _LastSendError;
+		
+		private EntityRef<User> _User;
+		
+		private EntityRef<Message> _Message;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdRecordChanging(int value);
+    partial void OnIdRecordChanged();
+    partial void OnMessageIdChanging(int value);
+    partial void OnMessageIdChanged();
+    partial void OnUserIdChanging(System.Guid value);
+    partial void OnUserIdChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    partial void OnDateCreateChanging(System.DateTime value);
+    partial void OnDateCreateChanged();
+    partial void OnDateSendChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateSendChanged();
+    partial void OnLastSendErrorChanging(string value);
+    partial void OnLastSendErrorChanged();
+    #endregion
+		
+		public MsgNotification()
+		{
+			this._User = default(EntityRef<User>);
+			this._Message = default(EntityRef<Message>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdRecord
+		{
+			get
+			{
+				return this._IdRecord;
+			}
+			set
+			{
+				if ((this._IdRecord != value))
+				{
+					this.OnIdRecordChanging(value);
+					this.SendPropertyChanging();
+					this._IdRecord = value;
+					this.SendPropertyChanged("IdRecord");
+					this.OnIdRecordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MessageId", DbType="Int NOT NULL")]
+		public int MessageId
+		{
+			get
+			{
+				return this._MessageId;
+			}
+			set
+			{
+				if ((this._MessageId != value))
+				{
+					if (this._Message.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMessageIdChanging(value);
+					this.SendPropertyChanging();
+					this._MessageId = value;
+					this.SendPropertyChanged("MessageId");
+					this.OnMessageIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._UserId = value;
+					this.SendPropertyChanged("UserId");
+					this.OnUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(1000) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreate", DbType="DateTime2 NOT NULL")]
+		public System.DateTime DateCreate
+		{
+			get
+			{
+				return this._DateCreate;
+			}
+			set
+			{
+				if ((this._DateCreate != value))
+				{
+					this.OnDateCreateChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreate = value;
+					this.SendPropertyChanged("DateCreate");
+					this.OnDateCreateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateSend", DbType="DateTime2")]
+		public System.Nullable<System.DateTime> DateSend
+		{
+			get
+			{
+				return this._DateSend;
+			}
+			set
+			{
+				if ((this._DateSend != value))
+				{
+					this.OnDateSendChanging(value);
+					this.SendPropertyChanging();
+					this._DateSend = value;
+					this.SendPropertyChanged("DateSend");
+					this.OnDateSendChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastSendError", DbType="NVarChar(1000)")]
+		public string LastSendError
+		{
+			get
+			{
+				return this._LastSendError;
+			}
+			set
+			{
+				if ((this._LastSendError != value))
+				{
+					this.OnLastSendErrorChanging(value);
+					this.SendPropertyChanging();
+					this._LastSendError = value;
+					this.SendPropertyChanged("LastSendError");
+					this.OnLastSendErrorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_MsgNotification", Storage="_User", ThisKey="UserId", OtherKey="UserId", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.MsgNotifications.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.MsgNotifications.Add(this);
+						this._UserId = value.UserId;
+					}
+					else
+					{
+						this._UserId = default(System.Guid);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Message_MsgNotification", Storage="_Message", ThisKey="MessageId", OtherKey="IdRecord", IsForeignKey=true)]
+		public Message Message
+		{
+			get
+			{
+				return this._Message.Entity;
+			}
+			set
+			{
+				Message previousValue = this._Message.Entity;
+				if (((previousValue != value) 
+							|| (this._Message.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Message.Entity = null;
+						previousValue.MsgNotifications.Remove(this);
+					}
+					this._Message.Entity = value;
+					if ((value != null))
+					{
+						value.MsgNotifications.Add(this);
+						this._MessageId = value.IdRecord;
+					}
+					else
+					{
+						this._MessageId = default(int);
+					}
+					this.SendPropertyChanged("Message");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UsersMsgGroups")]
+	public partial class UsersMsgGroup : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdRecord;
+		
+		private System.Guid _GroupId;
+		
+		private System.Guid _UserId;
+		
+		private EntityRef<MsgGroup> _MsgGroup;
+		
+		private EntityRef<User> _User;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdRecordChanging(int value);
+    partial void OnIdRecordChanged();
+    partial void OnGroupIdChanging(System.Guid value);
+    partial void OnGroupIdChanged();
+    partial void OnUserIdChanging(System.Guid value);
+    partial void OnUserIdChanged();
+    #endregion
+		
+		public UsersMsgGroup()
+		{
+			this._MsgGroup = default(EntityRef<MsgGroup>);
+			this._User = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdRecord
+		{
+			get
+			{
+				return this._IdRecord;
+			}
+			set
+			{
+				if ((this._IdRecord != value))
+				{
+					this.OnIdRecordChanging(value);
+					this.SendPropertyChanging();
+					this._IdRecord = value;
+					this.SendPropertyChanged("IdRecord");
+					this.OnIdRecordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GroupId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid GroupId
+		{
+			get
+			{
+				return this._GroupId;
+			}
+			set
+			{
+				if ((this._GroupId != value))
+				{
+					if (this._MsgGroup.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnGroupIdChanging(value);
+					this.SendPropertyChanging();
+					this._GroupId = value;
+					this.SendPropertyChanged("GroupId");
+					this.OnGroupIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._UserId = value;
+					this.SendPropertyChanged("UserId");
+					this.OnUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MsgGroup_UsersMsgGroup", Storage="_MsgGroup", ThisKey="GroupId", OtherKey="GroupId", IsForeignKey=true)]
+		public MsgGroup MsgGroup
+		{
+			get
+			{
+				return this._MsgGroup.Entity;
+			}
+			set
+			{
+				MsgGroup previousValue = this._MsgGroup.Entity;
+				if (((previousValue != value) 
+							|| (this._MsgGroup.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._MsgGroup.Entity = null;
+						previousValue.UsersMsgGroups.Remove(this);
+					}
+					this._MsgGroup.Entity = value;
+					if ((value != null))
+					{
+						value.UsersMsgGroups.Add(this);
+						this._GroupId = value.GroupId;
+					}
+					else
+					{
+						this._GroupId = default(System.Guid);
+					}
+					this.SendPropertyChanged("MsgGroup");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UsersMsgGroup", Storage="_User", ThisKey="UserId", OtherKey="UserId", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.UsersMsgGroups.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.UsersMsgGroups.Add(this);
+						this._UserId = value.UserId;
+					}
+					else
+					{
+						this._UserId = default(System.Guid);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Messages")]
+	public partial class Message : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdRecord;
+		
+		private string _Subject;
+		
+		private string _MessageText;
+		
+		private System.DateTime _DateCreate;
+		
+		private string _ToUserText;
+		
+		private System.Guid _FromUserId;
+		
+		private EntitySet<MsgNotification> _MsgNotifications;
+		
+		private EntitySet<MessageRecepient> _MessageRecepients;
+		
+		private EntityRef<User> _User;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdRecordChanging(int value);
+    partial void OnIdRecordChanged();
+    partial void OnSubjectChanging(string value);
+    partial void OnSubjectChanged();
+    partial void OnMessageTextChanging(string value);
+    partial void OnMessageTextChanged();
+    partial void OnDateCreateChanging(System.DateTime value);
+    partial void OnDateCreateChanged();
+    partial void OnToUserTextChanging(string value);
+    partial void OnToUserTextChanged();
+    partial void OnFromUserIdChanging(System.Guid value);
+    partial void OnFromUserIdChanged();
+    #endregion
+		
+		public Message()
+		{
+			this._MsgNotifications = new EntitySet<MsgNotification>(new Action<MsgNotification>(this.attach_MsgNotifications), new Action<MsgNotification>(this.detach_MsgNotifications));
+			this._MessageRecepients = new EntitySet<MessageRecepient>(new Action<MessageRecepient>(this.attach_MessageRecepients), new Action<MessageRecepient>(this.detach_MessageRecepients));
+			this._User = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdRecord
+		{
+			get
+			{
+				return this._IdRecord;
+			}
+			set
+			{
+				if ((this._IdRecord != value))
+				{
+					this.OnIdRecordChanging(value);
+					this.SendPropertyChanging();
+					this._IdRecord = value;
+					this.SendPropertyChanged("IdRecord");
+					this.OnIdRecordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Subject", DbType="NVarChar(256)")]
+		public string Subject
+		{
+			get
+			{
+				return this._Subject;
+			}
+			set
+			{
+				if ((this._Subject != value))
+				{
+					this.OnSubjectChanging(value);
+					this.SendPropertyChanging();
+					this._Subject = value;
+					this.SendPropertyChanged("Subject");
+					this.OnSubjectChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MessageText", DbType="NVarChar(MAX)")]
+		public string MessageText
+		{
+			get
+			{
+				return this._MessageText;
+			}
+			set
+			{
+				if ((this._MessageText != value))
+				{
+					this.OnMessageTextChanging(value);
+					this.SendPropertyChanging();
+					this._MessageText = value;
+					this.SendPropertyChanged("MessageText");
+					this.OnMessageTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreate", DbType="DateTime2 NOT NULL")]
+		public System.DateTime DateCreate
+		{
+			get
+			{
+				return this._DateCreate;
+			}
+			set
+			{
+				if ((this._DateCreate != value))
+				{
+					this.OnDateCreateChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreate = value;
+					this.SendPropertyChanged("DateCreate");
+					this.OnDateCreateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ToUserText", DbType="NVarChar(1024) NOT NULL", CanBeNull=false)]
+		public string ToUserText
+		{
+			get
+			{
+				return this._ToUserText;
+			}
+			set
+			{
+				if ((this._ToUserText != value))
+				{
+					this.OnToUserTextChanging(value);
+					this.SendPropertyChanging();
+					this._ToUserText = value;
+					this.SendPropertyChanged("ToUserText");
+					this.OnToUserTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FromUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid FromUserId
+		{
+			get
+			{
+				return this._FromUserId;
+			}
+			set
+			{
+				if ((this._FromUserId != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFromUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._FromUserId = value;
+					this.SendPropertyChanged("FromUserId");
+					this.OnFromUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Message_MsgNotification", Storage="_MsgNotifications", ThisKey="IdRecord", OtherKey="MessageId")]
+		public EntitySet<MsgNotification> MsgNotifications
+		{
+			get
+			{
+				return this._MsgNotifications;
+			}
+			set
+			{
+				this._MsgNotifications.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Message_MessageRecepient", Storage="_MessageRecepients", ThisKey="IdRecord", OtherKey="MessageId")]
+		public EntitySet<MessageRecepient> MessageRecepients
+		{
+			get
+			{
+				return this._MessageRecepients;
+			}
+			set
+			{
+				this._MessageRecepients.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Message", Storage="_User", ThisKey="FromUserId", OtherKey="UserId", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Messages.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Messages.Add(this);
+						this._FromUserId = value.UserId;
+					}
+					else
+					{
+						this._FromUserId = default(System.Guid);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_MsgNotifications(MsgNotification entity)
+		{
+			this.SendPropertyChanging();
+			entity.Message = this;
+		}
+		
+		private void detach_MsgNotifications(MsgNotification entity)
+		{
+			this.SendPropertyChanging();
+			entity.Message = null;
+		}
+		
+		private void attach_MessageRecepients(MessageRecepient entity)
+		{
+			this.SendPropertyChanging();
+			entity.Message = this;
+		}
+		
+		private void detach_MessageRecepients(MessageRecepient entity)
+		{
+			this.SendPropertyChanging();
+			entity.Message = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MessageRecepients")]
+	public partial class MessageRecepient : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdRecord;
+		
+		private int _MessageId;
+		
+		private System.Guid _ToUserId;
+		
+		private bool _IsReaded;
+		
+		private EntityRef<Message> _Message;
+		
+		private EntityRef<User> _User;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdRecordChanging(int value);
+    partial void OnIdRecordChanged();
+    partial void OnMessageIdChanging(int value);
+    partial void OnMessageIdChanged();
+    partial void OnToUserIdChanging(System.Guid value);
+    partial void OnToUserIdChanged();
+    partial void OnIsReadedChanging(bool value);
+    partial void OnIsReadedChanged();
+    #endregion
+		
+		public MessageRecepient()
+		{
+			this._Message = default(EntityRef<Message>);
+			this._User = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdRecord
+		{
+			get
+			{
+				return this._IdRecord;
+			}
+			set
+			{
+				if ((this._IdRecord != value))
+				{
+					this.OnIdRecordChanging(value);
+					this.SendPropertyChanging();
+					this._IdRecord = value;
+					this.SendPropertyChanged("IdRecord");
+					this.OnIdRecordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MessageId", DbType="Int NOT NULL")]
+		public int MessageId
+		{
+			get
+			{
+				return this._MessageId;
+			}
+			set
+			{
+				if ((this._MessageId != value))
+				{
+					if (this._Message.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMessageIdChanging(value);
+					this.SendPropertyChanging();
+					this._MessageId = value;
+					this.SendPropertyChanged("MessageId");
+					this.OnMessageIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ToUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ToUserId
+		{
+			get
+			{
+				return this._ToUserId;
+			}
+			set
+			{
+				if ((this._ToUserId != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnToUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._ToUserId = value;
+					this.SendPropertyChanged("ToUserId");
+					this.OnToUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsReaded", DbType="Bit NOT NULL")]
+		public bool IsReaded
+		{
+			get
+			{
+				return this._IsReaded;
+			}
+			set
+			{
+				if ((this._IsReaded != value))
+				{
+					this.OnIsReadedChanging(value);
+					this.SendPropertyChanging();
+					this._IsReaded = value;
+					this.SendPropertyChanged("IsReaded");
+					this.OnIsReadedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Message_MessageRecepient", Storage="_Message", ThisKey="MessageId", OtherKey="IdRecord", IsForeignKey=true)]
+		public Message Message
+		{
+			get
+			{
+				return this._Message.Entity;
+			}
+			set
+			{
+				Message previousValue = this._Message.Entity;
+				if (((previousValue != value) 
+							|| (this._Message.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Message.Entity = null;
+						previousValue.MessageRecepients.Remove(this);
+					}
+					this._Message.Entity = value;
+					if ((value != null))
+					{
+						value.MessageRecepients.Add(this);
+						this._MessageId = value.IdRecord;
+					}
+					else
+					{
+						this._MessageId = default(int);
+					}
+					this.SendPropertyChanged("Message");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_MessageRecepient", Storage="_User", ThisKey="ToUserId", OtherKey="UserId", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.MessageRecepients.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.MessageRecepients.Add(this);
+						this._ToUserId = value.UserId;
+					}
+					else
+					{
+						this._ToUserId = default(System.Guid);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vClientsRoomsReport")]
+	public partial class vClientsRoomsReport
+	{
+		
+		private string _DocNum;
+		
+		private System.Nullable<System.DateTime> _DocDate;
+		
+		private string _FullName;
+		
+		private System.Nullable<decimal> _Square;
+		
+		private System.Nullable<int> _FloorId;
+		
+		private string _BTINums;
+		
+		private string _Number;
+		
+		private System.Nullable<System.DateTime> _DocExpDate;
+		
+		private System.Nullable<decimal> _RentPayment;
+		
+		private System.Nullable<int> _MonthCount;
+		
+		private System.Nullable<decimal> _PayByDoc;
+		
+		private System.Nullable<decimal> _PayReceived;
+		
+		private System.Nullable<decimal> _ToPay;
+		
+		private string _Building;
+		
+		private System.Nullable<decimal> _MeterPrice;
+		
+		public vClientsRoomsReport()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNum", DbType="NVarChar(50)")]
+		public string DocNum
+		{
+			get
+			{
+				return this._DocNum;
+			}
+			set
+			{
+				if ((this._DocNum != value))
+				{
+					this._DocNum = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocDate", DbType="Date")]
+		public System.Nullable<System.DateTime> DocDate
+		{
+			get
+			{
+				return this._DocDate;
+			}
+			set
+			{
+				if ((this._DocDate != value))
+				{
+					this._DocDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FullName", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string FullName
+		{
+			get
+			{
+				return this._FullName;
+			}
+			set
+			{
+				if ((this._FullName != value))
+				{
+					this._FullName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Square", DbType="Decimal(14,4)")]
+		public System.Nullable<decimal> Square
+		{
+			get
+			{
+				return this._Square;
+			}
+			set
+			{
+				if ((this._Square != value))
+				{
+					this._Square = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FloorId", DbType="Int")]
+		public System.Nullable<int> FloorId
+		{
+			get
+			{
+				return this._FloorId;
+			}
+			set
+			{
+				if ((this._FloorId != value))
+				{
+					this._FloorId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BTINums", DbType="NVarChar(50)")]
+		public string BTINums
+		{
+			get
+			{
+				return this._BTINums;
+			}
+			set
+			{
+				if ((this._BTINums != value))
+				{
+					this._BTINums = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number", DbType="NVarChar(10)")]
+		public string Number
+		{
+			get
+			{
+				return this._Number;
+			}
+			set
+			{
+				if ((this._Number != value))
+				{
+					this._Number = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocExpDate", DbType="Date")]
+		public System.Nullable<System.DateTime> DocExpDate
+		{
+			get
+			{
+				return this._DocExpDate;
+			}
+			set
+			{
+				if ((this._DocExpDate != value))
+				{
+					this._DocExpDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RentPayment", DbType="Decimal(14,4)")]
+		public System.Nullable<decimal> RentPayment
+		{
+			get
+			{
+				return this._RentPayment;
+			}
+			set
+			{
+				if ((this._RentPayment != value))
+				{
+					this._RentPayment = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MonthCount", DbType="Int")]
+		public System.Nullable<int> MonthCount
+		{
+			get
+			{
+				return this._MonthCount;
+			}
+			set
+			{
+				if ((this._MonthCount != value))
+				{
+					this._MonthCount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PayByDoc", DbType="Decimal(14,4)")]
+		public System.Nullable<decimal> PayByDoc
+		{
+			get
+			{
+				return this._PayByDoc;
+			}
+			set
+			{
+				if ((this._PayByDoc != value))
+				{
+					this._PayByDoc = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PayReceived", DbType="Decimal(14,4)")]
+		public System.Nullable<decimal> PayReceived
+		{
+			get
+			{
+				return this._PayReceived;
+			}
+			set
+			{
+				if ((this._PayReceived != value))
+				{
+					this._PayReceived = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ToPay", DbType="Decimal(14,4)")]
+		public System.Nullable<decimal> ToPay
+		{
+			get
+			{
+				return this._ToPay;
+			}
+			set
+			{
+				if ((this._ToPay != value))
+				{
+					this._ToPay = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Building", DbType="NVarChar(30)")]
+		public string Building
+		{
+			get
+			{
+				return this._Building;
+			}
+			set
+			{
+				if ((this._Building != value))
+				{
+					this._Building = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MeterPrice", DbType="Decimal(14,4)")]
+		public System.Nullable<decimal> MeterPrice
+		{
+			get
+			{
+				return this._MeterPrice;
+			}
+			set
+			{
+				if ((this._MeterPrice != value))
+				{
+					this._MeterPrice = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Companies")]
+	public partial class Company : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdRecord;
+		
+		private string _Name;
+		
+		private string _FullName;
+		
+		private string _DocNum;
+		
+		private System.Nullable<System.DateTime> _DocDate;
+		
+		private string _Building;
+		
+		private string _BTINums;
+		
+		private System.Nullable<System.DateTime> _DocExpDate;
+		
+		private System.Nullable<decimal> _RentPayment;
+		
+		private System.Nullable<int> _MonthCount;
+		
+		private System.Nullable<decimal> _PayByDoc;
+		
+		private System.Nullable<decimal> _PayReceived;
+		
+		private System.Nullable<decimal> _ToPay;
+		
+		private EntitySet<User> _Users;
+		
+		private EntitySet<Room> _Rooms;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdRecordChanging(int value);
+    partial void OnIdRecordChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnFullNameChanging(string value);
+    partial void OnFullNameChanged();
+    partial void OnDocNumChanging(string value);
+    partial void OnDocNumChanged();
+    partial void OnDocDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDocDateChanged();
+    partial void OnBuildingChanging(string value);
+    partial void OnBuildingChanged();
+    partial void OnBTINumsChanging(string value);
+    partial void OnBTINumsChanged();
+    partial void OnDocExpDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDocExpDateChanged();
+    partial void OnRentPaymentChanging(System.Nullable<decimal> value);
+    partial void OnRentPaymentChanged();
+    partial void OnMonthCountChanging(System.Nullable<int> value);
+    partial void OnMonthCountChanged();
+    partial void OnPayByDocChanging(System.Nullable<decimal> value);
+    partial void OnPayByDocChanged();
+    partial void OnPayReceivedChanging(System.Nullable<decimal> value);
+    partial void OnPayReceivedChanged();
+    partial void OnToPayChanging(System.Nullable<decimal> value);
+    partial void OnToPayChanged();
+    #endregion
+		
+		public Company()
+		{
+			this._Users = new EntitySet<User>(new Action<User>(this.attach_Users), new Action<User>(this.detach_Users));
+			this._Rooms = new EntitySet<Room>(new Action<Room>(this.attach_Rooms), new Action<Room>(this.detach_Rooms));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRecord", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdRecord
+		{
+			get
+			{
+				return this._IdRecord;
+			}
+			set
+			{
+				if ((this._IdRecord != value))
+				{
+					this.OnIdRecordChanging(value);
+					this.SendPropertyChanging();
+					this._IdRecord = value;
+					this.SendPropertyChanged("IdRecord");
+					this.OnIdRecordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FullName", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string FullName
+		{
+			get
+			{
+				return this._FullName;
+			}
+			set
+			{
+				if ((this._FullName != value))
+				{
+					this.OnFullNameChanging(value);
+					this.SendPropertyChanging();
+					this._FullName = value;
+					this.SendPropertyChanged("FullName");
+					this.OnFullNameChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNum", DbType="NVarChar(50)")]
 		public string DocNum
 		{
@@ -2718,50 +3716,109 @@ namespace DataService
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_RoomPhoto", Storage="_RoomPhotos", ThisKey="IdRecord", OtherKey="RoomId")]
-		public EntitySet<RoomPhoto> RoomPhotos
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MonthCount", DbType="Int")]
+		public System.Nullable<int> MonthCount
 		{
 			get
 			{
-				return this._RoomPhotos;
+				return this._MonthCount;
 			}
 			set
 			{
-				this._RoomPhotos.Assign(value);
+				if ((this._MonthCount != value))
+				{
+					this.OnMonthCountChanging(value);
+					this.SendPropertyChanging();
+					this._MonthCount = value;
+					this.SendPropertyChanged("MonthCount");
+					this.OnMonthCountChanged();
+				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Room", Storage="_Company", ThisKey="CompanyId", OtherKey="IdRecord", IsForeignKey=true)]
-		public Company Company
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PayByDoc", DbType="Decimal(14,4)")]
+		public System.Nullable<decimal> PayByDoc
 		{
 			get
 			{
-				return this._Company.Entity;
+				return this._PayByDoc;
 			}
 			set
 			{
-				Company previousValue = this._Company.Entity;
-				if (((previousValue != value) 
-							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				if ((this._PayByDoc != value))
 				{
+					this.OnPayByDocChanging(value);
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Company.Entity = null;
-						previousValue.Rooms.Remove(this);
-					}
-					this._Company.Entity = value;
-					if ((value != null))
-					{
-						value.Rooms.Add(this);
-						this._CompanyId = value.IdRecord;
-					}
-					else
-					{
-						this._CompanyId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Company");
+					this._PayByDoc = value;
+					this.SendPropertyChanged("PayByDoc");
+					this.OnPayByDocChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PayReceived", DbType="Decimal(14,4)")]
+		public System.Nullable<decimal> PayReceived
+		{
+			get
+			{
+				return this._PayReceived;
+			}
+			set
+			{
+				if ((this._PayReceived != value))
+				{
+					this.OnPayReceivedChanging(value);
+					this.SendPropertyChanging();
+					this._PayReceived = value;
+					this.SendPropertyChanged("PayReceived");
+					this.OnPayReceivedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ToPay", DbType="Decimal(14,4)")]
+		public System.Nullable<decimal> ToPay
+		{
+			get
+			{
+				return this._ToPay;
+			}
+			set
+			{
+				if ((this._ToPay != value))
+				{
+					this.OnToPayChanging(value);
+					this.SendPropertyChanging();
+					this._ToPay = value;
+					this.SendPropertyChanged("ToPay");
+					this.OnToPayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_User", Storage="_Users", ThisKey="IdRecord", OtherKey="CompanyId")]
+		public EntitySet<User> Users
+		{
+			get
+			{
+				return this._Users;
+			}
+			set
+			{
+				this._Users.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Room", Storage="_Rooms", ThisKey="IdRecord", OtherKey="CompanyId")]
+		public EntitySet<Room> Rooms
+		{
+			get
+			{
+				return this._Rooms;
+			}
+			set
+			{
+				this._Rooms.Assign(value);
 			}
 		}
 		
@@ -2785,16 +3842,28 @@ namespace DataService
 			}
 		}
 		
-		private void attach_RoomPhotos(RoomPhoto entity)
+		private void attach_Users(User entity)
 		{
 			this.SendPropertyChanging();
-			entity.Room = this;
+			entity.Company = this;
 		}
 		
-		private void detach_RoomPhotos(RoomPhoto entity)
+		private void detach_Users(User entity)
 		{
 			this.SendPropertyChanging();
-			entity.Room = null;
+			entity.Company = null;
+		}
+		
+		private void attach_Rooms(Room entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = this;
+		}
+		
+		private void detach_Rooms(Room entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = null;
 		}
 	}
 }

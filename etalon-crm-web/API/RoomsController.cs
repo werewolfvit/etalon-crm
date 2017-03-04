@@ -49,9 +49,9 @@ namespace etalon_crm_web.API
             try
             {
                 RoomModel roomModel = jsonData.ToObject<RoomModel>();
-                _dbService.UpdateRoom(roomModel);
+                var curRoom = _dbService.UpdateRoom(roomModel);
 
-                return MessageBuilder.GetSuccessMessage(null);
+                return MessageBuilder.GetSuccessMessage(curRoom);
             }
             catch (Exception ex)
             {

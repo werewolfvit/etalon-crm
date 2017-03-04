@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[MsgGroupsLinks]
+(
+	[IdRecord] INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
+	FirstGroupId UNIQUEIDENTIFIER NOT NULL,
+	SecondGroupId UNIQUEIDENTIFIER NOT NULL,
+	FOREIGN KEY (FirstGroupId) REFERENCES MsgGroups(GroupId),
+	FOREIGN KEY (SecondGroupId) REFERENCES MsgGroups(GroupId)
+)

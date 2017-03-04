@@ -60,6 +60,7 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables\" />
+    <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Users.sql" />
@@ -67,11 +68,15 @@
     <Build Include="Tables\UsersRoles.sql" />
     <Build Include="Tables\Files.sql" />
     <Build Include="Tables\Messages.sql" />
-    <Build Include="Tables\MessageAttachmets.sql" />
     <Build Include="Tables\MessageRecepients.sql" />
     <Build Include="Tables\Rooms.sql" />
     <Build Include="Tables\Companies.sql" />
     <Build Include="Tables\RoomPhotos.sql" />
+    <Build Include="Tables\MsgGroups.sql" />
+    <Build Include="Tables\UsersMsgGroups.sql" />
+    <Build Include="Tables\MsgNotifications.sql" />
+    <Build Include="Tables\MsgGroupsLinks.sql" />
+    <Build Include="Views\vClientsRoomsReport.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="work.publish.xml" />
