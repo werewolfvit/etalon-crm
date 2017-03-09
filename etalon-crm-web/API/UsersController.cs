@@ -22,7 +22,7 @@ using User = etalon_crm_web.Models.User;
 
 namespace etalon_crm_web.API
 {
-    [System.Web.Http.Authorize(Roles = "Admin")]
+    [System.Web.Http.Authorize(Roles = "Admin, Employer")]
     public class UsersController : ApiController
     {
         private readonly UserManager<User> _userManager;
@@ -40,6 +40,7 @@ namespace etalon_crm_web.API
             _userManager = userManager;
         }
 
+        [System.Web.Http.Authorize(Roles = "Admin")]
         [System.Web.Http.HttpPost]
         public MessageModel Add(JObject jsonData)
         {
@@ -104,6 +105,7 @@ namespace etalon_crm_web.API
             }
         }
 
+        [System.Web.Http.Authorize(Roles = "Admin")]
         [System.Web.Http.HttpPost]
         public MessageModel ChangePassword(JObject jsonData)
         {
@@ -150,6 +152,7 @@ namespace etalon_crm_web.API
         //    }
         //}
 
+        [System.Web.Http.Authorize(Roles = "Admin")]
         [System.Web.Http.HttpPost]
         public MessageModel Update(JObject jsonData)
         {

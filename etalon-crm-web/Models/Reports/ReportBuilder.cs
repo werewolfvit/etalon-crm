@@ -58,7 +58,7 @@ namespace etalon_crm_web.Models.Reports
                 var curData = data[i];
                 ws.Cells[rowNum, 1].Value = curData.DocNum;
                 ws.Cells[rowNum, 2].Value = curData.DocDate?.ToString("dd.MM.yyyy") ?? string.Empty;
-                ws.Cells[rowNum, 3].Value = curData.DocExpDate?.ToString("dd.MM.yyy") ?? string.Empty;
+                ws.Cells[rowNum, 3].Value = curData.DocExpDate?.ToString("dd.MM.yyyy") ?? string.Empty;
                 ws.Cells[rowNum, 4].Value = curData.FullName;
                 ws.Cells[rowNum, 5].Value = curData.Square;
                 ws.Cells[rowNum, 6].Value = curData.Building;

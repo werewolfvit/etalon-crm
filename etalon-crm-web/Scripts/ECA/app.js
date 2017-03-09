@@ -33,17 +33,34 @@ Ext.onReady( function() {
                     if (obj.success) {
                         Ext.create("MainMenuForm");
 
- 
-                    if ((obj.data.Groups.length == 0)
-                        || ((obj.data.Groups.length == 1) && (obj.data.Groups.indexOf("Renter") != -1)))
-                    {
-                        var arenda = Ext.getCmp("menuArenda");
-                        var katalog = Ext.getCmp("menuKatalog");
-                        var report = Ext.getCmp("menuReport");
-                        arenda.destroy();
-                        katalog.destroy();
-                        report.destroy();
-                    }
+                        if ((obj.data.Groups.length == 0)
+                            || (obj.data.Groups.indexOf("Renter") != -1))
+                        {
+                            try {
+                                var arenda = Ext.getCmp("menuArenda");
+                                var katalog = Ext.getCmp("menuKatalog");
+                                var report = Ext.getCmp("menuReport");
+                                arenda.destroy();
+                                katalog.destroy();
+                                report.destroy();
+                            }
+                            finally {
+
+                            }
+                        }
+
+
+                        if (obj.data.Groups.indexOf("Employer") != -1) {
+                            try {
+                                var arenda = Ext.getCmp("menuArenda");
+                                var report = Ext.getCmp("menuReport");
+                                arenda.destroy();
+                                report.destroy();
+                            }
+                            finally {
+
+                            }
+                        }
                         
                     } else {
                         var wnd = Ext.create("ECA.view.login.LoginForm");

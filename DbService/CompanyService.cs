@@ -104,7 +104,7 @@ namespace DataService
             }
         }
 
-        public IEnumerable<CompanyModel> ListCompany()
+        public IEnumerable<CompanyModel> ListCompany(bool needSimple)
         {
             try
             {
@@ -115,16 +115,16 @@ namespace DataService
                         IdRecord = x.IdRecord,
                         Name = x.Name,
                         FullName = x.FullName,
-                        BTINums = x.BTINums,
-                        Building = x.Building,
-                        DocDate = x.DocDate,
-                        DocExpDate = x.DocExpDate,
-                        DocNum = x.DocNum,
-                        RentPayment = x.RentPayment,
-                        MonthCount = x.MonthCount,
-                        PayReceived = x.PayReceived,
-                        ToPay = x.ToPay,
-                        PayByDoc = x.PayByDoc
+                        BTINums = needSimple ? null : x.BTINums,
+                        Building = needSimple ? null : x.Building,
+                        DocDate = needSimple ? null : x.DocDate,
+                        DocExpDate = needSimple ? null : x.DocExpDate,
+                        DocNum = needSimple ? null : x.DocNum,
+                        RentPayment = needSimple ? null : x.RentPayment,
+                        MonthCount = needSimple ? null : x.MonthCount,
+                        PayReceived = needSimple ? null : x.PayReceived,
+                        ToPay = needSimple ? null : x.ToPay,
+                        PayByDoc = needSimple ? null : x.PayByDoc
                     }).ToList();
                 }
             }

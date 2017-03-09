@@ -15,7 +15,7 @@ using NLog;
 
 namespace etalon_crm_web.API
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Employer")]
     public class CompaniesController : ApiController
     {
         private readonly DbService _dbService;
@@ -32,6 +32,7 @@ namespace etalon_crm_web.API
             _dbService = dbService;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public MessageModel Add(JObject jsonData)
         {
@@ -92,12 +93,13 @@ namespace etalon_crm_web.API
             return result;
         }
 
+        [Authorize(Roles = "Admin, Employer")]
         [HttpGet]
         public MessageModel List()
         {
             try
             {
-                return MessageBuilder.GetSuccessMessage(_dbService.ListCompany());
+                return MessageBuilder.GetSuccessMessage(_dbService.ListCompany(User.IsInRole("Employer")));
             }
             catch (Exception ex)
             {
@@ -105,6 +107,7 @@ namespace etalon_crm_web.API
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public MessageModel Update(JObject jsonData)
         {
@@ -120,6 +123,7 @@ namespace etalon_crm_web.API
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public MessageModel Delete(JObject jsonData)
         {

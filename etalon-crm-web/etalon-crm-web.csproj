@@ -194,6 +194,7 @@
     <Compile Include="API\AuthController.cs" />
     <Compile Include="API\CompaniesController.cs" />
     <Compile Include="API\GroupsController.cs" />
+    <Compile Include="API\LandingController.cs" />
     <Compile Include="API\MessagesController.cs" />
     <Compile Include="API\ReportsController.cs" />
     <Compile Include="API\RoomPhotosController.cs" />
@@ -975,6 +976,7 @@
     <Folder Include="fonts\" />
     <Folder Include="Models\Auth\" />
     <Folder Include="Views\Default\" />
+    <Folder Include="Views\Landing\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

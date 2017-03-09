@@ -30,7 +30,17 @@
                     inputType: 'password',
                     fieldLabel: 'Пароль:',
                     allowBlank: false,
-                    margin: "10 5 10 5"
+                    margin: "10 5 10 5",
+                    enableKeyEvents: true,
+                    listeners: {
+                        keypress: function (form, e) {
+                            var currForm = this.up('form').getForm();
+                            if (e.getKey() == e.RETURN && currForm.isValid()) {
+                                this.up('window').doLogin(currForm);
+                            }
+                        }
+                    }
+                    
                 }, {
                     xtype: "checkboxfield",
                     name: "remember",
@@ -57,26 +67,29 @@
                     listeners: {
                         click: function (btn) {
                             var form = btn.up('form').getForm();
-
-                            Ext.Ajax.request({
-                                url: "API/Auth/Login",
-                                method: "POST",
-                                jsonData: form.getValues(),
-                                success: function (response, opts) {
-                                    var obj = Ext.decode(response.responseText);
-                                    if (!obj.success) {
-                                        Ext.Msg.alert('Не удалось войти', '<b>Неверная пара логин\\пароль!</b>', Ext.emptyFn);
-                                    } else {
-                                        window.location.reload();
-                                    }
-                                },
-                                failure: function () {
-                                    Ext.Msg.alert('Не удалось войти', 'Сервер не отвечает, обратитесь к администратору.', Ext.emptyFn);
-                                }
-                            });
+                            this.up('window').doLogin(form);
                         }
                     }
                 }
             ]
+        },
+
+        doLogin: function (form) {
+            Ext.Ajax.request({
+                url: "API/Auth/Login",
+                method: "POST",
+                jsonData: form.getValues(),
+                success: function (response, opts) {
+                    var obj = Ext.decode(response.responseText);
+                    if (!obj.success) {
+                        Ext.Msg.alert('Не удалось войти', '<b>Неверная пара логин\\пароль!</b>', Ext.emptyFn);
+                    } else {
+                        window.location.reload();
+                    }
+                },
+                failure: function () {
+                    Ext.Msg.alert('Не удалось войти', 'Сервер не отвечает, обратитесь к администратору.', Ext.emptyFn);
+                }
+            });
         }
     });
