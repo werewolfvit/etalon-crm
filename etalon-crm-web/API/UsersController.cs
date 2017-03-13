@@ -83,7 +83,7 @@ namespace etalon_crm_web.API
             }
         }
 
-        [System.Web.Http.Authorize(Roles = "Admin,Employer,Renter")]
+        [System.Web.Http.Authorize(Roles = "Admin, Employer, Renter")]
         [System.Web.Http.HttpPost]
         public MessageModel UserChangePassword(JObject jsonData)
         {
